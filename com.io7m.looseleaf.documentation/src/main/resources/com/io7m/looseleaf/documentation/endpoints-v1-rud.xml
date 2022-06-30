@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Section xmlns="urn:com.io7m.structural:8:0"
+         id="1918f98c-74fb-417a-bcdf-cd987d4f6067"
+         title="/v1/rud">
+
+  <Subsection title="Name">
+    <Paragraph>
+      <Term type="command">/v1/rud</Term> - Atomically read, update, and delete sets of keys
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="Description">
+    <Paragraph>
+      The <Term type="command">/v1/rud</Term> endpoint performs a
+      <Link target="cd47aff9-56fb-404a-a137-f367fb408a9c">read-update-delete</Link> operation. The
+      endpoint requires a JSON object containing three properties: <Term type="expression">read</Term>,
+      <Term type="expression">update</Term>, and <Term type="expression">delete</Term>. The
+      <Term type="expression">read</Term> property is an array-typed property containing a list of
+      key names that will be read. The <Term type="expression">update</Term> property is a JSON object
+      where the properties names are key names, and the property values are key values; the key names
+      mentioned will be set to the corresponding values. The <Term type="expression">delete</Term>
+      property is an array-typed property containing a list of key names to be deleted.
+    </Paragraph>
+    <FormalItem title="Example Object">
+      <Verbatim><![CDATA[{
+  "read": [
+    "/x/y/z"
+  ],
+  "update": {
+    "/x/y/z": "24"
+  },
+  "delete": []
+}
+]]></Verbatim>
+    </FormalItem>
+    <Paragraph>
+      On success, the endpoint returns a JSON object with a <Term type="expression">values</Term> property
+      that contains the values of the keys specified by the original <Term type="expression">read</Term> property.
+    </Paragraph>
+    <FormalItem title="Example Values">
+      <Verbatim><![CDATA[{
+  "values": {
+    "/x/y/z": "before"
+  }
+}
+]]></Verbatim>
+    </FormalItem>
+  </Subsection>
+
+  <Subsection title="Examples">
+    <Paragraph>
+      The following command reads the value of <Term type="expression">/x/y/z</Term>, then sets the value of
+      <Term type="expression">/x/y/z</Term> to <Term type="expression">"after"</Term>:
+    </Paragraph>
+    <FormalItem title="Example Read/Update">
+      <Verbatim><![CDATA[$ curl -u grouch:12345678 -d '{"read":["/x/y/z"],"update":{"/x/y/z":"after"},"delete":[]}' http://localhost:20000/v1/rud
+{"values":{"/x/y/z":"before"}}
+]]></Verbatim>
+    </FormalItem>
+    <Paragraph>
+      The following command deletes <Term type="expression">/x/y/z</Term>:
+    </Paragraph>
+    <FormalItem title="Example Read/Update">
+      <Verbatim><![CDATA[$ curl -u grouch:12345678 -d '{"read":[],"update":{},"delete":["/x/y/z"]}' http://localhost:20000/v1/rud
+{"values":{}}
+]]></Verbatim>
+    </FormalItem>
+    <Paragraph>
+      The following command updates/creates all of <Term type="expression">/x/y/a</Term>,
+      <Term type="expression">/x/y/b</Term>, and <Term type="expression">/x/y/c</Term> atomically:
+    </Paragraph>
+    <FormalItem title="Example Read/Update">
+      <Verbatim><![CDATA[$ curl -u grouch:12345678 -d '{"read":[],"update":{"/x/y/a":"q","/x/y/b":"w","/x/y/c":"x"},"delete":[]}' http://localhost:20000/v1/rud
+{"values":{}}
+]]></Verbatim>
+    </FormalItem>
+  </Subsection>
+
+</Section>

@@ -1,0 +1,160 @@
+{
+  "$id": "https://www.io7m.com/software/looseleaf/looseleaf-config-1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+
+  "$defs": {
+    "SchemaIdentifier": {
+      "type": "string",
+      "const": "https://www.io7m.com/software/looseleaf/looseleaf-config-1.json"
+    },
+
+    "BindAddress": {
+      "type": "object",
+      "properties": {
+        "host": {
+          "type": "string"
+        },
+        "port": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "host",
+        "port"
+      ]
+    },
+
+    "Action": {
+      "type": "string",
+      "enum": [
+        "READ",
+        "WRITE"
+      ]
+    },
+
+    "Grant": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/Action"
+        },
+        "keys": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "keys"
+      ]
+    },
+
+    "Role": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "grants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Grant"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "grants"
+      ]
+    },
+
+    "Password": {
+      "type": "object",
+      "properties": {
+        "algorithm": {
+          "type": "string"
+        },
+        "hash": {
+          "type": "string",
+          "format": "[A-F0-9]+"
+        },
+        "salt": {
+          "type": "string",
+          "format": "[A-F0-9]+"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "hash",
+        "salt"
+      ]
+    },
+
+    "User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "password": {
+          "$ref": "#/$defs/Password"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "password",
+        "roles"
+      ]
+    },
+
+    "Configuration": {
+      "type": "object",
+      "properties": {
+        "%schema": {
+          "$ref": "#/$defs/SchemaIdentifier"
+        },
+        "addresses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/BindAddress"
+          }
+        },
+        "databaseFile": {
+          "type": "string"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Role"
+          }
+        },
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/User"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "%schema",
+        "addresses",
+        "databaseFile",
+        "roles",
+        "users"
+      ]
+    }
+  },
+
+  "$ref": "#/$defs/Configuration"
+}

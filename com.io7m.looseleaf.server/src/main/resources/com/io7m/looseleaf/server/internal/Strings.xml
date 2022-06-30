@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
+<properties>
+  <entry key="errorOperationNotPermitted">Operation {0} not permitted on key {1}</entry>
+  <entry key="errorUnexpectedMessage">Unexpected message type; expected a {0}</entry>
+  <entry key="errorUnparseableMessage">Unparseable message: {0}</entry>
+  <entry key="errorNotFound">Key not found: {0}</entry>
+  <entry key="errorBadKeyName">Bad key name: {0}: {1}</entry>
+</properties>

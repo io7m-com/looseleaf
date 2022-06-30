@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Section xmlns="urn:com.io7m.structural:8:0"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         id="cdb09c14-a360-40cf-974e-55b9681f8e33"
+         title="Protocol V1">
+
+  <Section title="Generalities" id="478b7427-af76-4d0e-9f20-e03d2c4c7d16">
+    <Paragraph>
+      On failure conditions that are unrelated to problems on the server (such as hardware or software failure, bugs,
+      and etc), all endpoints return a <Term type="expression">4**</Term> HTTP status code, and a JSON object of type
+      <Term type="type">Errors</Term>. An <Term type="type">Errors</Term> object contains an array-typed
+      <Term type="expression">errors</Term> property such that each element is of type <Term type="type">Error</Term>.
+      An <Term type="type">Error</Term> object contains an <Term type="expression">errorCode</Term> property and
+      a human-readable <Term type="expression">message</Term> property.
+    </Paragraph>
+    <FormalItem title="Errors">
+      <Verbatim><![CDATA[{
+  "errors": [
+    { "errorCode": "operation-not-permitted", "message": "Operation READ not permitted on key /x/y/z" },
+    { "errorCode": "not-found", "message": "Key not found: /q" },
+  ]
+}
+]]></Verbatim>
+    </FormalItem>
+    <Paragraph>
+      See the <Link target="73db076a-5de8-4ddf-ad19-58c16b2b9f38">schema</Link> for the exact types of
+      all objects that can be returned by the endpoints.
+    </Paragraph>
+  </Section>
+
+  <xi:include href="endpoints-v1-rud.xml"/>
+  <xi:include href="endpoints-v1-read.xml"/>
+  <xi:include href="endpoints-v1-update.xml"/>
+  <xi:include href="endpoints-v1-delete.xml"/>
+  <xi:include href="endpoints-v1-schema.xml"/>
+
+</Section>

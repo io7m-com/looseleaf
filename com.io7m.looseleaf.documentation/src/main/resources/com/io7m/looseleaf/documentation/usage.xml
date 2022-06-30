@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Section xmlns="urn:com.io7m.structural:8:0"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         id="4ddb722c-536c-43a7-9182-84edab380eda"
+         title="Usage">
+
+  <Subsection title="Overview">
+    <Paragraph>
+      This section of the documentation describes the usage of the <Term type="package">looseleaf</Term>
+      server.
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="Running The Server">
+    <Paragraph>
+      Given a correctly defined <Link target="a1f3b55a-b907-4b62-94a1-b343bac5f540">configuration file</Link>
+      in <Term type="expression">config.json</Term>, the server can be started with the following command:
+    </Paragraph>
+    <FormalItem title="Run">
+      <Verbatim><![CDATA[$ looseleaf server --file config.json]]></Verbatim>
+    </FormalItem>
+    <Paragraph>
+      The <Term type="package">looseleaf</Term> command <Term type="term">does not</Term> fork into the background,
+      and is designed to run under process supervision.
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="Endpoints">
+    <Paragraph>
+      The <Term type="package">looseleaf</Term> server exposes a number of HTTP endpoints. For the sake of
+      example, we will assume throughout the rest of this documentation that the server was configured to listen
+      on <Term type="expression">localhost</Term> on port <Term type="constant">20000</Term>. We will also assume
+      that a user exists with name <Term type="expression">grouch</Term> and password
+      <Term type="expression">12345678</Term>. The <Term type="package">looseleaf</Term> server
+      requires <LinkExternal target="https://en.wikipedia.org/wiki/Basic_access_authentication">basic
+      authentication</LinkExternal> for all requests. The API versions exposed by the server can be inspected directly:
+    </Paragraph>
+    <FormalItem title="Versions">
+      <Verbatim><![CDATA[$ curl -u grouch:12345678 http://localhost:20000
+[{"name":"com.io7m.looseleaf.v1","base":"/v1"}]
+]]></Verbatim>
+    </FormalItem>
+    <Paragraph>
+      The above output indicates that the server only supports
+      <Link target="cdb09c14-a360-40cf-974e-55b9681f8e33">protocol v1</Link>, with all of the protocol's
+      endpoints based at <Term type="expression">http://localhost:20000/v1</Term>. Please see the reference
+      pages for the endpoints for precise descriptions of inputs and outputs, and usage examples.
+    </Paragraph>
+  </Subsection>
+
+</Section>

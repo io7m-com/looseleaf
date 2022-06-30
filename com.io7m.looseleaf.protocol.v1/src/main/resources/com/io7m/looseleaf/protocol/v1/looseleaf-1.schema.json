@@ -1,0 +1,117 @@
+{
+  "$id": "https://www.io7m.com/software/looseleaf/looseleaf-1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+
+  "$defs": {
+    "SchemaIdentifier": {
+      "type": "string",
+      "const": "https://www.io7m.com/software/looseleaf/looseleaf-1.json"
+    },
+
+    "Error": {
+      "type": "object",
+      "properties": {
+        "%schema": {
+          "$ref": "#/$defs/SchemaIdentifier"
+        },
+        "errorCode": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "errorCode",
+        "message"
+      ]
+    },
+
+    "Errors": {
+      "type": "object",
+      "properties": {
+        "%schema": {
+          "$ref": "#/$defs/SchemaIdentifier"
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Error"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "errors"
+      ]
+    },
+
+    "RUD": {
+      "type": "object",
+      "properties": {
+        "%schema": {
+          "$ref": "#/$defs/SchemaIdentifier"
+        },
+        "read": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "update": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "delete": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "read",
+        "update",
+        "delete"
+      ]
+    },
+
+    "Result": {
+      "type": "object",
+      "properties": {
+        "%schema": {
+          "$ref": "#/$defs/SchemaIdentifier"
+        },
+        "values": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "values"
+      ]
+    }
+  },
+
+  "anyOf": [
+    {
+      "$ref": "#/$defs/Error"
+    },
+    {
+      "$ref": "#/$defs/Errors"
+    },
+    {
+      "$ref": "#/$defs/RUD"
+    },
+    {
+      "$ref": "#/$defs/Result"
+    }
+  ]
+}

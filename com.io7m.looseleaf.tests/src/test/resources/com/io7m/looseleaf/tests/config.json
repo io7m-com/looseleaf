@@ -1,0 +1,47 @@
+{
+  "%schema": "https://www.io7m.com/software/looseleaf/looseleaf-config-1.json",
+
+  "addresses": [
+    {
+      "host": "localhost",
+      "port": 20000
+    }
+  ],
+
+  "databaseFile": "/tmp/looseleaf.db",
+
+  "roles": [
+    {
+      "name": "read-xy",
+      "grants": [
+        {
+          "action": "READ",
+          "keys": "/x/y/*"
+        }
+      ]
+    },
+    {
+      "name": "write-xy",
+      "grants": [
+        {
+          "action": "WRITE",
+          "keys": "/x/y/*"
+        }
+      ]
+    }
+  ],
+
+  "users": [
+    {
+      "name": "someone",
+      "password": {
+        "algorithm": "PBKDF2WithHmacSHA256:10000:256",
+        "hash": "7706A5A86FEA0CE2BAC511FD0C3C10B3432D247CF28B8B9BD9CD99234D80B738",
+        "salt": "4B4057CD69190E6D41898F9E793824D6"
+      },
+      "roles": [
+        "read-xy", "write-xy"
+      ]
+    }
+  ]
+}
