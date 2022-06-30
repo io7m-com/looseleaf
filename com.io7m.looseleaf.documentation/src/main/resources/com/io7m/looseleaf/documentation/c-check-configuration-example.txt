@@ -1,0 +1,13 @@
+$ looseleaf check-configuration --file server.conf
+$ echo $?
+0
+
+$ looseleaf check-configuration --file bad.conf
+error: Nonexistent role 'oops'
+$ echo $?
+1
+
+$ looseleaf check-configuration --file bad2.conf
+error: Duplicate user 'someone'
+$ echo $?
+1

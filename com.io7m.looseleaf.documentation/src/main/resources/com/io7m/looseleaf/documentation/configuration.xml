@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Section xmlns="urn:com.io7m.structural:8:0"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         id="a1f3b55a-b907-4b62-94a1-b343bac5f540"
+         title="Configuration">
+
+  <Subsection title="Overview">
+    <Paragraph>
+      The <Term type="package">looseleaf</Term> server accepts a JSON configuration file with a very strictly-defined
+      format. The configuration file is a JSON object with the following properties:
+    </Paragraph>
+
+    <FormalItem title="Properties">
+      <ListUnordered>
+        <Item>
+          <Link target="a8101d53-7717-48e6-a9cc-2e84785b049a">%schema</Link>
+        </Item>
+        <Item>
+          <Link target="8b6a56e9-5af9-43d1-b0e5-854d457ec8b7">addresses</Link>
+        </Item>
+        <Item>
+          <Link target="152c649c-0803-4c5d-b750-e71f8bf32269">databaseFile</Link>
+        </Item>
+        <Item>
+          <Link target="591e8092-ff3b-44f8-8e84-d221f397f428">roles</Link>
+        </Item>
+        <Item>
+          <Link target="885a06a4-8e44-44d0-9939-2dde991fa4da">users</Link>
+        </Item>
+      </ListUnordered>
+    </FormalItem>
+  </Subsection>
+
+  <Subsection title="%schema"
+              id="a8101d53-7717-48e6-a9cc-2e84785b049a">
+    <Paragraph>
+      The <Term type="expression">%schema</Term> property must be present and set to the value
+      <Term type="expression">"https://www.io7m.com/software/looseleaf/looseleaf-config-1.json"</Term>.
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="addresses"
+              id="8b6a56e9-5af9-43d1-b0e5-854d457ec8b7">
+    <Paragraph>
+      The <Term type="expression">addresses</Term> property specifies an array of addresses to which the server will
+      bind. An address is a JSON object with a mandatory string-typed <Term type="expression">host</Term> and mandatory
+      integer-typed <Term type="expression">port</Term> property. For example, for a server that listens on
+      <Term type="expression">172.17.0.1</Term>
+      port
+      <Term type="expression">20000</Term>
+      and
+      <Term type="expression">fe80::42:31ff:fe0a:119a</Term>
+      port <Term type="expression">20001</Term>, the following definitions would be used:
+    </Paragraph>
+    <FormalItem title="Example Addresses">
+      <Verbatim><![CDATA[
+"addresses": [
+  { "host": "172.17.0.1", "port": 20000 },
+  { "host": "fe80::42:31ff:fe0a:119a", "port": 20001 },
+]
+]]></Verbatim>
+    </FormalItem>
+    <Paragraph>
+      The <Term type="package">looseleaf</Term> server does not support
+      <LinkExternal target="https://en.wikipedia.org/wiki/Transport_Layer_Security">TLS</LinkExternal>
+      and it is expected that the server will be configured to listen on
+      <Term type="expression">localhost</Term>
+      behind a reverse proxy that provides TLS such as <LinkExternal target="https://nginx.org/">nginx</LinkExternal>.
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="databaseFile"
+              id="152c649c-0803-4c5d-b750-e71f8bf32269">
+    <Paragraph>
+      The <Term type="expression">databaseFile</Term> property specifies the path of the database that the server
+      will use to store key/value data. The file will be created if it does not already exist.
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="roles"
+              id="591e8092-ff3b-44f8-8e84-d221f397f428">
+    <Paragraph>
+      The <Term type="expression">roles</Term> property is an array-typed property that defines a set of <Link
+      target="7d3a180b-3b1c-4c23-8518-f72477f1c0ec">roles</Link>.
+    </Paragraph>
+    <Paragraph>
+      The following example defines a role <Term type="expression">read-xy</Term> that allows any user that
+      has the role to read keys that begin with <Term type="expression">/x/y/</Term>:
+    </Paragraph>
+    <FormalItem title="read-xy">
+      <Verbatim><![CDATA[
+"roles": [
+  {
+    "name": "read-xy",
+    "grants": [
+      {
+        "action": "READ",
+        "keys": "/x/y/*"
+      }
+    ]
+  }
+]
+]]></Verbatim>
+    </FormalItem>
+    <Paragraph>
+      Similarly, the following <Term type="expression">write-xy</Term> definition allows any user that
+      has the <Term type="expression">write-xy</Term> role to create, update, and/or delete keys that begin with
+      <Term type="expression">/x/y/</Term>:
+    </Paragraph>
+    <FormalItem title="read-xy">
+      <Verbatim><![CDATA[
+"roles": [
+  {
+    "name": "write-xy",
+    "grants": [
+      {
+        "action": "WRITE",
+        "keys": "/x/y/*"
+      }
+    ]
+  }
+]
+]]></Verbatim>
+    </FormalItem>
+  </Subsection>
+
+  <Subsection title="users"
+              id="885a06a4-8e44-44d0-9939-2dde991fa4da">
+    <Paragraph>
+      The <Term type="expression">users</Term> property is an array-typed property that defines a set of <Link
+      target="60d26bf3-2f67-49c0-989a-323941a3bcb8">users</Link>. Each element of the array is a JSON object
+      that specifies a user name, a <Term type="term">hashed password</Term>, and a set of
+      <Term type="term">role names</Term> that reference roles declared in the
+      <Link target="591e8092-ff3b-44f8-8e84-d221f397f428">roles</Link> property.
+    </Paragraph>
+    <Paragraph>
+      A <Term type="term">hashed password</Term> declares an <Term type="term">algorithm identifier</Term>,
+      an uppercase hex-encoded <Term type="term">salt value</Term> and an uppercase hex-encoded
+      <Term type="term">hash value</Term>. Currently, the only supported <Term type="term">algorithm identifier</Term> is
+      <Term type="constant">PBKDF2WithHmacSHA256:n:256</Term>, which states that passwords are hashed
+      with <LinkExternal target="https://en.wikipedia.org/wiki/PBKDF2">PBKDF2</LinkExternal> using a 
+      <LinkExternal target="https://en.wikipedia.org/wiki/SHA-2">SHA-256 HMAC</LinkExternal>, with
+      <Term type="constant">n</Term> rounds of hashing, using a <Term type="constant">256</Term> bit key.
+    </Paragraph>
+    <Paragraph>
+      The <Link target="43008ff7-f2d1-4d52-b064-ef37d9aafc24">create-password</Link> command can be used
+      to hash a password suitable for use in a configuration file.
+    </Paragraph>
+    <Paragraph>
+      The following example defines a hashed password for a user:
+    </Paragraph>
+    <FormalItem title="Hashed Password">
+      <Verbatim><![CDATA[
+"password": {
+  "algorithm": "PBKDF2WithHmacSHA256:10000:256",
+  "hash": "7706A5A86FEA0CE2BAC511FD0C3C10B3432D247CF28B8B9BD9CD99234D80B738",
+  "salt": "4B4057CD69190E6D41898F9E793824D6"
+},
+]]></Verbatim>
+    </FormalItem>
+    <Paragraph>
+      The following example defines a user called <Term type="expression">someone</Term>, with a hashed
+      password and a set of roles:
+    </Paragraph>
+    <FormalItem title="User Example">
+      <Verbatim><![CDATA[
+"users": [
+  {
+    "name": "someone",
+    "password": {
+      "algorithm": "PBKDF2WithHmacSHA256:10000:256",
+      "hash": "7706A5A86FEA0CE2BAC511FD0C3C10B3432D247CF28B8B9BD9CD99234D80B738",
+      "salt": "4B4057CD69190E6D41898F9E793824D6"
+    },
+    "roles": [
+      "read-xy",
+      "write-xy"
+    ]
+  }
+]
+]]></Verbatim>
+    </FormalItem>
+  </Subsection>
+
+  <Subsection title="Example">
+    <Paragraph>
+      A full configuration file example is as follows:
+    </Paragraph>
+    <FormalItem title="Example">
+      <Verbatim>
+        <xi:include href="config.json"
+                    parse="text"/>
+      </Verbatim>
+    </FormalItem>
+    <Paragraph>
+      The configuration defines two roles <Term type="expression">read-xy</Term> and
+      <Term type="expression">write-xy</Term>
+      which allow reading of keys
+      <Term type="expression">/x/y/*</Term>
+      and writing of keys <Term type="expression">/x/y/*</Term>, respectively. The configuration defines a single user
+      named <Term type="expression">someone</Term> with both roles assigned. The configuration specifies that the local
+      database will be created a <Term type="expression">/looseleaf/etc/data.db</Term>, and that the server will listen
+      on <Term type="expression">http://localhost:20000</Term>.
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="Schema">
+    <Paragraph>
+      The <LinkExternal target="https://json-schema.org/">JSON schema</LinkExternal> that defines the configuration
+      file format is as follows:
+    </Paragraph>
+    <FormalItem title="Schema">
+      <Verbatim>
+        <xi:include href="com/io7m/looseleaf/server/api/looseleaf-config-1.schema.json"
+                    parse="text"/>
+      </Verbatim>
+    </FormalItem>
+  </Subsection>
+
+</Section>

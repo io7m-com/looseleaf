@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Section xmlns="urn:com.io7m.structural:8:0"
+         id="ac6f1f2a-a2f2-4bff-87a3-4ba26d6c1d3f"
+         title="Introduction">
+
+  <Paragraph>
+    The <Term type="package">looseleaf</Term> server is an HTTP-accessible key/value store with a focus on minimalism, a
+    small footprint, and reliability. The server has the following notable features:
+  </Paragraph>
+
+  <FormalItem title="Features">
+    <ListUnordered>
+      <Item>
+        <LinkExternal target="https://en.wikipedia.org/wiki/ACID">ACID</LinkExternal>
+        semantics.
+      </Item>
+      <Item>
+        Atomic reads and updates for arbitrary sets of keys. An unlimited number of keys can be read, updated, and/or
+        deleted in a single operation that is atomic with respect to all other database operations.
+      </Item>
+      <Item>
+        Fine-grained role-based access control.
+      </Item>
+      <Item>
+        A trivial HTTP interface for easy access from shell scripts.
+      </Item>
+      <Item>
+        A strictly defined JSON protocol with a full schema.
+      </Item>
+      <Item>
+        Convenient endpoints for use with command-line tools such as
+        <LinkExternal target="https://curl.se/">curl</LinkExternal>.
+      </Item>
+      <Item>
+        A small, easily auditable codebase with a heavy use of modularity for correctness.
+      </Item>
+      <Item>
+        An extensive automated test suite with high coverage.
+      </Item>
+      <Item>
+        A small footprint; the server is designed to run in tiny 16-32mb JVM heap configurations.
+      </Item>
+      <Item>
+        Platform independence. No platform-dependent code is included in any form, and installations can largely be
+        carried between platforms without changes. The database file format is also platform-independent.
+      </Item>
+      <Item>
+        Security-conscious engineering. All requests require authentication, extensive validation is performed on all
+        requests, and careful use is made of the Java type system to enforce invariants throughout the codebase.
+      </Item>
+      <Item>
+        <LinkExternal target="https://www.osgi.org/">OSGi</LinkExternal>-ready
+      </Item>
+      <Item>
+        <LinkExternal target="https://en.wikipedia.org/wiki/Java_Platform_Module_System">JPMS</LinkExternal>-ready
+      </Item>
+      <Item>
+        ISC license
+      </Item>
+    </ListUnordered>
+  </FormalItem>
+
+  <Paragraph>
+    The server does not and is unlikely to ever have the following features:
+  </Paragraph>
+
+  <FormalItem title="Non-Features">
+    <ListUnordered>
+      <Item>
+        The server cannot store arbitrary binary data; keys and values are UTF-8 encoded strings.
+      </Item>
+      <Item>
+        The server's database is not a <LinkExternal target="https://en.wikipedia.org/wiki/Distributed_database">
+        distributed database</LinkExternal>; it is a simple local store based on the
+        <LinkExternal target="https://h2database.com/html/main.html">H2</LinkExternal>
+        database's underlying storage engine.
+      </Item>
+      <Item>
+        Adding/removing users and roles is not dynamic. The users and roles are defined ahead of time in a single
+        configuration file, and the server must be restarted for changes to the configuration file to take effect. The
+        server is intended to be provisioned according to the principles of <Term type="term">immutable infrastructure
+      </Term> and, as such, a change to the security policy is considered to be a critical infrastructure change. This
+        has the benefit that the server's current security policy is trivially observable in a single location, as
+        opposed to being part of the database's mutable state.
+      </Item>
+      <Item>
+        TLS support. Use a reverse proxy such as
+        <LinkExternal target="https://www.nginx.org">nginx</LinkExternal>
+        to provide TLS if required.
+      </Item>
+    </ListUnordered>
+  </FormalItem>
+
+</Section>

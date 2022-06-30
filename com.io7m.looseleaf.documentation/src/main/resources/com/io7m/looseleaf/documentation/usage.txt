@@ -1,0 +1,28 @@
+info: Usage: looseleaf [options] [command] [command options]
+
+  Options:
+    --verbose
+      Set the minimum logging verbosity level.
+      Default: info
+      Possible Values: [trace, debug, info, warn, error]
+
+  Use the "help" command to examine specific commands:
+
+    $ looseleaf help help.
+
+  Command-line arguments can be placed one per line into a file, and the file
+  can be referenced using the @ symbol:
+
+    $ echo help > file.txt
+    $ echo help >> file.txt
+    $ looseleaf @file.txt
+
+  Commands:
+    check-configuration     Check configuration file.
+    create-password         Create a hashed password.
+    help                    Show detailed help messages for commands.
+    server                  Start a server.
+    version                 Show the package version.
+
+  Documentation:
+    https://www.io7m.com/software/looseleaf/documentation/

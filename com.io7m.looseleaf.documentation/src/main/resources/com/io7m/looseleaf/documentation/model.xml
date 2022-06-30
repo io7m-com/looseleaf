@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Section xmlns="urn:com.io7m.structural:8:0"
+         id="dcce2688-c87d-4adc-a5f4-59cc07234aa7"
+         title="Model">
+
+  <Subsection title="Overview">
+    <Paragraph>
+      The <Term type="package">looseleaf</Term> server provides a persistent key/value database with
+      <LinkExternal target="https://en.wikipedia.org/wiki/ACID">ACID</LinkExternal> semantics. Keys and
+      values are arbitrary UTF-8 strings, and a fine-grained role-based access control system is provided
+      to control how users are allowed to perform operations on the database.
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="Value"
+              id="b4079bee-8eac-4869-97f1-160017caec37">
+    <Paragraph>
+      A <Term type="term">value</Term> is an arbitrary
+      <LinkExternal target="https://en.wikipedia.org/wiki/UTF-8">UTF-8</LinkExternal> encoded string.
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="Key"
+              id="567b4219-822b-4a3d-a9a1-77a22c26219d">
+    <Paragraph>
+      A <Term type="term">key</Term> is a unique name for a
+      <Link target="b4079bee-8eac-4869-97f1-160017caec37">value</Link>. The core functionality of the
+      <Term type="package">looseleaf</Term> server is a persistent database of keys and values that can
+      be updated atomically. A key is a
+      <LinkExternal target="https://en.wikipedia.org/wiki/UTF-8">UTF-8</LinkExternal> encoded string
+      with an associated UTF-8 string value. Key names must begin with <Term type="expression">/</Term>
+      and consist of an arbitrarily long sequence of segments separated with
+      <Term type="expression">/</Term> characters. Repeated sequences of <Term type="expression">/</Term>
+      characters are automatically reduced to a single <Term type="expression">/</Term> character. Key names,
+      effectively, resemble <LinkExternal target="https://en.wikipedia.org/wiki/Path_(computing)">absolute UNIX
+      paths</LinkExternal>. Key names are ordered lexicographically, so the path
+      <Term type="expression">/a</Term> is considered to be <Term type="term">less than</Term>
+      <Term type="expression">/b</Term>.
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="Key Expression"
+              id="793c2b03-4179-4d7d-9f36-dd5e64e3208a">
+    <Paragraph>
+      A <Term type="term">key expression</Term> describes a set of keys. The syntax of key expressions
+      is identical to <Link target="567b4219-822b-4a3d-a9a1-77a22c26219d">keys</Link>, except that
+      a <Term type="term">key expression</Term> is allowed to end with a <Term type="term">wildcard</Term>
+      character <Term type="constant">*</Term>. A key expression <Term type="expression">/x/y/z</Term> matches
+      exactly one key: <Term type="expression">/x/y/z</Term>, whilst the key expression
+      <Term type="expression">/x/y/z*</Term> matches all keys that begin with
+      <Term type="expression">/x/y/z</Term>.
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="Action"
+              id="dc0466ef-7668-4dc9-881b-501bf00a0d77">
+    <Paragraph>
+      An <Term type="term">action</Term> defines an operation that may be performed upon a key. An
+      <Term type="term">action</Term>
+      may be <Term type="constant">READ</Term> or <Term type="constant">WRITE</Term>, where <Term type="constant">READ
+    </Term> means that the value of a given key may be retrieved, and
+      <Term type="constant">WRITE</Term>
+      means that the value of a given key may be modified, or the key created and/or removed as desired.
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="Grant"
+              id="c0cc0b53-458d-4262-aff8-54866402bcc7">
+    <Paragraph>
+      A <Term type="term">grant</Term> combines a
+      <Link target="793c2b03-4179-4d7d-9f36-dd5e64e3208a">key expression</Link>
+      and an
+      <Link target="dc0466ef-7668-4dc9-881b-501bf00a0d77">action</Link>, and effectively declares that the given
+      <Term type="term">action</Term>
+      is allowed to be performed on the keys described by the
+      <Term type="term">key expression</Term>. For example, a grant with action <Term type="constant">READ</Term> and
+      key expression
+      <Term type="expression">/x/y/*</Term>
+      allows reading the values of any keys that begin with <Term type="expression">/x/y/</Term>. A grant
+      with action <Term type="constant">WRITE</Term> and key expression
+      <Term type="expression">/a/b/c</Term> allows the key
+      <Term type="expression">/a/b/c</Term> to be created, modified, and/or deleted.
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="Role"
+              id="7d3a180b-3b1c-4c23-8518-f72477f1c0ec">
+    <Paragraph>
+      A <Term type="term">role</Term> is a uniquely named (with respect to other roles) container that defines a
+      set of <Link target="c0cc0b53-458d-4262-aff8-54866402bcc7">
+      grants</Link>. A
+      <Link target="60d26bf3-2f67-49c0-989a-323941a3bcb8">user</Link>
+      may have zero or more roles.
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="User"
+              id="60d26bf3-2f67-49c0-989a-323941a3bcb8">
+    <Paragraph>
+      A <Term type="term">user</Term> is a uniquely named (with respect to other users) container that combines
+      a set of <Link target="7d3a180b-3b1c-4c23-8518-f72477f1c0ec">roles</Link> with a
+      <Term type="password">password</Term>. All operations in the <Term type="package">looseleaf</Term> server
+      are conducted on behalf of authenticated <Term type="term">users</Term>; no operations are anonymous.
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="Read-Update-Delete" id="cd47aff9-56fb-404a-a137-f367fb408a9c">
+    <Paragraph>
+      All operations that occur in the <Term type="package">looseleaf</Term> server occur in terms of
+      single atomic <Term type="term">read-update-delete</Term> operations, or <Term type="term">RUDs</Term>.
+      An <Term type="term">RUD</Term> operation specifies a set of keys that will be <Term type="term">read</Term>,
+      followed by a set of keys that will be <Term type="term">updated</Term>, followed by a set of keys that
+      will be <Term type="term">deleted</Term>. The reads, updates, and deletes are specified to occur in that
+      order, and the operation as whole will occur atomically; either all read/update/delete operations succeed,
+      or it is as if none of them took place at all. More formally, an <Term type="term">RUD</Term> can be
+      specified as a 3-tuple <Term type="expression">(R,U,D)</Term>, where <Term type="expression">R</Term>
+      is the set of keys to read, <Term type="expression">U</Term> is the set of keys to update, and
+      <Term type="expression">D</Term> is the set of keys to delete. If any of the keys specified in
+      <Term type="expression">U</Term> do not exist, then they will be created by the update operation.
+      It follows that:
+    </Paragraph>
+    <FormalItem title="Operations">
+      <ListUnordered>
+        <Item>
+          Reading a single key <Term type="expression">k</Term> can be expressed as the
+          operation <Term type="expression">(k,∅,∅)</Term>.
+        </Item>
+        <Item>
+          Updating a single key <Term type="expression">k</Term> can be expressed as the
+          operation <Term type="expression">(∅,k,∅)</Term>.
+        </Item>
+        <Item>
+          Deleting a single key <Term type="expression">k</Term> can be expressed as the
+          operation <Term type="expression">(∅,∅,k)</Term>.
+        </Item>
+      </ListUnordered>
+    </FormalItem>
+    <Paragraph>
+      As mentioned previously, operations are specified to occur in <Term type="expression">R → U → D</Term>
+      order. This means that, for example, the operation <Term type="expression">(∅,k,k)</Term> for any
+      <Term type="expression">k</Term> is a no-op.
+    </Paragraph>
+  </Subsection>
+
+</Section>

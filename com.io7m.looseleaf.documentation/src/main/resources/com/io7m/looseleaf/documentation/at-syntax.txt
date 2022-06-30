@@ -1,0 +1,12 @@
+$ looseleaf server --file config.json
+info: [localhost:20000] server started
+
+$ (cat <<EOF
+server
+--file
+config.json
+EOF
+) > args.txt
+
+$ looseleaf @args.txt
+info: [localhost:20000] server started

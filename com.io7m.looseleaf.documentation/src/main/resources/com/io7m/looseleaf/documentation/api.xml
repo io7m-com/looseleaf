@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Section xmlns="urn:com.io7m.structural:8:0"
+         id="94cc9b32-352f-4ef3-9210-780e381fe712"
+         title="API">
+
+  <Paragraph>
+    Documentation for the <Term type="package">looseleaf</Term> APIs are provided in the
+    form of <LinkExternal target="https://www.io7m.com/software/looseleaf/documentation/apidocs">JavaDoc</LinkExternal>.
+  </Paragraph>
+
+</Section>

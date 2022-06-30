@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Section xmlns="urn:com.io7m.structural:8:0"
+         id="0acba45d-3452-4b04-bbf6-f2fea0df629f"
+         title="/v1/delete">
+
+  <Subsection title="Name">
+    <Paragraph>
+      <Term type="command">/v1/delete</Term> - Directly update the value of a single key
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="Description">
+    <Paragraph>
+      The <Term type="command">/v1/delete</Term> endpoint is a convenience endpoint that directly updates the value of a
+      key, assuming the key exists. It is equivalent to calling the
+      <Link target="1918f98c-74fb-417a-bcdf-cd987d4f6067">/v1/rud</Link>
+      endpoint with empty
+      <Term type="expression">update</Term>
+      and <Term type="expression">read</Term> sets, and a
+      <Term type="expression">delete</Term>
+      set that contains a single key. The endpoint is suffixed with the name of the target key, so
+      to update key <Term type="expression">/x/y/z</Term>, the endpoint is called as
+      <Term type="expression">/v1/delete/x/y/z</Term>.
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="Examples">
+    <Paragraph>
+      The following command deletes the key <Term type="expression">/x/y/z</Term>:
+    </Paragraph>
+    <FormalItem title="Example Update">
+      <Verbatim><![CDATA[$ curl -u grouch:12345678 http://localhost:20000/v1/delete/x/y/z
+
+$ curl -u grouch:12345678 http://localhost:20000/v1/get/x/y/z
+{"errors":[{"errorCode":"not-found","message":"Key not found: /x/y/z"}]}
+]]></Verbatim>
+    </FormalItem>
+  </Subsection>
+
+</Section>

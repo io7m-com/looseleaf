@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Section xmlns="urn:com.io7m.structural:8:0"
+         id="8aa74b7e-5091-45e0-a013-8047f300a52a"
+         title="/v1/read">
+
+  <Subsection title="Name">
+    <Paragraph>
+      <Term type="command">/v1/read</Term>
+      - Directly read the value of a single key
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="Description">
+    <Paragraph>
+      The <Term type="command">/v1/read</Term> endpoint is a convenience endpoint that directly returns the value of a
+      key, assuming the key exists. It is equivalent to calling the
+      <Link target="1918f98c-74fb-417a-bcdf-cd987d4f6067">/v1/rud</Link>
+      endpoint with empty
+      <Term type="expression">update</Term>
+      and <Term type="expression">delete</Term> sets, and a
+      <Term type="expression">read</Term>
+      set that contains a single key, and then extracting the key value from the resulting
+      <Term type="expression">values</Term>
+      property and returning it directly. The endpoint is suffixed with the name of the target key, so to read
+      key <Term type="expression">/x/y/z</Term>, the endpoint is called as
+      <Term type="expression">/v1/read/x/y/z</Term>. The content type of the returned data is
+      <Term type="expression">text/plain</Term>.
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="Examples">
+    <Paragraph>
+      The following command reads the value of <Term type="expression">/x/y/z</Term>:
+    </Paragraph>
+    <FormalItem title="Example Read">
+      <Verbatim><![CDATA[$ curl -u grouch:12345678 http://localhost:20000/v1/read/x/y/z
+/x/y/z
+]]></Verbatim>
+    </FormalItem>
+  </Subsection>
+
+</Section>

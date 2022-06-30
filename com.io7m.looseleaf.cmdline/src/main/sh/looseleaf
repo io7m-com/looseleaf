@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ -z "${LOOSELEAF_HOME}" ]
+then
+  echo "LOOSELEAF_HOME is unset" 1>&2
+  exit 1
+fi
+
+exec /usr/bin/env java \
+-p "${LOOSELEAF_HOME}/lib" \
+-m com.io7m.looseleaf.cmdline/com.io7m.looseleaf.cmdline.Main \
+"$@"

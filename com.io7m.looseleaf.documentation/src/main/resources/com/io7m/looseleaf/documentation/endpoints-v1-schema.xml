@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Section xmlns="urn:com.io7m.structural:8:0"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         id="73db076a-5de8-4ddf-ad19-58c16b2b9f38"
+         title="Schema">
+  <Paragraph>
+    The JSON schema that defines all JSON messages exchanged between the client and server in this
+    version of the protocol is as follows:
+  </Paragraph>
+  <FormalItem title="Schema">
+    <Verbatim>
+      <xi:include href="com/io7m/looseleaf/protocol/v1/looseleaf-1.schema.json"
+                  parse="text"/>
+    </Verbatim>
+  </FormalItem>
+</Section>
