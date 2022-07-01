@@ -82,6 +82,9 @@
       <Term type="expression">/a/b/c</Term> allows the key
       <Term type="expression">/a/b/c</Term> to be created, modified, and/or deleted.
     </Paragraph>
+    <Paragraph>
+      Any action not explicitly allowed by a grant is denied.
+    </Paragraph>
   </Subsection>
 
   <Subsection title="Role"
