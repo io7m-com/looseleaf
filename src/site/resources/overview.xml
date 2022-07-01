@@ -16,7 +16,7 @@
 
   <p>
     The <tt>looseleaf</tt> package implements an HTTP-accessible key/value database with ACID semantics and
-    fine-graned role-based access control.
+    fine-grained role-based access control.
   </p>
 
 </div>
