@@ -186,8 +186,8 @@ public final class LLServerSmokeTest
       (double) failed / (double) SMOKE_REQUESTS;
 
     assertTrue(
-      failurePercentage < 0.001,
-      "Failure percentage %f must be < 0.001".formatted(failurePercentage)
+      failurePercentage < 0.002,
+      "Failure percentage %f must be < 0.002".formatted(failurePercentage)
     );
   }
 
