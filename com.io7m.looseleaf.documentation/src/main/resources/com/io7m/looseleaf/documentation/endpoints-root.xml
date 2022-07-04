@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Section xmlns="urn:com.io7m.structural:8:0"
+         id="c93559c1-765f-42fe-b6b6-926973340ded"
+         title="/">
+
+  <Subsection title="Name">
+    <Paragraph>
+      <Term type="command">/</Term> - The root endpoint
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="Description">
+    <Paragraph>
+      The <Term type="command">/</Term> endpoint displays the protocols supported by the server.
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="Examples">
+    <Paragraph>
+      The following command displays the supported protocols:
+    </Paragraph>
+    <FormalItem title="Example Update">
+      <Verbatim><![CDATA[$ curl http://localhost:20000/
+[{"name":"com.io7m.looseleaf.v1","base":"/v1"}]
+]]></Verbatim>
+    </FormalItem>
+  </Subsection>
+
+</Section>

@@ -75,6 +75,8 @@ public final class LLErrorHandler extends ErrorHandler
 
     try (var out = response.getOutputStream()) {
       out.write(this.mapper.writeValueAsBytes(obj));
+      out.write('\r');
+      out.write('\n');
     }
   }
 
@@ -107,6 +109,8 @@ public final class LLErrorHandler extends ErrorHandler
 
     try (var out = response.getOutputStream()) {
       out.write(this.mapper.writeValueAsBytes(obj));
+      out.write('\r');
+      out.write('\n');
     }
   }
 }

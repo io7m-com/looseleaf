@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Section xmlns="urn:com.io7m.structural:8:0"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         id="47167513-1d7b-4437-a6db-aa2532f95ac1"
+         title="Base Endpoints">
+
+  <xi:include href="endpoints-root.xml"/>
+  <xi:include href="endpoints-health.xml"/>
+
+</Section>

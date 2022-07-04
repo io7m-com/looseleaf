@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Section xmlns="urn:com.io7m.structural:8:0"
+         id="97d87834-e92d-4638-b24a-895af1f83aae"
+         title="/health">
+
+  <Subsection title="Name">
+    <Paragraph>
+      <Term type="command">/health</Term> - The health endpoint
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="Description">
+    <Paragraph>
+      The <Term type="command">/health</Term> endpoint is intended to be used as a health check by load balancers.
+      The endpoint returns HTTP status <Term type="constant">200</Term>, and a small JSON object containing a
+      few statistics.
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="Examples">
+    <Paragraph>
+      The following command displays the health of the server:
+    </Paragraph>
+    <FormalItem title="Example Update">
+      <Verbatim><![CDATA[$ curl http://localhost:20000/health
+{"reads":18,"writes":117}
+]]></Verbatim>
+    </FormalItem>
+  </Subsection>
+
+</Section>
