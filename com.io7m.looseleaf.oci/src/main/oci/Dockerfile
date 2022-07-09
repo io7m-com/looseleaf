@@ -17,5 +17,6 @@ LABEL "org.opencontainers.image.url"="https://www.io7m.com/software/looseleaf"
 LABEL "org.opencontainers.image.version"="$looseleaf_version"
 
 VOLUME "/looseleaf/etc"
+VOLUME "/looseleaf/var"
 
 CMD ["/looseleaf/bin/looseleaf"]
