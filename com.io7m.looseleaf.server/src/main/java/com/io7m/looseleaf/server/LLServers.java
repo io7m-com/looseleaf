@@ -26,6 +26,7 @@ import com.io7m.looseleaf.server.api.LLServerFactoryType;
 import com.io7m.looseleaf.server.api.LLServerType;
 import com.io7m.looseleaf.server.internal.LLDatabaseService;
 import com.io7m.looseleaf.server.internal.LLErrorHandler;
+import com.io7m.looseleaf.server.internal.LLHealth;
 import com.io7m.looseleaf.server.internal.LLServer;
 import com.io7m.looseleaf.server.internal.LLServerClock;
 import com.io7m.looseleaf.server.internal.LLServerRequestDecoration;
@@ -175,6 +176,15 @@ public final class LLServers implements LLServerFactoryType
       servletHolders.create(LLVersions.class, LLVersions::new),
       "/"
     );
+    servlets.addServlet(
+      servletHolders.create(LLHealth.class, LLHealth::new),
+      "/health"
+    );
+
+    /*
+     * Version 1 protocol.
+     */
+
     servlets.addServlet(
       servletHolders.create(LLRUDServlet.class, LLRUDServlet::new),
       "/v1/rud"

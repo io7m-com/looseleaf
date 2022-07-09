@@ -23,6 +23,7 @@
   <xi:include href="install.xml"/>
   <xi:include href="configuration.xml"/>
   <xi:include href="usage.xml"/>
+  <xi:include href="endpoints.xml"/>
   <xi:include href="endpoints-v1.xml"/>
   <xi:include href="cmdline.xml"/>
   <xi:include href="api.xml"/>

@@ -150,6 +150,46 @@ public final class LLServerTest
   }
 
   /**
+   * Failing to authenticate results in success for the root.
+   *
+   * @throws Exception On errors
+   */
+
+  @Test
+  public void testNotAuthenticatedRoot()
+    throws Exception
+  {
+    final var request =
+      HttpRequest.newBuilder(uriOf("/"))
+        .build();
+
+    final var response =
+      this.client.send(request, ofByteArray());
+
+    assertEquals(200, response.statusCode());
+  }
+
+  /**
+   * Failing to authenticate results in success for the health endpoint.
+   *
+   * @throws Exception On errors
+   */
+
+  @Test
+  public void testNotAuthenticatedHealth()
+    throws Exception
+  {
+    final var request =
+      HttpRequest.newBuilder(uriOf("/health"))
+        .build();
+
+    final var response =
+      this.client.send(request, ofByteArray());
+
+    assertEquals(200, response.statusCode());
+  }
+
+  /**
    * Authenticating works.
    *
    * @throws Exception On errors

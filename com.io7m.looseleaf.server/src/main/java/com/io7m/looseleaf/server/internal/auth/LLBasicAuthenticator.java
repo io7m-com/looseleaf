@@ -99,6 +99,10 @@ public final class LLBasicAuthenticator implements Authenticator
     final boolean mandatory)
     throws ServerAuthException
   {
+    if (!mandatory) {
+      return Authentication.NOT_CHECKED;
+    }
+
     final var request =
       (HttpServletRequest) req;
     final var response =

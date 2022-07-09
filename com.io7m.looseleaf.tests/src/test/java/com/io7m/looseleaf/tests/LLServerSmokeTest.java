@@ -60,6 +60,7 @@ import static java.net.http.HttpRequest.BodyPublishers.ofByteArray;
 import static java.net.http.HttpResponse.BodyHandlers.ofString;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
  * An aggressive smoke test that blasts the server with many concurrent
@@ -153,6 +154,10 @@ public final class LLServerSmokeTest
   public void testSmoke()
     throws Exception
   {
+    assumeTrue(
+      System.getProperty("com.io7m.looseleaf.noExpensiveTests") == null
+    );
+
     final var requests =
       IntStream.range(0, SMOKE_REQUESTS)
         .mapToObj(this::randomRUD)
@@ -186,8 +191,8 @@ public final class LLServerSmokeTest
       (double) failed / (double) SMOKE_REQUESTS;
 
     assertTrue(
-      failurePercentage < 0.001,
-      "Failure percentage %f must be < 0.001".formatted(failurePercentage)
+      failurePercentage < 0.002,
+      "Failure percentage %f must be < 0.002".formatted(failurePercentage)
     );
   }
 
