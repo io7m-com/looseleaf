@@ -23,7 +23,6 @@
     <module>com.io7m.looseleaf.database.api</module>
     <module>com.io7m.looseleaf.database.mvstore</module>
     <module>com.io7m.looseleaf.documentation</module>
-    <module>com.io7m.looseleaf.oci</module>
     <module>com.io7m.looseleaf.protocol.v1</module>
     <module>com.io7m.looseleaf.security</module>
     <module>com.io7m.looseleaf.server.api</module>
@@ -222,16 +221,6 @@
   </dependencyManagement>
 
   <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>io.fabric8</groupId>
-          <artifactId>docker-maven-plugin</artifactId>
-          <version>0.40.1</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-
     <plugins>
       <!-- Generate a site -->
       <plugin>
