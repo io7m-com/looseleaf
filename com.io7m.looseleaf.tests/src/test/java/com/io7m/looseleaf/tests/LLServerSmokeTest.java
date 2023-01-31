@@ -60,6 +60,7 @@ import static java.net.http.HttpRequest.BodyPublishers.ofByteArray;
 import static java.net.http.HttpResponse.BodyHandlers.ofString;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
@@ -154,6 +155,20 @@ public final class LLServerSmokeTest
   public void testSmoke()
     throws Exception
   {
+    /*
+     * The test is unreliable on windows due to thread contention.
+     */
+
+    assumeFalse(
+      System.getProperty("os.name")
+        .toUpperCase()
+        .contains("WINDOWS")
+    );
+
+    /*
+     * The test is expensive.
+     */
+
     assumeTrue(
       System.getProperty("com.io7m.looseleaf.noExpensiveTests") == null
     );
