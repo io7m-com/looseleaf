@@ -32,6 +32,7 @@
   </modules>
 
   <properties>
+    <com.io7m.quarrel.version>1.1.0</com.io7m.quarrel.version>
     <com.io7m.xstructural.version>1.8.0</com.io7m.xstructural.version>
     <io7m.api.previousVersion>0.0.3-SNAPSHOT</io7m.api.previousVersion>
     <jackson.version>2.15.2</jackson.version>
@@ -82,6 +83,15 @@
         <artifactId>com.io7m.jeucreader.core</artifactId>
         <version>3.0.0</version>
       </dependency>
+
+      <!-- DB -->
+      <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2-mvstore</artifactId>
+        <version>2.1.214</version>
+      </dependency>
+
+      <!-- HTTP -->
       <dependency>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-server</artifactId>
@@ -117,16 +127,8 @@
         <artifactId>jetty-jakarta-servlet-api</artifactId>
         <version>5.0.2</version>
       </dependency>
-      <dependency>
-        <groupId>com.io7m.claypot</groupId>
-        <artifactId>com.io7m.claypot.core</artifactId>
-        <version>0.0.8</version>
-      </dependency>
-      <dependency>
-        <groupId>com.beust</groupId>
-        <artifactId>jcommander</artifactId>
-        <version>1.82</version>
-      </dependency>
+
+      <!-- JSON -->
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-annotations</artifactId>
@@ -147,20 +149,17 @@
         <artifactId>com.io7m.dixmont.core</artifactId>
         <version>0.0.2</version>
       </dependency>
+
+      <!-- CLI -->
       <dependency>
-        <groupId>com.io7m.primogenitor</groupId>
-        <artifactId>com.io7m.primogenitor.support</artifactId>
-        <version>7.7.0</version>
+        <groupId>com.io7m.quarrel</groupId>
+        <artifactId>com.io7m.quarrel.core</artifactId>
+        <version>${com.io7m.quarrel.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.io7m.jcip</groupId>
-        <artifactId>com.io7m.jcip.annotations</artifactId>
-        <version>2.0.0</version>
-      </dependency>
-      <dependency>
-        <groupId>com.h2database</groupId>
-        <artifactId>h2-mvstore</artifactId>
-        <version>2.1.214</version>
+        <groupId>com.io7m.quarrel</groupId>
+        <artifactId>com.io7m.quarrel.ext.logback</artifactId>
+        <version>${com.io7m.quarrel.version}</version>
       </dependency>
 
       <!-- Logging -->
@@ -190,6 +189,16 @@
         <groupId>org.osgi</groupId>
         <artifactId>org.osgi.annotation.versioning</artifactId>
         <version>1.1.2</version>
+      </dependency>
+      <dependency>
+        <groupId>com.io7m.primogenitor</groupId>
+        <artifactId>com.io7m.primogenitor.support</artifactId>
+        <version>7.7.0</version>
+      </dependency>
+      <dependency>
+        <groupId>com.io7m.jcip</groupId>
+        <artifactId>com.io7m.jcip.annotations</artifactId>
+        <version>2.0.0</version>
       </dependency>
 
       <!-- Test suite. -->
@@ -229,6 +238,12 @@
   <build>
     <pluginManagement>
       <plugins>
+        <plugin>
+          <groupId>com.io7m.stmp</groupId>
+          <artifactId>string-template-maven-plugin</artifactId>
+          <version>1.2.0</version>
+        </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>

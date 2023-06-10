@@ -1,5 +1,9 @@
+LLVersion(
+  appVersion,
+  appBuild) ::= <<
+
 /*
- * Copyright © 2022 Mark Raynsford <code@io7m.com> https://www.io7m.com
+ * Copyright © 2023 Mark Raynsford \<code@io7m.com\> https://www.io7m.com
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -14,9 +18,17 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-module com.io7m.looseleaf.documentation
-{
-  requires java.xml;
+package com.io7m.looseleaf.server;
 
-  requires com.io7m.looseleaf.cmdline;
+public final class LLVersion
+{
+  public static final String MAIN_VERSION = "<appVersion>";
+  public static final String MAIN_BUILD = "<appBuild>";
+
+  private LLVersion()
+  {
+
+  }
 }
+
+>>

@@ -16,43 +16,60 @@
 
 package com.io7m.looseleaf.cmdline.internal;
 
-import com.beust.jcommander.Parameter;
-import com.beust.jcommander.Parameters;
-import com.io7m.claypot.core.CLPAbstractCommand;
-import com.io7m.claypot.core.CLPCommandContextType;
 import com.io7m.looseleaf.server.LLServers;
 import com.io7m.looseleaf.server.api.LLServerConfigurations;
+import com.io7m.quarrel.core.QCommandContextType;
+import com.io7m.quarrel.core.QCommandMetadata;
+import com.io7m.quarrel.core.QCommandStatus;
+import com.io7m.quarrel.core.QCommandType;
+import com.io7m.quarrel.core.QParameterNamed1;
+import com.io7m.quarrel.core.QParameterNamedType;
+import com.io7m.quarrel.core.QStringType;
+import com.io7m.quarrel.ext.logback.QLogback;
 
 import java.nio.file.Path;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Start a server instance.
  */
 
-@Parameters(commandDescription = "Start a server.")
-public final class LLServer extends CLPAbstractCommand
+public final class LLServer implements QCommandType
 {
-  @Parameter(
-    names = "--file",
-    description = "The configuration file",
-    required = true
-  )
-  private Path file;
+  private final QCommandMetadata metadata;
+
+  private static final QParameterNamed1<Path> FILE =
+    new QParameterNamed1<>(
+      "--file",
+      List.of(),
+      new QStringType.QConstant("The configuration file."),
+      Optional.empty(),
+      Path.class
+    );
 
   /**
    * Construct a command.
-   *
-   * @param inContext The command context
    */
 
-  public LLServer(
-    final CLPCommandContextType inContext)
+  public LLServer()
   {
-    super(inContext);
+    this.metadata = new QCommandMetadata(
+      "server",
+      new QStringType.QConstant("Start a server."),
+      Optional.empty()
+    );
   }
 
   @Override
-  protected Status executeActual()
+  public List<QParameterNamedType<?>> onListNamedParameters()
+  {
+    return QLogback.plusParameters(List.of(FILE));
+  }
+
+  @Override
+  public QCommandStatus onExecute(
+    final QCommandContextType context)
     throws Exception
   {
     final var servers =
@@ -60,7 +77,8 @@ public final class LLServer extends CLPAbstractCommand
     final var configurations =
       new LLServerConfigurations();
 
-    try (var server = servers.open(configurations.parse(this.file))) {
+    try (var ignored = servers.open(
+      configurations.parse(context.parameterValue(FILE)))) {
       while (true) {
         Thread.sleep(1_000L);
       }
@@ -68,8 +86,8 @@ public final class LLServer extends CLPAbstractCommand
   }
 
   @Override
-  public String name()
+  public QCommandMetadata metadata()
   {
-    return "server";
+    return this.metadata;
   }
 }
