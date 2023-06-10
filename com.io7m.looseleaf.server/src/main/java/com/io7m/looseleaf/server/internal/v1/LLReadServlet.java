@@ -21,13 +21,19 @@ import com.io7m.looseleaf.protocol.v1.LLv1Error;
 import com.io7m.looseleaf.protocol.v1.LLv1Errors;
 import com.io7m.looseleaf.security.LLKeyName;
 import com.io7m.looseleaf.security.LLUser;
+import com.io7m.looseleaf.server.api.LLFaultInjection;
+import com.io7m.looseleaf.server.api.LLServerConfiguration;
+import com.io7m.looseleaf.server.internal.LLConfigurationService;
 import com.io7m.looseleaf.server.internal.LLDatabaseService;
 import com.io7m.looseleaf.server.internal.LLHTTPErrorStatusException;
+import com.io7m.looseleaf.server.internal.LLMetricsService;
+import com.io7m.looseleaf.server.internal.LLServerClock;
 import com.io7m.looseleaf.server.internal.LLStrings;
 import com.io7m.looseleaf.server.internal.LLv1MessagesService;
 import com.io7m.looseleaf.server.internal.auth.LLUserPrincipal;
-import com.io7m.looseleaf.server.internal.mx.LLMetricsService;
-import com.io7m.looseleaf.server.internal.services.LLServices;
+import com.io7m.looseleaf.server.internal.telemetry.LLTelemetryServiceType;
+import com.io7m.repetoir.core.RPServiceDirectoryType;
+import io.opentelemetry.api.trace.Span;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -36,9 +42,12 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.List;
+import java.util.Optional;
 
 import static com.io7m.looseleaf.security.LLAction.READ;
+import static com.io7m.looseleaf.server.internal.v1.LLWithTelemetry.withTelemetry;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
@@ -54,6 +63,9 @@ public final class LLReadServlet extends HttpServlet
   private final LLDatabaseType database;
   private final LLStrings strings;
   private final LLMetricsService metrics;
+  private final LLTelemetryServiceType telemetry;
+  private final LLServerClock clock;
+  private final LLServerConfiguration configuration;
 
   /**
    * The v1 "get" servlet.
@@ -62,8 +74,10 @@ public final class LLReadServlet extends HttpServlet
    */
 
   public LLReadServlet(
-    final LLServices inServices)
+    final RPServiceDirectoryType inServices)
   {
+    this.clock =
+      inServices.requireService(LLServerClock.class);
     this.messages =
       inServices.requireService(LLv1MessagesService.class);
     this.database =
@@ -72,6 +86,11 @@ public final class LLReadServlet extends HttpServlet
       inServices.requireService(LLStrings.class);
     this.metrics =
       inServices.requireService(LLMetricsService.class);
+    this.telemetry =
+      inServices.requireService(LLTelemetryServiceType.class);
+    this.configuration =
+      inServices.requireService(LLConfigurationService.class)
+        .configuration();
   }
 
   @Override
@@ -80,21 +99,29 @@ public final class LLReadServlet extends HttpServlet
     final HttpServletResponse response)
     throws IOException
   {
-    final var userPrincipal =
-      (LLUserPrincipal) request.getUserPrincipal();
-    final var user =
-      userPrincipal.user();
+    withTelemetry(
+      this.telemetry,
+      "Read",
+      request,
+      () -> {
+        final var userPrincipal =
+          (LLUserPrincipal) request.getUserPrincipal();
+        final var user =
+          userPrincipal.user();
 
-    try {
-      MDC.put("user", user.name().name());
-      MDC.put(
-        "client",
-        request.getRemoteAddr() + ":" + request.getRemotePort());
-      this.doProcessMessage(request, response, user);
-    } finally {
-      MDC.remove("user");
-      MDC.remove("client");
-    }
+        try {
+          MDC.put("user", user.name().name());
+          MDC.put(
+            "client",
+            "%s:%d".formatted(request.getRemoteAddr(), request.getRemotePort())
+          );
+          this.doProcessMessage(request, response, user);
+        } finally {
+          MDC.remove("user");
+          MDC.remove("client");
+        }
+      }
+    );
   }
 
   private void doProcessMessage(
@@ -120,7 +147,25 @@ public final class LLReadServlet extends HttpServlet
         );
       }
 
-      final var value = this.database.get(keyName);
+      final var timeThen =
+        this.clock.nowPrecise();
+
+      final Optional<String> value;
+      try {
+        this.configuration.faultInjection()
+          .orElseGet(LLFaultInjection::disabled)
+          .databaseFaultInject();
+
+        value = this.database.get(keyName);
+      } catch (final Exception e) {
+        Span.current().recordException(e);
+        this.metrics.logError(user, e.getMessage());
+        throw e;
+      }
+
+      final var timeNow =
+        this.clock.nowPrecise();
+
       if (value.isEmpty()) {
         throw new LLHTTPErrorStatusException(
           404,
@@ -140,7 +185,9 @@ public final class LLReadServlet extends HttpServlet
         output.flush();
       }
 
-      this.updateMetrics();
+      this.metrics.logRead(user, keyName.value());
+      this.metrics.addDBTime(Duration.between(timeThen, timeNow));
+
       LOG.info("get {}", keyName.value());
     } catch (final LLHTTPErrorStatusException e) {
       response.setContentType("application/json");
@@ -151,11 +198,5 @@ public final class LLReadServlet extends HttpServlet
         );
       }
     }
-  }
-
-  private void updateMetrics()
-  {
-    final var bean = this.metrics.bean();
-    bean.addReads(1L);
   }
 }

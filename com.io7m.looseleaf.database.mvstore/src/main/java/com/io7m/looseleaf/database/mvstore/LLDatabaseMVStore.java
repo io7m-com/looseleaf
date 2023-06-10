@@ -82,6 +82,33 @@ public final class LLDatabaseMVStore
   }
 
   @Override
+  public long dataSizeApproximate()
+  {
+    return this.store.getFileStore()
+      .size();
+  }
+
+  @Override
+  public long keyCountApproximate()
+  {
+    final var tx =
+      this.txStore.begin(
+        ROLLBACK_NO_LISTENER,
+        10,
+        0,
+        IsolationLevel.READ_COMMITTED
+      );
+
+    try {
+      final var m = tx.openMap("values", INSTANCE, INSTANCE);
+      return m.sizeAsLong();
+    } catch (final Exception e) {
+      tx.rollback();
+      throw e;
+    }
+  }
+
+  @Override
   public boolean isClosed()
   {
     return this.closed.get();
@@ -90,7 +117,6 @@ public final class LLDatabaseMVStore
   @Override
   public Map<LLKeyName, String> readUpdateDelete(
     final LLDatabaseRUD rud)
-    throws IOException
   {
     Objects.requireNonNull(rud, "rud");
 

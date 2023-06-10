@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022 Mark Raynsford <code@io7m.com> https://www.io7m.com
+ * Copyright © 2023 Mark Raynsford <code@io7m.com> https://www.io7m.com
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -15,10 +15,12 @@
  */
 
 /**
- * Minimalist transactional HTTP key/value store (Server [internals for MX])
+ * Minimalist transactional HTTP key/value store (Grafana)
  */
 
+@Export
 @Version("1.0.0")
-package com.io7m.looseleaf.server.internal.mx;
+package com.io7m.looseleaf.grafana;
 
+import org.osgi.annotation.bundle.Export;
 import org.osgi.annotation.versioning.Version;

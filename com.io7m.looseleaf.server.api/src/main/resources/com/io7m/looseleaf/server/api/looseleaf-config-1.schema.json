@@ -8,6 +8,63 @@
       "const": "https://www.io7m.com/software/looseleaf/looseleaf-config-1.json"
     },
 
+    "Protocol": {
+      "type": "string",
+      "enum": [
+        "HTTP",
+        "GRPC"
+      ]
+    },
+
+    "TelemetryEndpoint": {
+      "type": "object",
+      "properties": {
+        "endpoint": {
+          "type": "string"
+        },
+        "protocol": {
+          "$ref": "#/$defs/TelemetryEndpoint"
+        }
+      },
+      "required": [
+        "endpoint",
+        "protocol"
+      ]
+    },
+
+    "Telemetry": {
+      "type": "object",
+      "properties": {
+        "logicalServiceName": {
+          "type": "string"
+        },
+        "metrics": {
+          "$ref": "#/$defs/TelemetryEndpoint"
+        },
+        "logs": {
+          "$ref": "#/$defs/TelemetryEndpoint"
+        },
+        "traces": {
+          "$ref": "#/$defs/TelemetryEndpoint"
+        }
+      },
+      "required": [
+        "logicalServiceName"
+      ]
+    },
+
+    "FaultInjection": {
+      "type": "object",
+      "properties": {
+        "databaseCrashProbability": {
+          "type": "double"
+        }
+      },
+      "required": [
+        "databaseCrashProbability"
+      ]
+    },
+
     "BindAddress": {
       "type": "object",
       "properties": {
@@ -143,6 +200,12 @@
           "items": {
             "$ref": "#/$defs/User"
           }
+        },
+        "telemetry": {
+          "$ref": "#/$defs/Telemetry"
+        },
+        "faultInjection": {
+          "$ref": "#/$defs/FaultInjection"
         }
       },
       "additionalProperties": false,
@@ -150,6 +213,7 @@
         "%schema",
         "addresses",
         "databaseFile",
+        "faultInjection",
         "roles",
         "users"
       ]

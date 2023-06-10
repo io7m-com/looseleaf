@@ -20,12 +20,15 @@ package com.io7m.looseleaf.server.api;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.module.SimpleDeserializers;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.io7m.dixmont.core.DmJsonRestrictedDeserializers;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Optional;
 
 import static com.fasterxml.jackson.databind.DeserializationFeature.USE_BIG_INTEGER_FOR_INTS;
 import static com.fasterxml.jackson.databind.MapperFeature.SORT_PROPERTIES_ALPHABETICALLY;
@@ -55,9 +58,22 @@ public final class LLServerConfigurations
         .allowClass(LLServerHashedPassword.class)
         .allowClass(LLServerRole.class)
         .allowClass(LLServerUser.class)
+        .allowClass(LLTelemetryConfiguration.LLLogs.class)
+        .allowClass(LLTelemetryConfiguration.LLMetrics.class)
+        .allowClass(LLTelemetryConfiguration.LLOTLPProtocol.class)
+        .allowClass(LLTelemetryConfiguration.LLTraces.class)
+        .allowClass(LLTelemetryConfiguration.class)
+        .allowClass(LLFaultInjection.class)
+        .allowClass(Optional.class)
         .allowClass(Path.class)
         .allowClass(String.class)
+        .allowClass(URI.class)
         .allowClass(int.class)
+        .allowClass(double.class)
+        .allowClassName(
+          "java.util.Optional<com.io7m.looseleaf.server.api.LLFaultInjection>")
+        .allowClassName(
+          "java.util.Optional<com.io7m.looseleaf.server.api.LLTelemetryConfiguration>")
         .allowClassName(
           "java.util.List<java.lang.String>")
         .allowClassName(
@@ -80,6 +96,7 @@ public final class LLServerConfigurations
     final var simpleModule = new SimpleModule();
     simpleModule.setDeserializers(this.serializers);
     this.mapper.registerModule(simpleModule);
+    this.mapper.registerModule(new Jdk8Module());
   }
 
   /**

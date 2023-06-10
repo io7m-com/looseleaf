@@ -41,6 +41,7 @@ import java.nio.file.Path;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.io7m.looseleaf.server.api.LLServerAction.READ;
 import static com.io7m.looseleaf.server.api.LLServerAction.WRITE;
@@ -114,7 +115,9 @@ public final class LLServerTest
             ),
             List.of("xy-reader", "xy-writer")
           )
-        )
+        ),
+        Optional.empty(),
+        Optional.empty()
       )
     );
 

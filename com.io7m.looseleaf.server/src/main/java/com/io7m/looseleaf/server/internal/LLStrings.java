@@ -18,7 +18,7 @@
 package com.io7m.looseleaf.server.internal;
 
 import com.io7m.jxtrand.vanilla.JXTAbstractStrings;
-import com.io7m.looseleaf.server.internal.services.LLServiceType;
+import com.io7m.repetoir.core.RPServiceType;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -29,7 +29,7 @@ import java.util.Locale;
 
 public final class LLStrings
   extends JXTAbstractStrings
-  implements LLServiceType
+  implements RPServiceType
 {
   /**
    * The server string resource service.
@@ -55,5 +55,14 @@ public final class LLStrings
   public String description()
   {
     return "String resource service.";
+  }
+
+  @Override
+  public String toString()
+  {
+    return "[%s 0x%s]".formatted(
+      this.getClass().getSimpleName(),
+      Long.toUnsignedString(this.hashCode(), 16)
+    );
   }
 }

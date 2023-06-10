@@ -25,6 +25,8 @@ module com.io7m.looseleaf.server.api
 
   requires com.io7m.dixmont.core;
   requires com.io7m.jdeferthrow.core;
+
+  requires transitive com.fasterxml.jackson.datatype.jdk8;
   requires transitive com.fasterxml.jackson.annotation;
   requires transitive com.fasterxml.jackson.databind;
   requires transitive com.io7m.looseleaf.security;

@@ -30,6 +30,18 @@ import java.util.Optional;
 public interface LLDatabaseType extends Closeable
 {
   /**
+   * @return The approximate size of the database in bytes
+   */
+
+  long dataSizeApproximate();
+
+  /**
+   * @return The approximate number of keys in the database
+   */
+
+  long keyCountApproximate();
+
+  /**
    * @return {@code true} if the store has been closed
    */
 

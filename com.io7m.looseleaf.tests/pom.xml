@@ -43,6 +43,11 @@
       <artifactId>com.io7m.looseleaf.cmdline</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>com.io7m.looseleaf.grafana</artifactId>
+      <version>${project.version}</version>
+    </dependency>
 
     <dependency>
       <groupId>com.io7m.jaffirm</groupId>

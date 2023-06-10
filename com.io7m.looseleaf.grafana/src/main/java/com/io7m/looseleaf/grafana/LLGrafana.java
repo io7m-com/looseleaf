@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022 Mark Raynsford <code@io7m.com> https://www.io7m.com
+ * Copyright © 2023 Mark Raynsford <code@io7m.com> https://www.io7m.com
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -14,11 +14,29 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+package com.io7m.looseleaf.grafana;
+
+import java.io.InputStream;
+
 /**
- * Minimalist transactional HTTP key/value store (Server [internals services])
+ * Grafana data.
  */
 
-@Version("1.0.0")
-package com.io7m.looseleaf.server.internal.services;
+public final class LLGrafana
+{
+  private LLGrafana()
+  {
 
-import org.osgi.annotation.versioning.Version;
+  }
+
+  /**
+   * @return The dashboard JSON text
+   */
+
+  public static InputStream dashboard()
+  {
+    return LLGrafana.class.getResourceAsStream(
+      "/com/io7m/looseleaf/grafana/dashboard.json"
+    );
+  }
+}

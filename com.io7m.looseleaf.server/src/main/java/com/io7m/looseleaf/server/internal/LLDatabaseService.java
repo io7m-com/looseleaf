@@ -18,7 +18,7 @@
 package com.io7m.looseleaf.server.internal;
 
 import com.io7m.looseleaf.database.api.LLDatabaseType;
-import com.io7m.looseleaf.server.internal.services.LLServiceType;
+import com.io7m.repetoir.core.RPServiceType;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -28,7 +28,7 @@ import java.util.Objects;
  * A service that exposes a database.
  */
 
-public final class LLDatabaseService implements LLServiceType, Closeable
+public final class LLDatabaseService implements RPServiceType, Closeable
 {
   private final LLDatabaseType database;
 
@@ -57,6 +57,15 @@ public final class LLDatabaseService implements LLServiceType, Closeable
   public LLDatabaseType database()
   {
     return this.database;
+  }
+
+  @Override
+  public String toString()
+  {
+    return "[%s 0x%s]".formatted(
+      this.getClass().getSimpleName(),
+      Long.toUnsignedString(this.hashCode(), 16)
+    );
   }
 
   @Override
