@@ -44,5 +44,25 @@
         "write-xy"
       ]
     }
-  ]
+  ],
+
+  "telemetry": {
+    "logicalServiceName": "looseleaf",
+    "metrics": {
+      "endpoint": "http://metrics.example.com:4317",
+      "protocol": "GRPC"
+    },
+    "logs": {
+      "endpoint": "http://metrics.example.com:4317",
+      "protocol": "GRPC"
+    },
+    "traces": {
+      "endpoint": "http://traces.example.com:4317",
+      "protocol": "GRPC"
+    }
+  },
+
+  "faultInjection": {
+    "databaseCrashProbability": 0.005
+  }
 }

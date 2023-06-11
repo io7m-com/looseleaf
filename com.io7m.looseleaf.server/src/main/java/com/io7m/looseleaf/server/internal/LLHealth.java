@@ -17,8 +17,7 @@
 package com.io7m.looseleaf.server.internal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.io7m.looseleaf.server.internal.mx.LLMetricsService;
-import com.io7m.looseleaf.server.internal.services.LLServices;
+import com.io7m.repetoir.core.RPServiceDirectoryType;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -41,7 +40,7 @@ public final class LLHealth extends HttpServlet
    */
 
   public LLHealth(
-    final LLServices inServices)
+    final RPServiceDirectoryType inServices)
   {
     this.mapper =
       new ObjectMapper();
@@ -59,8 +58,9 @@ public final class LLHealth extends HttpServlet
     response.setStatus(200);
 
     final var obj = this.mapper.createObjectNode();
-    obj.put("reads", this.metrics.bean().getReads());
-    obj.put("writes", this.metrics.bean().getWrites());
+    obj.put("reads", this.metrics.reads());
+    obj.put("writes", this.metrics.writes());
+    obj.put("deletes", this.metrics.deletes());
 
     final var data = this.mapper.writeValueAsBytes(obj);
     response.setContentLength(data.length + 2);

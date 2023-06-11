@@ -183,6 +183,64 @@
     </FormalItem>
   </Subsection>
 
+  <Subsection title="Telemetry">
+    <Paragraph>
+      The <Term type="expression">telemetry</Term> property is an optional object-typed property that
+      configures <Link target="da1bf941-8236-4bed-b4de-ce77a5e0e197">telemetry</Link>. It expects three
+      optional properties <Term type="expression">metrics</Term>, <Term type="expression">traces</Term>,
+      and <Term type="expression">logs</Term>, that each specify an
+      <Term type="expression">endpoint</Term> and <Term type="expression">protocol</Term> for telemetry.
+      If any of the three properties are absent, data will not be sent for that class of telemetry. The
+      <Term type="expression">telemetry</Term> property also requires a property named
+      <Term type="expression">logicalServiceName</Term> property which, unsurprisingly, configures
+      the logical service name to be included in telemetry; this is used to distinguish between multiple
+      running instances of the <Term type="package">looseleaf</Term> server in telemetry. The protocol
+      name may either be <Term type="expression">HTTP</Term> or <Term type="expression">GRPC</Term>.
+    </Paragraph>
+    <FormalItem title="Telemetry Example">
+      <Verbatim><![CDATA[
+"telemetry": {
+  "logicalServiceName": "looseleaf",
+  "metrics": {
+    "endpoint": "http://metrics.example.com:4317",
+    "protocol": "GRPC"
+  },
+  "logs": {
+    "endpoint": "http://metrics.example.com:4317",
+    "protocol": "GRPC"
+  },
+  "traces": {
+    "endpoint": "http://traces.example.com:4317",
+    "protocol": "GRPC"
+  }
+}
+]]></Verbatim>
+    </FormalItem>
+  </Subsection>
+
+  <Subsection title="Fault Injection">
+    <Paragraph>
+      In order to test that your <Link target="da1bf941-8236-4bed-b4de-ce77a5e0e197">monitoring</Link> system
+      is working correctly, it can be desirable to be able to inject faults into the server in order to verify
+      that the monitoring system picks them up. The <Term type="expression">faultInjection</Term> property is
+      an optional object-typed property that specifies the probability that various types of faults will be
+      injected. If the property is not present, no fault injection will occur. All probabilities are in the
+      range <Term type="expression">[0, 1]</Term> where <Term type="expression">1</Term> indicates that faults
+      will occur on every operation unconditionally.
+    </Paragraph>
+    <Paragraph>
+      Currently, the only supported property is <Term type="expression">databaseCrashProbability</Term>, which
+      specifies the probability that database accesses will raise exceptions.
+    </Paragraph>
+    <FormalItem title="Telemetry Example">
+      <Verbatim><![CDATA[
+"faultInjection": {
+  "databaseCrashProbability": 0.005
+}
+]]></Verbatim>
+    </FormalItem>
+  </Subsection>
+
   <Subsection title="Example">
     <Paragraph>
       A full configuration file example is as follows:

@@ -18,13 +18,13 @@
 package com.io7m.looseleaf.server.internal;
 
 import com.io7m.looseleaf.protocol.v1.LLv1Messages;
-import com.io7m.looseleaf.server.internal.services.LLServiceType;
+import com.io7m.repetoir.core.RPServiceType;
 
 /**
  * A message service for v1 protocol messages.
  */
 
-public final class LLv1MessagesService implements LLServiceType
+public final class LLv1MessagesService implements RPServiceType
 {
   private final LLv1Messages messages;
 
@@ -50,5 +50,14 @@ public final class LLv1MessagesService implements LLServiceType
   public String description()
   {
     return "v1 Messages service.";
+  }
+
+  @Override
+  public String toString()
+  {
+    return "[%s 0x%s]".formatted(
+      this.getClass().getSimpleName(),
+      Long.toUnsignedString(this.hashCode(), 16)
+    );
   }
 }

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Section xmlns="urn:com.io7m.structural:8:0"
+         id="da1bf941-8236-4bed-b4de-ce77a5e0e197"
+         title="Monitoring">
+
+  <Subsection title="Overview">
+    <Paragraph>
+      The <Term type="package">looseleaf</Term> package is extensively instrumented with
+      <LinkExternal target="https://opentelemetry.io">OpenTelemetry</LinkExternal>
+      in order to allow for the database to be continually monitored. The package publishes
+      <Link target="52a79cba-d824-41e2-b9b2-07f3edf6c8b4">metrics</Link>,
+      <Link target="018f028c-d9cd-4718-b9cc-b739743cfeb5">logs</Link>,
+      and
+      <Link target="52e180ac-463b-45fd-a3e8-d3da93674094">traces</Link>, all of which
+      can be independently enabled or disabled. Most installations will only want to
+      enable metrics or logs in production; traces are more useful when trying to diagnose performance
+      problems, or for doing actual development on the <Term type="package">looseleaf</Term> package.
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="Metrics" id="52a79cba-d824-41e2-b9b2-07f3edf6c8b4">
+    <Subsection title="Names">
+      <Paragraph>
+        The package publishes the following metrics that can be used for monitoring:
+      </Paragraph>
+      <FormalItem title="Metrics">
+        <Table type="genericTable">
+          <Columns>
+            <Column>Name</Column>
+            <Column>Description</Column>
+          </Columns>
+          <Row>
+            <Cell>
+              <Term type="expression">looseleaf_db_reads</Term>
+            </Cell>
+            <Cell>
+              A counter that is incremented every time a key is successfully read from the database.
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <Term type="expression">looseleaf_db_writes</Term>
+            </Cell>
+            <Cell>
+              A counter that is incremented every time a key is successfully written in the database.
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <Term type="expression">looseleaf_db_errors</Term>
+            </Cell>
+            <Cell>
+              A counter that is incremented every time an error occurs when trying to read or write the
+              database. This can occur on database transaction conflicts.
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <Term type="expression">looseleaf_auth_errors</Term>
+            </Cell>
+            <Cell>
+              A counter that is incremented every time a user fails to authenticate properly.
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <Term type="expression">looseleaf_db_deletes</Term>
+            </Cell>
+            <Cell>
+              A counter that is incremented every time a key is successfully deleted from the database.
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <Term type="expression">looseleaf_db_time</Term>
+            </Cell>
+            <Cell>
+              A gauge that is periodically updated with the time the most recent database access took in nanoseconds.
+              This can give a general view of how well the database is performing.
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <Term type="expression">looseleaf_db_keys</Term>
+            </Cell>
+            <Cell>
+              A gauge that is periodically updated with the approximate number of keys present in the
+              database.
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <Term type="expression">looseleaf_db_size</Term>
+            </Cell>
+            <Cell>
+              A gauge that is periodically updated with the approximate size of the database
+              in bytes.
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <Term type="expression">looseleaf_http_request_time</Term>
+            </Cell>
+            <Cell>
+              A gauge that is periodically updated with the duration of the most recently
+              processed HTTP request. This is an important metric for showing the overall
+              latency of the service.
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <Term type="expression">looseleaf_http_error_400</Term>
+            </Cell>
+            <Cell>
+              A counter that is incremented every time an HTTP request results in an
+              HTTP response with a <Term type="expression">4xx</Term> status code.
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <Term type="expression">looseleaf_http_error_500</Term>
+            </Cell>
+            <Cell>
+              A counter that is incremented every time an HTTP request results in an
+              HTTP response with a <Term type="expression">5xx</Term> status code.
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <Term type="expression">looseleaf_http_request</Term>
+            </Cell>
+            <Cell>
+              A counter that is incremented every time an HTTP request is made. This
+              is an important metric for showing the overall traffic level to the service.
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <Term type="expression">looseleaf_up</Term>
+            </Cell>
+            <Cell>
+              A guage that provides a fixed <Term type="constant">1</Term> value
+              whenever the service is up.
+            </Cell>
+          </Row>
+        </Table>
+      </FormalItem>
+      <Paragraph>
+        The package <Term type="term">may</Term> produce other metrics, however these are undocumented and
+        should not be relied upon.
+      </Paragraph>
+    </Subsection>
+  </Subsection>
+
+  <Subsection title="Logs" id="018f028c-d9cd-4718-b9cc-b739743cfeb5">
+    <Paragraph>
+      The <Term type="package">looseleaf</Term> package is conservative in the amount of logging output
+      it produces by default. The package is written to publish only a specific set of log messages to
+      telemetry logs in order to increase the signal-to-noise ratio. There are very few kinds of errors
+      that can even occur; the database might fail on reading or writing, and users might fail to authenticate
+      properly. The <Term type="package">looseleaf</Term> package logs errors at
+      <Term type="constant">ERROR</Term> severity with at least the following attributes:
+    </Paragraph>
+    <FormalItem title="Message Attributes">
+      <Table type="genericTable">
+        <Columns>
+          <Column>Name</Column>
+          <Column>Description</Column>
+        </Columns>
+        <Row>
+          <Cell><Term type="expression">looseleaf.user</Term></Cell>
+          <Cell>The user that triggered the error.</Cell>
+        </Row>
+        <Row>
+          <Cell><Term type="expression">looseleaf.key</Term></Cell>
+          <Cell>The database key associated with the error.</Cell>
+        </Row>
+        <Row>
+          <Cell><Term type="expression">looseleaf.operation</Term></Cell>
+          <Cell>The operation being performed, such as "read", "update", etc.</Cell>
+        </Row>
+        <Row>
+          <Cell><Term type="expression">looseleaf.remoteAddress</Term></Cell>
+          <Cell>The address of the client that triggered the error.</Cell>
+        </Row>
+      </Table>
+    </FormalItem>
+  </Subsection>
+
+  <Subsection title="Traces" id="52e180ac-463b-45fd-a3e8-d3da93674094">
+    <Paragraph>
+      The <Term type="package">looseleaf</Term> package publishes traces for all internal operations. No
+      specific documentation is provided on the structures of the traces as they are effectively tied to
+      the internal structure of the code and are subject to change.
+    </Paragraph>
+    <FormalItem title="Trace Display">
+      <Image source="traces.png" width="640" height="323">
+        Telemetry displayed in Grafana.
+      </Image>
+    </FormalItem>
+  </Subsection>
+
+  <Subsection title="Grafana Dashboard" id="4e53dd06-1994-4036-af10-b68c677518b6">
+    <Paragraph>
+      The <Term type="package">looseleaf</Term> package provides a basic
+      <LinkExternal target="https://grafana.com">Grafana</LinkExternal> dashboard. The dashboard
+      can be imported from
+      <LinkExternal
+        target="https://raw.githubusercontent.com/io7m/looseleaf/develop/com.io7m.looseleaf.grafana/src/main/resources/com/io7m/looseleaf/grafana/dashboard.json">
+        https://raw.githubusercontent.com/io7m/looseleaf/develop/com.io7m.looseleaf.grafana/src/main/resources/com/io7m/looseleaf/grafana/dashboard.json
+      </LinkExternal>.
+    </Paragraph>
+    <FormalItem title="Dashboard">
+      <Image source="dashboard.png" width="640" height="324">Dashboard</Image>
+    </FormalItem>
+  </Subsection>
+
+</Section>

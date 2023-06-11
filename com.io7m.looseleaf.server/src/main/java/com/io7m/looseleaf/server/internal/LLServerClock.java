@@ -17,7 +17,7 @@
 
 package com.io7m.looseleaf.server.internal;
 
-import com.io7m.looseleaf.server.internal.services.LLServiceType;
+import com.io7m.repetoir.core.RPServiceType;
 
 import java.time.Clock;
 import java.time.OffsetDateTime;
@@ -27,7 +27,7 @@ import java.util.Objects;
  * A service that exposes a clock.
  */
 
-public final class LLServerClock implements LLServiceType
+public final class LLServerClock implements RPServiceType
 {
   private final Clock clock;
 
@@ -65,5 +65,14 @@ public final class LLServerClock implements LLServiceType
   public OffsetDateTime nowPrecise()
   {
     return OffsetDateTime.now(this.clock);
+  }
+
+  @Override
+  public String toString()
+  {
+    return "[%s 0x%s]".formatted(
+      this.getClass().getSimpleName(),
+      Long.toUnsignedString(this.hashCode(), 16)
+    );
   }
 }

@@ -27,13 +27,19 @@ import com.io7m.looseleaf.protocol.v1.LLv1RUD;
 import com.io7m.looseleaf.protocol.v1.LLv1Result;
 import com.io7m.looseleaf.security.LLKeyName;
 import com.io7m.looseleaf.security.LLUser;
+import com.io7m.looseleaf.server.api.LLFaultInjection;
+import com.io7m.looseleaf.server.api.LLServerConfiguration;
+import com.io7m.looseleaf.server.internal.LLConfigurationService;
 import com.io7m.looseleaf.server.internal.LLDatabaseService;
 import com.io7m.looseleaf.server.internal.LLHTTPErrorStatusException;
+import com.io7m.looseleaf.server.internal.LLMetricsService;
+import com.io7m.looseleaf.server.internal.LLServerClock;
 import com.io7m.looseleaf.server.internal.LLStrings;
 import com.io7m.looseleaf.server.internal.LLv1MessagesService;
 import com.io7m.looseleaf.server.internal.auth.LLUserPrincipal;
-import com.io7m.looseleaf.server.internal.mx.LLMetricsService;
-import com.io7m.looseleaf.server.internal.services.LLServices;
+import com.io7m.looseleaf.server.internal.telemetry.LLTelemetryServiceType;
+import com.io7m.repetoir.core.RPServiceDirectoryType;
+import io.opentelemetry.api.trace.Span;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -42,6 +48,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -51,6 +58,7 @@ import java.util.stream.Collectors;
 
 import static com.io7m.looseleaf.security.LLAction.READ;
 import static com.io7m.looseleaf.security.LLAction.WRITE;
+import static com.io7m.looseleaf.server.internal.v1.LLWithTelemetry.withTelemetry;
 
 /**
  * The v1 "RUD" servlet.
@@ -65,6 +73,9 @@ public final class LLRUDServlet extends HttpServlet
   private final LLDatabaseType database;
   private final LLStrings strings;
   private final LLMetricsService metrics;
+  private final LLTelemetryServiceType telemetry;
+  private final LLServerClock clock;
+  private final LLServerConfiguration configuration;
 
   /**
    * The v1 "RUD" servlet.
@@ -73,8 +84,10 @@ public final class LLRUDServlet extends HttpServlet
    */
 
   public LLRUDServlet(
-    final LLServices inServices)
+    final RPServiceDirectoryType inServices)
   {
+    this.clock =
+      inServices.requireService(LLServerClock.class);
     this.messages =
       inServices.requireService(LLv1MessagesService.class);
     this.database =
@@ -83,6 +96,11 @@ public final class LLRUDServlet extends HttpServlet
       inServices.requireService(LLStrings.class);
     this.metrics =
       inServices.requireService(LLMetricsService.class);
+    this.telemetry =
+      inServices.requireService(LLTelemetryServiceType.class);
+    this.configuration =
+      inServices.requireService(LLConfigurationService.class)
+        .configuration();
   }
 
   private static void sendV1Errors(
@@ -111,21 +129,29 @@ public final class LLRUDServlet extends HttpServlet
     final HttpServletResponse response)
     throws IOException
   {
-    final var userPrincipal =
-      (LLUserPrincipal) request.getUserPrincipal();
-    final var user =
-      userPrincipal.user();
+    withTelemetry(
+      this.telemetry,
+      "RUD",
+      request,
+      () -> {
+        final var userPrincipal =
+          (LLUserPrincipal) request.getUserPrincipal();
+        final var user =
+          userPrincipal.user();
 
-    try {
-      MDC.put("user", user.name().name());
-      MDC.put(
-        "client",
-        request.getRemoteAddr() + ":" + request.getRemotePort());
-      this.doProcessMessage(request, response, user);
-    } finally {
-      MDC.remove("user");
-      MDC.remove("client");
-    }
+        try {
+          MDC.put("user", user.name().name());
+          MDC.put(
+            "client",
+            "%s:%d".formatted(request.getRemoteAddr(), request.getRemotePort())
+          );
+          this.doProcessMessage(request, response, user);
+        } finally {
+          MDC.remove("user");
+          MDC.remove("client");
+        }
+      }
+    );
   }
 
   private void doProcessMessage(
@@ -152,20 +178,39 @@ public final class LLRUDServlet extends HttpServlet
         return;
       }
 
-      final var dbResult =
-        this.database.readUpdateDelete(rud);
+      final var timeThen =
+        this.clock.nowPrecise();
+
+      final Map<LLKeyName, String> dbResult;
+      try {
+        this.configuration.faultInjection()
+          .orElseGet(LLFaultInjection::disabled)
+          .databaseFaultInject();
+
+        dbResult = this.database.readUpdateDelete(rud);
+      } catch (final Exception e) {
+        Span.current().recordException(e);
+        this.metrics.logError(user, e.getMessage());
+        throw e;
+      }
+
+      final var timeNow =
+        this.clock.nowPrecise();
 
       for (final var read : rud.read()) {
         LOG.info("read {}", read.value());
+        this.metrics.logRead(user, read.value());
       }
       for (final var update : rud.update().keySet()) {
         LOG.info("update {}", update.value());
+        this.metrics.logUpdate(user, update.value());
       }
       for (final var delete : rud.delete()) {
         LOG.info("delete {}", delete.value());
+        this.metrics.logDelete(user, delete.value());
       }
 
-      this.updateMetrics(rud);
+      this.metrics.addDBTime(Duration.between(timeThen, timeNow));
 
       final var result =
         new LLv1Result(
@@ -192,15 +237,6 @@ public final class LLRUDServlet extends HttpServlet
       sendV1Errors(
         new LLv1Errors(errors), response, e.statusCode(), v1Messages);
     }
-  }
-
-  private void updateMetrics(
-    final LLDatabaseRUD rud)
-  {
-    final var bean = this.metrics.bean();
-    bean.addReads(rud.read().size());
-    bean.addWrites(rud.update().size());
-    bean.addDeletes(rud.delete().size());
   }
 
   private LLDatabaseRUD checkKeysPermitted(
@@ -290,7 +326,7 @@ public final class LLRUDServlet extends HttpServlet
       final var v1Messages = this.messages.messages();
       try (var stream = request.getInputStream()) {
         final LLv1MessageType message = v1Messages.deserialize(stream);
-        if (message instanceof LLv1RUD rud) {
+        if (message instanceof final LLv1RUD rud) {
           return rud;
         }
       }

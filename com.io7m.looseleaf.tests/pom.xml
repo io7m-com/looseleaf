@@ -9,7 +9,7 @@
   <parent>
     <artifactId>com.io7m.looseleaf</artifactId>
     <groupId>com.io7m.looseleaf</groupId>
-    <version>0.0.4</version>
+    <version>1.0.0</version>
   </parent>
 
   <artifactId>com.io7m.looseleaf.tests</artifactId>
@@ -41,6 +41,11 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>com.io7m.looseleaf.cmdline</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>com.io7m.looseleaf.grafana</artifactId>
       <version>${project.version}</version>
     </dependency>
 
@@ -87,6 +92,20 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>run-it</id>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>integration-test</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
       <!-- Determine test coverage -->
       <plugin>
         <groupId>org.jacoco</groupId>

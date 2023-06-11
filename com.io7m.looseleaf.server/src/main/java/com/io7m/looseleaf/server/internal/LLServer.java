@@ -18,7 +18,7 @@ package com.io7m.looseleaf.server.internal;
 
 import com.io7m.jmulticlose.core.CloseableCollectionType;
 import com.io7m.looseleaf.server.api.LLServerType;
-import com.io7m.looseleaf.server.internal.services.LLServices;
+import com.io7m.repetoir.core.RPServiceDirectoryType;
 import org.eclipse.jetty.server.Server;
 
 import java.io.IOException;
@@ -33,7 +33,7 @@ public final class LLServer implements LLServerType
 {
   private final CloseableCollectionType<IOException> resources;
   private final ArrayList<Server> servers;
-  private final LLServices services;
+  private final RPServiceDirectoryType services;
 
   /**
    * The main server implementation.
@@ -46,7 +46,7 @@ public final class LLServer implements LLServerType
   public LLServer(
     final CloseableCollectionType<IOException> inResources,
     final ArrayList<Server> inServers,
-    final LLServices inServices)
+    final RPServiceDirectoryType inServices)
   {
     this.resources =
       Objects.requireNonNull(inResources, "resources");

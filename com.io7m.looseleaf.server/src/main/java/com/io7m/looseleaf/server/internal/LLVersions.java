@@ -17,7 +17,7 @@
 package com.io7m.looseleaf.server.internal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.io7m.looseleaf.server.internal.services.LLServices;
+import com.io7m.repetoir.core.RPServiceDirectoryType;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -39,7 +39,7 @@ public final class LLVersions extends HttpServlet
    */
 
   public LLVersions(
-    final LLServices inServices)
+    final RPServiceDirectoryType inServices)
   {
     this.mapper = new ObjectMapper();
   }

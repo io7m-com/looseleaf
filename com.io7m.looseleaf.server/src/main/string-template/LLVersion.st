@@ -1,5 +1,9 @@
+LLVersion(
+  appVersion,
+  appBuild) ::= <<
+
 /*
- * Copyright © 2020 Mark Raynsford <code@io7m.com> http://io7m.com
+ * Copyright © 2023 Mark Raynsford \<code@io7m.com\> https://www.io7m.com
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -14,25 +18,17 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.io7m.looseleaf.server.internal.services;
+package com.io7m.looseleaf.server;
 
-import java.util.Objects;
-
-/**
- * A service exception.
- */
-
-public final class LLServiceException extends RuntimeException
+public final class LLVersion
 {
-  /**
-   * Construct an exception.
-   *
-   * @param inMessage The message
-   */
+  public static final String MAIN_VERSION = "<appVersion>";
+  public static final String MAIN_BUILD = "<appBuild>";
 
-  public LLServiceException(
-    final String inMessage)
+  private LLVersion()
   {
-    super(Objects.requireNonNull(inMessage, "message"));
+
   }
 }
+
+>>

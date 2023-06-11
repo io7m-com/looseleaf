@@ -16,13 +16,20 @@
 
 package com.io7m.looseleaf.cmdline.internal;
 
-import com.beust.jcommander.Parameter;
-import com.beust.jcommander.Parameters;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.io7m.claypot.core.CLPAbstractCommand;
-import com.io7m.claypot.core.CLPCommandContextType;
 import com.io7m.looseleaf.security.LLPasswordAlgorithmPBKDF2HmacSHA256;
 import com.io7m.looseleaf.server.api.LLServerHashedPassword;
+import com.io7m.quarrel.core.QCommandContextType;
+import com.io7m.quarrel.core.QCommandMetadata;
+import com.io7m.quarrel.core.QCommandStatus;
+import com.io7m.quarrel.core.QCommandType;
+import com.io7m.quarrel.core.QParameterNamed1;
+import com.io7m.quarrel.core.QParameterNamedType;
+import com.io7m.quarrel.core.QStringType;
+import com.io7m.quarrel.ext.logback.QLogback;
+
+import java.util.List;
+import java.util.Optional;
 
 import static com.fasterxml.jackson.databind.MapperFeature.SORT_PROPERTIES_ALPHABETICALLY;
 import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
@@ -32,36 +39,47 @@ import static com.fasterxml.jackson.databind.SerializationFeature.ORDER_MAP_ENTR
  * Create a hashed password.
  */
 
-@Parameters(commandDescription = "Create a hashed password.")
-public final class LLCreatePassword extends CLPAbstractCommand
+public final class LLCreatePassword implements QCommandType
 {
-  @Parameter(
-    names = "--password",
-    description = "The password",
-    required = true
-  )
-  private String password;
+  private static final QParameterNamed1<String> PASSWORD =
+    new QParameterNamed1<>(
+      "--password",
+      List.of(),
+      new QStringType.QConstant("The password."),
+      Optional.empty(),
+      String.class
+    );
+
+  private final QCommandMetadata metadata;
 
   /**
    * Construct a command.
-   *
-   * @param inContext The command context
    */
 
-  public LLCreatePassword(
-    final CLPCommandContextType inContext)
+  public LLCreatePassword()
   {
-    super(inContext);
+    this.metadata = new QCommandMetadata(
+      "create-password",
+      new QStringType.QConstant("Create a hashed password."),
+      Optional.empty()
+    );
   }
 
   @Override
-  protected Status executeActual()
+  public List<QParameterNamedType<?>> onListNamedParameters()
+  {
+    return QLogback.plusParameters(List.of(PASSWORD));
+  }
+
+  @Override
+  public QCommandStatus onExecute(
+    final QCommandContextType context)
     throws Exception
   {
     final var algorithm =
       LLPasswordAlgorithmPBKDF2HmacSHA256.create();
     final var hashedPassword =
-      algorithm.createHashed(this.password);
+      algorithm.createHashed(context.parameterValue(PASSWORD));
 
     final var configuration =
       new LLServerHashedPassword(
@@ -77,13 +95,13 @@ public final class LLCreatePassword extends CLPAbstractCommand
         .enable(INDENT_OUTPUT)
         .build();
 
-    mapper.writeValue(System.out, configuration);
-    return Status.SUCCESS;
+    mapper.writeValue(context.output(), configuration);
+    return QCommandStatus.SUCCESS;
   }
 
   @Override
-  public String name()
+  public QCommandMetadata metadata()
   {
-    return "create-password";
+    return this.metadata;
   }
 }

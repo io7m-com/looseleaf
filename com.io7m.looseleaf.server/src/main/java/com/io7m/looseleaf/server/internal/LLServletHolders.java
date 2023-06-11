@@ -16,7 +16,7 @@
 
 package com.io7m.looseleaf.server.internal;
 
-import com.io7m.looseleaf.server.internal.services.LLServices;
+import com.io7m.repetoir.core.RPServiceDirectoryType;
 import jakarta.servlet.Servlet;
 
 import java.util.Objects;
@@ -28,7 +28,7 @@ import java.util.function.Function;
 
 public final class LLServletHolders
 {
-  private final LLServices services;
+  private final RPServiceDirectoryType services;
 
   /**
    * Servlet holder functions used to inject dependencies into servlets.
@@ -37,7 +37,7 @@ public final class LLServletHolders
    */
 
   public LLServletHolders(
-    final LLServices inServices)
+    final RPServiceDirectoryType inServices)
   {
     this.services =
       Objects.requireNonNull(inServices, "services");
@@ -56,7 +56,7 @@ public final class LLServletHolders
 
   public <T extends Servlet> LLServletHolder<T> create(
     final Class<T> clazz,
-    final Function<LLServices, T> servlets)
+    final Function<RPServiceDirectoryType, T> servlets)
   {
     Objects.requireNonNull(clazz, "clazz");
     Objects.requireNonNull(servlets, "servlets");

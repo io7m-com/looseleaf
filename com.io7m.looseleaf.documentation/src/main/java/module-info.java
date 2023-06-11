@@ -16,8 +16,7 @@
 
 module com.io7m.looseleaf.documentation
 {
-  requires jcommander;
   requires java.xml;
+
   requires com.io7m.looseleaf.cmdline;
-  requires com.io7m.claypot.core;
 }

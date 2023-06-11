@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022 Mark Raynsford <code@io7m.com> https://www.io7m.com
+ * Copyright © 2023 Mark Raynsford <code@io7m.com> https://www.io7m.com
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -14,11 +14,22 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-/**
- * Minimalist transactional HTTP key/value store (Server [internals for MX])
- */
 
-@Version("1.0.0")
-package com.io7m.looseleaf.server.internal.mx;
+package com.io7m.looseleaf.tests;
 
-import org.osgi.annotation.versioning.Version;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.io7m.looseleaf.grafana.LLGrafana;
+import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+
+public final class LLGrafanaTest
+{
+  @Test
+  public void testDashboard()
+    throws IOException
+  {
+    final var mapper = new ObjectMapper();
+    mapper.readTree(LLGrafana.dashboard());
+  }
+}

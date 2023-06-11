@@ -28,15 +28,18 @@ import com.io7m.looseleaf.security.LLUserName;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * A server configuration.
  *
- * @param schema       The schema identifier
- * @param addresses    The server bind addresses
- * @param databaseFile The server's database file
- * @param roles        The set of user roles
- * @param users        The set of users
+ * @param schema         The schema identifier
+ * @param addresses      The server bind addresses
+ * @param databaseFile   The server's database file
+ * @param roles          The set of user roles
+ * @param users          The set of users
+ * @param telemetry      The telemetry configuration
+ * @param faultInjection The fault injection configuration
  */
 
 @JsonDeserialize
@@ -51,16 +54,22 @@ public record LLServerConfiguration(
   @JsonProperty(value = "roles", required = true)
   List<LLServerRole> roles,
   @JsonProperty(value = "users", required = true)
-  List<LLServerUser> users)
+  List<LLServerUser> users,
+  @JsonProperty(value = "telemetry", required = false)
+  Optional<LLTelemetryConfiguration> telemetry,
+  @JsonProperty(value = "faultInjection", required = false)
+  Optional<LLFaultInjection> faultInjection)
 {
   /**
    * A server configuration.
    *
-   * @param schema       The schema identifier
-   * @param addresses    The server bind addresses
-   * @param databaseFile The server's database file
-   * @param roles        The set of user roles
-   * @param users        The set of users
+   * @param schema         The schema identifier
+   * @param addresses      The server bind addresses
+   * @param databaseFile   The server's database file
+   * @param roles          The set of user roles
+   * @param users          The set of users
+   * @param telemetry      The telemetry configuration
+   * @param faultInjection The fault injection configuration
    */
 
   public LLServerConfiguration
@@ -69,6 +78,8 @@ public record LLServerConfiguration(
     Objects.requireNonNull(databaseFile, "databaseFile");
     Objects.requireNonNull(roles, "roles");
     Objects.requireNonNull(users, "users");
+    Objects.requireNonNull(telemetry, "telemetry");
+    Objects.requireNonNull(faultInjection, "faultInjection");
   }
 
   /**

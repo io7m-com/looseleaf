@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022 Mark Raynsford <code@io7m.com> https://www.io7m.com
+ * Copyright © 2023 Mark Raynsford <code@io7m.com> https://www.io7m.com
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -16,15 +16,13 @@
 
 package com.io7m.looseleaf.cmdline;
 
-import com.io7m.claypot.core.CLPApplicationConfiguration;
-import com.io7m.claypot.core.CLPCommandConstructorType;
-import com.io7m.claypot.core.CLPCommandType;
-import com.io7m.claypot.core.Claypot;
-import com.io7m.claypot.core.ClaypotType;
 import com.io7m.looseleaf.cmdline.internal.LLCheckConfiguration;
 import com.io7m.looseleaf.cmdline.internal.LLCreatePassword;
 import com.io7m.looseleaf.cmdline.internal.LLServer;
-import com.io7m.looseleaf.cmdline.internal.LLVersion;
+import com.io7m.looseleaf.server.LLVersion;
+import com.io7m.quarrel.core.QApplication;
+import com.io7m.quarrel.core.QApplicationMetadata;
+import com.io7m.quarrel.core.QApplicationType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,19 +30,19 @@ import java.net.URI;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.SortedMap;
-import java.util.stream.Stream;
 
 /**
- * com.io7m.looseleaf.cmdline.Main command line entry point.
+ * Main command line entry point.
  */
 
 public final class Main implements Runnable
 {
-  private static final Logger LOG = LoggerFactory.getLogger(Main.class);
+  private static final Logger LOG =
+    LoggerFactory.getLogger(Main.class);
 
-  private final String[] args;
-  private final ClaypotType claypot;
+  private final List<String> args;
+  private final QApplicationType application;
+  private int exitCode;
 
   /**
    * The main entry point.
@@ -56,26 +54,26 @@ public final class Main implements Runnable
     final String[] inArgs)
   {
     this.args =
-      Objects.requireNonNull(inArgs, "Command line arguments");
+      Objects.requireNonNull(List.of(inArgs), "Command line arguments");
 
-    final List<CLPCommandConstructorType> commands =
-      List.of(
-        LLServer::new,
-        LLCheckConfiguration::new,
-        LLCreatePassword::new,
-        LLVersion::new
+    final var metadata =
+      new QApplicationMetadata(
+        "looseleaf",
+        "com.io7m.looseleaf",
+        LLVersion.MAIN_VERSION,
+        LLVersion.MAIN_BUILD,
+        "The looseleaf server.",
+        Optional.of(URI.create("https://www.io7m.com/software/looseleaf/"))
       );
 
-    final var configuration =
-      CLPApplicationConfiguration.builder()
-        .setLogger(LOG)
-        .setProgramName("looseleaf")
-        .setCommands(commands)
-        .setDocumentationURI(URI.create(
-          "https://www.io7m.com/software/looseleaf/documentation/"))
-        .build();
+    final var builder = QApplication.builder(metadata);
+    builder.allowAtSyntax(true);
+    builder.addCommand(new LLCheckConfiguration());
+    builder.addCommand(new LLCreatePassword());
+    builder.addCommand(new LLServer());
 
-    this.claypot = Claypot.create(configuration);
+    this.application = builder.build();
+    this.exitCode = 0;
   }
 
   /**
@@ -112,50 +110,21 @@ public final class Main implements Runnable
 
   public int exitCode()
   {
-    return this.claypot.exitCode();
+    return this.exitCode;
   }
 
   @Override
   public void run()
   {
-    this.claypot.execute(this.args);
-  }
-
-  /**
-   * @return The names of the available commands
-   */
-
-  public Stream<String> commandNames()
-  {
-    return this.commands()
-      .keySet()
-      .stream();
-  }
-
-  /**
-   * @return The available commands
-   */
-
-  public SortedMap<String, CLPCommandType> commands()
-  {
-    return this.claypot.commands();
+    this.exitCode = this.application.run(LOG, this.args).exitCode();
   }
 
   @Override
   public String toString()
   {
     return String.format(
-      "[com.io7m.looseleaf.cmdline.Main 0x%s]",
+      "[Main 0x%s]",
       Long.toUnsignedString(System.identityHashCode(this), 16)
     );
-  }
-
-  /**
-   * @return The exception that caused the exit
-   */
-
-  public Optional<Exception> exitCause()
-  {
-    return this.claypot.exitCause();
   }
 }

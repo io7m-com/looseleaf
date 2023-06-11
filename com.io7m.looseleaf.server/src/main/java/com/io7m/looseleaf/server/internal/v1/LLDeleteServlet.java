@@ -23,13 +23,19 @@ import com.io7m.looseleaf.protocol.v1.LLv1Error;
 import com.io7m.looseleaf.protocol.v1.LLv1Errors;
 import com.io7m.looseleaf.security.LLKeyName;
 import com.io7m.looseleaf.security.LLUser;
+import com.io7m.looseleaf.server.api.LLFaultInjection;
+import com.io7m.looseleaf.server.api.LLServerConfiguration;
+import com.io7m.looseleaf.server.internal.LLConfigurationService;
 import com.io7m.looseleaf.server.internal.LLDatabaseService;
 import com.io7m.looseleaf.server.internal.LLHTTPErrorStatusException;
+import com.io7m.looseleaf.server.internal.LLMetricsService;
+import com.io7m.looseleaf.server.internal.LLServerClock;
 import com.io7m.looseleaf.server.internal.LLStrings;
 import com.io7m.looseleaf.server.internal.LLv1MessagesService;
 import com.io7m.looseleaf.server.internal.auth.LLUserPrincipal;
-import com.io7m.looseleaf.server.internal.mx.LLMetricsService;
-import com.io7m.looseleaf.server.internal.services.LLServices;
+import com.io7m.looseleaf.server.internal.telemetry.LLTelemetryServiceType;
+import com.io7m.repetoir.core.RPServiceDirectoryType;
+import io.opentelemetry.api.trace.Span;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -38,11 +44,13 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import static com.io7m.looseleaf.security.LLAction.WRITE;
+import static com.io7m.looseleaf.server.internal.v1.LLWithTelemetry.withTelemetry;
 
 /**
  * The v1 "delete" servlet.
@@ -57,6 +65,9 @@ public final class LLDeleteServlet extends HttpServlet
   private final LLDatabaseType database;
   private final LLStrings strings;
   private final LLMetricsService metrics;
+  private final LLTelemetryServiceType telemetry;
+  private final LLServerClock clock;
+  private final LLServerConfiguration configuration;
 
   /**
    * The v1 "delete" servlet.
@@ -65,7 +76,7 @@ public final class LLDeleteServlet extends HttpServlet
    */
 
   public LLDeleteServlet(
-    final LLServices inServices)
+    final RPServiceDirectoryType inServices)
   {
     this.messages =
       inServices.requireService(LLv1MessagesService.class);
@@ -75,6 +86,13 @@ public final class LLDeleteServlet extends HttpServlet
       inServices.requireService(LLStrings.class);
     this.metrics =
       inServices.requireService(LLMetricsService.class);
+    this.telemetry =
+      inServices.requireService(LLTelemetryServiceType.class);
+    this.clock =
+      inServices.requireService(LLServerClock.class);
+    this.configuration =
+      inServices.requireService(LLConfigurationService.class)
+        .configuration();
   }
 
   @Override
@@ -83,21 +101,29 @@ public final class LLDeleteServlet extends HttpServlet
     final HttpServletResponse response)
     throws IOException
   {
-    final var userPrincipal =
-      (LLUserPrincipal) request.getUserPrincipal();
-    final var user =
-      userPrincipal.user();
+    withTelemetry(
+      this.telemetry,
+      "Delete",
+      request,
+      () -> {
+        final var userPrincipal =
+          (LLUserPrincipal) request.getUserPrincipal();
+        final var user =
+          userPrincipal.user();
 
-    try {
-      MDC.put("user", user.name().name());
-      MDC.put(
-        "client",
-        request.getRemoteAddr() + ":" + request.getRemotePort());
-      this.doProcessMessage(request, response, user);
-    } finally {
-      MDC.remove("user");
-      MDC.remove("client");
-    }
+        try {
+          MDC.put("user", user.name().name());
+          MDC.put(
+            "client",
+            "%s:%d".formatted(request.getRemoteAddr(), request.getRemotePort())
+          );
+          this.doProcessMessage(request, response, user);
+        } finally {
+          MDC.remove("user");
+          MDC.remove("client");
+        }
+      }
+    );
   }
 
   private void doProcessMessage(
@@ -123,15 +149,30 @@ public final class LLDeleteServlet extends HttpServlet
         );
       }
 
-      this.database.readUpdateDelete(
-        new LLDatabaseRUD(
-          Set.of(),
-          Map.of(),
-          Set.of(keyName)
-        )
-      );
+      final var timeThen = this.clock.nowPrecise();
 
-      this.updateMetrics();
+      try {
+        this.configuration.faultInjection()
+          .orElseGet(LLFaultInjection::disabled)
+          .databaseFaultInject();
+
+        this.database.readUpdateDelete(
+          new LLDatabaseRUD(
+            Set.of(),
+            Map.of(),
+            Set.of(keyName)
+          )
+        );
+      } catch (final Exception e) {
+        Span.current().recordException(e);
+        this.metrics.logError(user, e.getMessage());
+        throw e;
+      }
+
+      final var timeNow = this.clock.nowPrecise();
+      this.metrics.logDelete(user, keyName.value());
+      this.metrics.addDBTime(Duration.between(timeThen, timeNow));
+
       LOG.info("delete {}", keyName.value());
       response.setStatus(200);
       response.setContentLength(0);
@@ -146,9 +187,4 @@ public final class LLDeleteServlet extends HttpServlet
     }
   }
 
-  private void updateMetrics()
-  {
-    final var bean = this.metrics.bean();
-    bean.addWrites(1L);
-  }
 }

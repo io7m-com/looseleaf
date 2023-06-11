@@ -16,7 +16,7 @@
 
 package com.io7m.looseleaf.server.internal;
 
-import com.io7m.looseleaf.server.internal.services.LLServices;
+import com.io7m.repetoir.core.RPServiceDirectoryType;
 import jakarta.servlet.http.HttpServletRequest;
 import org.eclipse.jetty.server.HttpChannel;
 import org.eclipse.jetty.server.Request;
@@ -40,7 +40,7 @@ public final class LLServerRequestDecoration implements HttpChannel.Listener
    */
 
   public LLServerRequestDecoration(
-    final LLServices services)
+    final RPServiceDirectoryType services)
   {
     Objects.requireNonNull(services, "services");
 

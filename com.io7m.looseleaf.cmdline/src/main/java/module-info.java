@@ -19,12 +19,10 @@ module com.io7m.looseleaf.cmdline
   requires ch.qos.logback.classic;
   requires ch.qos.logback.core;
   requires com.io7m.looseleaf.server;
-  requires com.io7m.claypot.core;
-  requires jcommander;
   requires org.slf4j;
 
-  opens com.io7m.looseleaf.cmdline.internal
-    to jcommander, com.io7m.looseleaf.documentation;
+  requires com.io7m.quarrel.core;
+  requires com.io7m.quarrel.ext.logback;
 
   exports com.io7m.looseleaf.cmdline;
 

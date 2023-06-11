@@ -47,6 +47,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -68,10 +69,10 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
  * transactions in an attempt to see how effective the retry behaviour is.
  */
 
-public final class LLServerSmokeTest
+public final class LLServerSmokeIT
 {
   private static final Logger LOG =
-    LoggerFactory.getLogger(LLServerSmokeTest.class);
+    LoggerFactory.getLogger(LLServerSmokeIT.class);
 
   private static final int SMOKE_CONCURRENT_CLIENTS = 64;
   private static final int SMOKE_REQUESTS = SMOKE_CONCURRENT_CLIENTS * 1000;
@@ -122,13 +123,15 @@ public final class LLServerSmokeTest
             ),
             List.of("all-reader", "all-writer")
           )
-        )
+        ),
+        Optional.empty(),
+        Optional.empty()
       )
     );
 
     final var file =
       LLTestDirectories.resourceOf(
-        LLServerSmokeTest.class,
+        LLServerSmokeIT.class,
         this.directory,
         "200-less-common.txt"
       );

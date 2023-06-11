@@ -14,17 +14,11 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.io7m.looseleaf.server.internal.services;
-
 /**
- * The base type of services.
+ * Minimalist transactional HTTP key/value store (Server [internals for telemetry])
  */
 
-public interface LLServiceType
-{
-  /**
-   * @return The service description
-   */
+@Version("1.0.0")
+package com.io7m.looseleaf.server.internal.telemetry;
 
-  String description();
-}
+import org.osgi.annotation.versioning.Version;

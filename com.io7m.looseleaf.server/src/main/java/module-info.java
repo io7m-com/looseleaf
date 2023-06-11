@@ -24,25 +24,31 @@ module com.io7m.looseleaf.server
   requires static org.osgi.annotation.versioning;
 
   requires transitive com.io7m.looseleaf.server.api;
+  requires com.io7m.looseleaf.database.api;
+  requires com.io7m.looseleaf.database.mvstore;
+  requires com.io7m.looseleaf.protocol.v1;
 
   requires com.fasterxml.jackson.databind;
   requires com.io7m.jcip.annotations;
   requires com.io7m.jdeferthrow.core;
   requires com.io7m.jmulticlose.core;
   requires com.io7m.jxtrand.vanilla;
-  requires com.io7m.looseleaf.database.api;
-  requires com.io7m.looseleaf.database.mvstore;
-  requires com.io7m.looseleaf.protocol.v1;
+  requires com.io7m.repetoir.core;
   requires java.management;
-  requires org.eclipse.jetty.jmx;
   requires org.eclipse.jetty.server;
   requires org.eclipse.jetty.servlet;
   requires org.slf4j;
 
-  opens com.io7m.looseleaf.server.internal.mx;
-
-  opens com.io7m.looseleaf.server.internal
-    to com.io7m.jxtrand.vanilla;
+  requires io.opentelemetry.api;
+  requires io.opentelemetry.context;
+  requires io.opentelemetry.sdk.logs;
+  requires io.opentelemetry.sdk.common;
+  requires io.opentelemetry.sdk.metrics;
+  requires io.opentelemetry.sdk.trace;
+  requires io.opentelemetry.semconv;
+  requires io.opentelemetry.exporter.otlp;
+  requires io.opentelemetry.sdk;
 
   exports com.io7m.looseleaf.server;
+  opens com.io7m.looseleaf.server.internal;
 }

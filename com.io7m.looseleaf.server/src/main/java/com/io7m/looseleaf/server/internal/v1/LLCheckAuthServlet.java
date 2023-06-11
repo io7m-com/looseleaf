@@ -14,15 +14,17 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-
 package com.io7m.looseleaf.server.internal.v1;
 
-import com.io7m.looseleaf.server.internal.services.LLServices;
+import com.io7m.looseleaf.server.internal.telemetry.LLTelemetryServiceType;
+import com.io7m.repetoir.core.RPServiceDirectoryType;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+
+import static com.io7m.looseleaf.server.internal.v1.LLWithTelemetry.withTelemetry;
 
 /**
  * The v1 "check-auth" servlet.
@@ -30,6 +32,8 @@ import java.io.IOException;
 
 public final class LLCheckAuthServlet extends HttpServlet
 {
+  private final LLTelemetryServiceType telemetry;
+
   /**
    * The v1 "check-auth" servlet.
    *
@@ -37,9 +41,10 @@ public final class LLCheckAuthServlet extends HttpServlet
    */
 
   public LLCheckAuthServlet(
-    final LLServices inServices)
+    final RPServiceDirectoryType inServices)
   {
-
+    this.telemetry =
+      inServices.requireService(LLTelemetryServiceType.class);
   }
 
   @Override
@@ -48,7 +53,14 @@ public final class LLCheckAuthServlet extends HttpServlet
     final HttpServletResponse response)
     throws IOException
   {
-    response.setStatus(200);
-    response.setContentLength(0);
+    withTelemetry(
+      this.telemetry,
+      "CheckAuth",
+      request,
+      () -> {
+        response.setStatus(200);
+        response.setContentLength(0);
+      }
+    );
   }
 }

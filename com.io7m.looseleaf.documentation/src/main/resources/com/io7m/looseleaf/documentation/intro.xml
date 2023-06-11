@@ -50,6 +50,13 @@
         requests, and careful use is made of the Java type system to enforce invariants throughout the codebase.
       </Item>
       <Item>
+        Fully instrumented with <LinkExternal target="https://www.opentelemetry.io">OpenTelemetry</LinkExternal>
+        for reliable service monitoring.
+      </Item>
+      <Item>
+        Configurable fault injection for testing monitoring.
+      </Item>
+      <Item>
         <LinkExternal target="https://www.osgi.org/">OSGi</LinkExternal>-ready
       </Item>
       <Item>
