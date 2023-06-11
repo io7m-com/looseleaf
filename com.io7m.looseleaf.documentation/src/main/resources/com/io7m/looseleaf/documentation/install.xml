@@ -11,7 +11,7 @@
     <FormalItem title="Sources">
       <ListUnordered>
         <Item>
-          <Link target="7e5d6b65-c7ea-456e-bc24-68a4871e9856">Podman / Docker</Link>
+          <Link target="7e5d6b65-c7ea-456e-bc24-68a4871e9856">OCI Images</Link>
         </Item>
         <Item>
           <Link target="6db3a651-1e50-4cab-a61d-44e2b862371d">Maven Central</Link>
@@ -28,16 +28,16 @@
     </Paragraph>
   </Subsection>
 
-  <Subsection title="Podman/Docker" id="7e5d6b65-c7ea-456e-bc24-68a4871e9856">
+  <Subsection title="OCI Images" id="7e5d6b65-c7ea-456e-bc24-68a4871e9856">
     <Paragraph>
       The <Term type="package">looseleaf</Term> package can be installed from
       <LinkExternal target="https://hub.docker.com/r/io7m/looseleaf">Docker Hub</LinkExternal>
       using <Term type="command">docker</Term> or <Term type="command">podman</Term>.
     </Paragraph>
     <FormalItem title="Docker/Podman Pull">
-      <Verbatim><![CDATA[$ docker pull docker.io/io7m/looseleaf:${project.version}
+      <Verbatim><![CDATA[$ docker pull quay.io/io7mcom/looseleaf:${project.version}
 
-$ podman pull docker.io/io7m/looseleaf:${project.version}
+$ podman pull quay.io/io7mcom/looseleaf:${project.version}
 ]]>
       </Verbatim>
     </FormalItem>
@@ -50,7 +50,7 @@ $ podman pull docker.io/io7m/looseleaf:${project.version}
       otherwise be run without any privileges, and with a read-only root filesystem.
     </Paragraph>
     <FormalItem title="Run">
-      <Verbatim><![CDATA[$ podman run --read-only --volume /x/y/z:/looseleaf/etc:Z -i -t docker.io/io7m/looseleaf:${project.version} looseleaf
+      <Verbatim><![CDATA[$ podman run --read-only --volume /x/y/z:/looseleaf/etc:Z -i -t quay.io/io7mcom/looseleaf:${project.version} looseleaf
 info: Usage: looseleaf [options] [command] [command options]
 ...
 ]]></Verbatim>
