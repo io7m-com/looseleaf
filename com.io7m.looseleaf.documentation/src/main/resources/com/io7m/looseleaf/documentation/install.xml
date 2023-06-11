@@ -31,7 +31,7 @@
   <Subsection title="OCI Images" id="7e5d6b65-c7ea-456e-bc24-68a4871e9856">
     <Paragraph>
       The <Term type="package">looseleaf</Term> package can be installed from
-      <LinkExternal target="https://hub.docker.com/r/io7m/looseleaf">Docker Hub</LinkExternal>
+      <LinkExternal target="https://quay.io/io7mcom/looseleaf">quay.io</LinkExternal>
       using <Term type="command">docker</Term> or <Term type="command">podman</Term>.
     </Paragraph>
     <FormalItem title="Docker/Podman Pull">
