@@ -23,9 +23,10 @@ module com.io7m.looseleaf.server
   requires static org.osgi.annotation.bundle;
   requires static org.osgi.annotation.versioning;
 
-  requires transitive com.io7m.looseleaf.server.api;
+  requires com.io7m.looseleaf.server.api;
   requires com.io7m.looseleaf.database.api;
   requires com.io7m.looseleaf.database.mvstore;
+  requires com.io7m.looseleaf.database.sqlite;
   requires com.io7m.looseleaf.protocol.v1;
 
   requires com.fasterxml.jackson.databind;

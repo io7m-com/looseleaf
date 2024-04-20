@@ -189,4 +189,32 @@ public final class LLDatabaseMVStore
       tx.rollback();
     }
   }
+
+  @Override
+  public Map<LLKeyName, String> getAll()
+  {
+    final var tx =
+      this.txStore.begin(
+        ROLLBACK_NO_LISTENER,
+        10,
+        0,
+        IsolationLevel.READ_COMMITTED
+      );
+
+    try {
+      final var m =
+        tx.openMap("values", INSTANCE, INSTANCE);
+
+      final var results = new TreeMap<LLKeyName, String>();
+      for (final var e : m.entrySet()) {
+        results.put(LLKeyName.create(e.getKey()), e.getValue());
+      }
+
+      tx.rollback();
+      return results;
+    } catch (final Exception e) {
+      tx.rollback();
+      throw e;
+    }
+  }
 }

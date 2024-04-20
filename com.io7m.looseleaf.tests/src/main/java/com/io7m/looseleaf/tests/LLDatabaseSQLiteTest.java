@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022 Mark Raynsford <code@io7m.com> https://www.io7m.com
+ * Copyright © 2024 Mark Raynsford <code@io7m.com> https://www.io7m.com
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -14,16 +14,23 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+
 package com.io7m.looseleaf.tests;
 
-/**
- * Marker class for unit tests.
- */
+import com.io7m.looseleaf.database.api.LLDatabaseType;
+import com.io7m.looseleaf.database.sqlite.LLDatabaseSQLiteFactory;
 
-public final class LLTests
+import java.io.IOException;
+import java.nio.file.Path;
+
+public final class LLDatabaseSQLiteTest
+  extends LLDatabaseContract
 {
-  private LLTests()
+  @Override
+  protected LLDatabaseType create(
+    final Path file)
+    throws IOException
   {
-
+    return new LLDatabaseSQLiteFactory().open(file);
   }
 }

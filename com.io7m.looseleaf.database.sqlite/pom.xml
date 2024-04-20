@@ -12,10 +12,10 @@
     <version>2.0.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>com.io7m.looseleaf.database.mvstore</artifactId>
+  <artifactId>com.io7m.looseleaf.database.sqlite</artifactId>
 
-  <name>com.io7m.looseleaf.database.mvstore</name>
-  <description>Minimalist transactional HTTP key/value store (Database MVStore)</description>
+  <name>com.io7m.looseleaf.database.sqlite</name>
+  <description>Minimalist transactional HTTP key/value store (Database SQLite)</description>
   <url>https://www.io7m.com/software/looseleaf/</url>
 
   <dependencies>
@@ -31,8 +31,24 @@
     </dependency>
 
     <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2-mvstore</artifactId>
+      <groupId>com.io7m.anethum</groupId>
+      <artifactId>com.io7m.anethum.api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.xerial</groupId>
+      <artifactId>sqlite-jdbc</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.io7m.trasco</groupId>
+      <artifactId>com.io7m.trasco.api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.io7m.trasco</groupId>
+      <artifactId>com.io7m.trasco.vanilla</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
     </dependency>
 
     <dependency>

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022 Mark Raynsford <code@io7m.com> https://www.io7m.com
+ * Copyright © 2024 Mark Raynsford <code@io7m.com> https://www.io7m.com
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -14,29 +14,27 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.io7m.looseleaf.database.mvstore;
+
+package com.io7m.looseleaf.database.sqlite;
 
 import com.io7m.looseleaf.database.api.LLDatabaseFactoryType;
 import com.io7m.looseleaf.database.api.LLDatabaseType;
-import org.h2.mvstore.MVStore;
-import org.h2.mvstore.tx.TransactionStore;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Objects;
 
 /**
- * A database implementation based on the H2 MVStore.
+ * A database based on SQLite.
  */
 
-public final class LLDatabaseMVStoreFactory
+public final class LLDatabaseSQLiteFactory
   implements LLDatabaseFactoryType
 {
   /**
-   * A database implementation based on the H2 MVStore.
+   * A database based on SQLite.
    */
 
-  public LLDatabaseMVStoreFactory()
+  public LLDatabaseSQLiteFactory()
   {
 
   }
@@ -44,24 +42,14 @@ public final class LLDatabaseMVStoreFactory
   @Override
   public String kind()
   {
-    return "MVSTORE";
+    return "SQLITE";
   }
 
   @Override
-  public LLDatabaseType open(final Path file)
+  public LLDatabaseType open(
+    final Path file)
     throws IOException
   {
-    Objects.requireNonNull(file, "file");
-
-    try {
-      final var store =
-        MVStore.open(file.toAbsolutePath().toString());
-      final var txStore =
-        new TransactionStore(store);
-
-      return new LLDatabaseMVStore(store, txStore);
-    } catch (final Exception e) {
-      throw new IOException(e);
-    }
+    return LLDatabaseSQLite.open(file);
   }
 }

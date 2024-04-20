@@ -189,6 +189,9 @@
         "databaseFile": {
           "type": "string"
         },
+        "databaseKind": {
+          "type": "string"
+        },
         "roles": {
           "type": "array",
           "items": {

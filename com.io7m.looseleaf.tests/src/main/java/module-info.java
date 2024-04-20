@@ -18,7 +18,7 @@
  * Minimalist transactional HTTP key/value store (Test suite)
  */
 
-module com.io7m.looseleaf.tests
+open module com.io7m.looseleaf.tests
 {
   requires static org.osgi.annotation.bundle;
   requires static org.osgi.annotation.versioning;
@@ -26,12 +26,20 @@ module com.io7m.looseleaf.tests
   requires com.io7m.looseleaf.cmdline;
   requires com.io7m.looseleaf.database.api;
   requires com.io7m.looseleaf.database.mvstore;
+  requires com.io7m.looseleaf.database.sqlite;
+  requires com.io7m.looseleaf.grafana;
   requires com.io7m.looseleaf.protocol.v1;
   requires com.io7m.looseleaf.security;
   requires com.io7m.looseleaf.server.api;
   requires com.io7m.looseleaf.server;
+
   requires java.net.http;
   requires org.slf4j;
 
   exports com.io7m.looseleaf.tests;
+
+  requires transitive org.junit.jupiter.api;
+  requires transitive org.junit.jupiter.engine;
+  requires transitive org.junit.platform.commons;
+  requires transitive org.junit.platform.engine;
 }
