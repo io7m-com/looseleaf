@@ -34,7 +34,7 @@
 
   <properties>
     <com.io7m.quarrel.version>1.6.0</com.io7m.quarrel.version>
-    <com.io7m.xstructural.version>1.8.0</com.io7m.xstructural.version>
+    <com.io7m.xstructural.version>1.8.1</com.io7m.xstructural.version>
     <io7m.api.previousVersion>1.1.0</io7m.api.previousVersion>
     <io7m.java.targetJavaVersion>21</io7m.java.targetJavaVersion>
     <jackson.version>2.17.1</jackson.version>
