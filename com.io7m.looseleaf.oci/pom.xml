@@ -9,7 +9,7 @@
   <parent>
     <artifactId>com.io7m.looseleaf</artifactId>
     <groupId>com.io7m.looseleaf</groupId>
-    <version>1.1.0</version>
+    <version>2.0.0</version>
   </parent>
 
   <artifactId>com.io7m.looseleaf.oci</artifactId>
@@ -19,8 +19,8 @@
   <url>https://www.io7m.com/software/looseleaf/</url>
 
   <properties>
-    <com.io7m.oci.versionAlpine>3.17.3</com.io7m.oci.versionAlpine>
-    <com.io7m.oci.versionTemurin>17.0.7_7-jre-alpine</com.io7m.oci.versionTemurin>
+    <com.io7m.oci.versionAlpine>3.19.1</com.io7m.oci.versionAlpine>
+    <com.io7m.oci.versionTemurin>21.0.3_9-jre-alpine</com.io7m.oci.versionTemurin>
     <spotbugs.skip>true</spotbugs.skip>
   </properties>
 
@@ -126,6 +126,32 @@
                     <argument>-t</argument>
                     <argument>quay.io/io7mcom/looseleaf:${project.version}</argument>
                     <argument>${project.build.directory}/oci</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+
+              <!-- Run the image as a basic sanity check. -->
+              <execution>
+                <id>oci-image-run-check</id>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <phase>package</phase>
+                <configuration>
+                  <executable>podman</executable>
+                  <arguments>
+                    <argument>run</argument>
+                    <argument>--rm</argument>
+                    <argument>--volume</argument>
+                    <argument>${project.build.directory}:/looseleaf/data:rw</argument>
+                    <argument>--volume</argument>
+                    <argument>${project.basedir}/src/test/resources:/looseleaf/etc:ro</argument>
+                    <argument>quay.io/io7mcom/looseleaf:${project.version}</argument>
+                    <argument>server</argument>
+                    <argument>--file</argument>
+                    <argument>/looseleaf/etc/test-configuration.json</argument>
+                    <argument>--self-test</argument>
+                    <argument>true</argument>
                   </arguments>
                 </configuration>
               </execution>

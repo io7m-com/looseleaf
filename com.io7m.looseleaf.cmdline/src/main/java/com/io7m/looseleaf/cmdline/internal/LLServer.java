@@ -48,6 +48,15 @@ public final class LLServer implements QCommandType
       Path.class
     );
 
+  private static final QParameterNamed1<Boolean> SELF_TEST =
+    new QParameterNamed1<>(
+      "--self-test",
+      List.of(),
+      new QStringType.QConstant("Self-test the server."),
+      Optional.of(Boolean.FALSE),
+      Boolean.class
+    );
+
   /**
    * Construct a command.
    */
@@ -64,7 +73,9 @@ public final class LLServer implements QCommandType
   @Override
   public List<QParameterNamedType<?>> onListNamedParameters()
   {
-    return QLogback.plusParameters(List.of(FILE));
+    return QLogback.plusParameters(
+      List.of(FILE, SELF_TEST)
+    );
   }
 
   @Override
@@ -77,12 +88,18 @@ public final class LLServer implements QCommandType
     final var configurations =
       new LLServerConfigurations();
 
+    final var runForever =
+      !context.<Boolean>parameterValue(SELF_TEST).booleanValue();
+
     try (var ignored = servers.open(
       configurations.parse(context.parameterValue(FILE)))) {
-      while (true) {
+
+      while (runForever) {
         Thread.sleep(1_000L);
       }
     }
+
+    return QCommandStatus.SUCCESS;
   }
 
   @Override

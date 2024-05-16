@@ -9,7 +9,7 @@
   <parent>
     <artifactId>com.io7m.looseleaf</artifactId>
     <groupId>com.io7m.looseleaf</groupId>
-    <version>1.1.0</version>
+    <version>2.0.0</version>
   </parent>
 
   <artifactId>com.io7m.looseleaf.tests</artifactId>
@@ -19,7 +19,10 @@
   <url>https://www.io7m.com/software/looseleaf/</url>
 
   <properties>
+    <bnd.baseline.skip>true</bnd.baseline.skip>
+    <checkstyle.skip>true</checkstyle.skip>
     <mdep.analyze.skip>true</mdep.analyze.skip>
+    <spotbugs.skip>true</spotbugs.skip>
   </properties>
 
   <dependencies>
