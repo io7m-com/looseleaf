@@ -19,7 +19,7 @@
  */
 
 @Export
-@Version("1.2.0")
+@Version("2.0.1")
 package com.io7m.looseleaf.server;
 
 import org.osgi.annotation.bundle.Export;
