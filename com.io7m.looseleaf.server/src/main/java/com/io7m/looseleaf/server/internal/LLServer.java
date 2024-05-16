@@ -20,6 +20,8 @@ import com.io7m.jmulticlose.core.CloseableCollectionType;
 import com.io7m.looseleaf.server.api.LLServerType;
 import com.io7m.repetoir.core.RPServiceDirectoryType;
 import org.eclipse.jetty.server.Server;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,6 +33,9 @@ import java.util.Objects;
 
 public final class LLServer implements LLServerType
 {
+  private static final Logger LOG =
+    LoggerFactory.getLogger(LLServer.class);
+
   private final CloseableCollectionType<IOException> resources;
   private final ArrayList<Server> servers;
   private final RPServiceDirectoryType services;
@@ -60,6 +65,7 @@ public final class LLServer implements LLServerType
   public void close()
     throws IOException
   {
+    LOG.info("closing");
     this.resources.close();
   }
 }

@@ -130,6 +130,32 @@
                 </configuration>
               </execution>
 
+              <!-- Run the image as a basic sanity check. -->
+              <execution>
+                <id>oci-image-run-check</id>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <phase>package</phase>
+                <configuration>
+                  <executable>podman</executable>
+                  <arguments>
+                    <argument>run</argument>
+                    <argument>--rm</argument>
+                    <argument>--volume</argument>
+                    <argument>${project.build.directory}:/looseleaf/data:rw</argument>
+                    <argument>--volume</argument>
+                    <argument>${project.basedir}/src/test/resources:/looseleaf/etc:ro</argument>
+                    <argument>quay.io/io7mcom/looseleaf:${project.version}</argument>
+                    <argument>server</argument>
+                    <argument>--file</argument>
+                    <argument>/looseleaf/etc/test-configuration.json</argument>
+                    <argument>--self-test</argument>
+                    <argument>true</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+
               <!-- Push with podman. -->
               <execution>
                 <id>oci-image-push</id>
