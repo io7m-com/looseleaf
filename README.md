@@ -17,7 +17,8 @@ looseleaf
 
 ## looseleaf
 
-Functions to convert unsigned int/long values to/from float/double values.
+The `looseleaf` package implements an HTTP-accessible key/value database with
+ACID semantics and fine-grained role-based access control.
 
 ## Features
 
