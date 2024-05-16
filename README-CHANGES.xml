@@ -6,9 +6,14 @@
         <c:change date="2023-06-11T00:00:00+00:00" summary="Initial major release."/>
       </c:changes>
     </c:release>
-    <c:release date="2023-06-11T15:36:03+00:00" is-open="false" ticket-system="com.github.io7m.looseleaf" version="1.1.0">
+    <c:release date="2023-06-11T00:00:00+00:00" is-open="false" ticket-system="com.github.io7m.looseleaf" version="1.1.0">
       <c:changes>
         <c:change date="2023-06-11T00:00:00+00:00" summary="Fix a packaging issue that prevented application startup with metrics enabled."/>
+      </c:changes>
+    </c:release>
+    <c:release date="2024-05-16T17:29:09+00:00" is-open="true" ticket-system="com.github.io7m.looseleaf" version="2.0.0">
+      <c:changes>
+        <c:change compatible="false" date="2024-05-16T17:29:09+00:00" summary="Require JDK 21."/>
       </c:changes>
     </c:release>
   </c:releases>
