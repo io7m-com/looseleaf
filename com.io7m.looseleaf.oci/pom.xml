@@ -19,8 +19,8 @@
   <url>https://www.io7m.com/software/looseleaf/</url>
 
   <properties>
-    <com.io7m.oci.versionAlpine>3.17.3</com.io7m.oci.versionAlpine>
-    <com.io7m.oci.versionTemurin>17.0.7_7-jre-alpine</com.io7m.oci.versionTemurin>
+    <com.io7m.oci.versionAlpine>3.19.1</com.io7m.oci.versionAlpine>
+    <com.io7m.oci.versionTemurin>21.0.3_9-jre-alpine</com.io7m.oci.versionTemurin>
     <spotbugs.skip>true</spotbugs.skip>
   </properties>
 

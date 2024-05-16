@@ -11,9 +11,11 @@
         <c:change date="2023-06-11T00:00:00+00:00" summary="Fix a packaging issue that prevented application startup with metrics enabled."/>
       </c:changes>
     </c:release>
-    <c:release date="2024-05-16T17:29:09+00:00" is-open="true" ticket-system="com.github.io7m.looseleaf" version="2.0.0">
+    <c:release date="2024-05-16T18:22:43+00:00" is-open="true" ticket-system="com.github.io7m.looseleaf" version="2.0.0">
       <c:changes>
-        <c:change compatible="false" date="2024-05-16T17:29:09+00:00" summary="Require JDK 21."/>
+        <c:change compatible="false" date="2024-05-16T00:00:00+00:00" summary="Require JDK 21."/>
+        <c:change date="2024-05-16T00:00:00+00:00" summary="Upgrade Alpine Linux → 3.19.1."/>
+        <c:change date="2024-05-16T18:22:43+00:00" summary="Upgrade Temurin → 21.0.3_9-jre-alpine."/>
       </c:changes>
     </c:release>
   </c:releases>
