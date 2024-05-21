@@ -23,6 +23,8 @@
     <checkstyle.skip>true</checkstyle.skip>
     <mdep.analyze.skip>true</mdep.analyze.skip>
     <spotbugs.skip>true</spotbugs.skip>
+    <checkstyle.skip>true</checkstyle.skip>
+    <bnd.baseline.skip>true</bnd.baseline.skip>
   </properties>
 
   <dependencies>
@@ -50,6 +52,21 @@
       <groupId>${project.groupId}</groupId>
       <artifactId>com.io7m.looseleaf.grafana</artifactId>
       <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>com.io7m.looseleaf.database.mvstore</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>com.io7m.looseleaf.database.sqlite</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.io7m.quarrel</groupId>
+      <artifactId>com.io7m.quarrel.ext.xstructural</artifactId>
     </dependency>
 
     <dependency>

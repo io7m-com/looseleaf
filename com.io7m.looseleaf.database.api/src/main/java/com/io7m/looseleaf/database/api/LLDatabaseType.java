@@ -31,15 +31,21 @@ public interface LLDatabaseType extends Closeable
 {
   /**
    * @return The approximate size of the database in bytes
+   *
+   * @throws IOException On errors
    */
 
-  long dataSizeApproximate();
+  long dataSizeApproximate()
+    throws IOException;
 
   /**
    * @return The approximate number of keys in the database
+   *
+   * @throws IOException On errors
    */
 
-  long keyCountApproximate();
+  long keyCountApproximate()
+    throws IOException;
 
   /**
    * @return {@code true} if the store has been closed
@@ -71,5 +77,14 @@ public interface LLDatabaseType extends Closeable
    */
 
   Optional<String> get(LLKeyName key)
+    throws IOException;
+
+  /**
+   * @return The entire database
+   *
+   * @throws IOException On errors
+   */
+
+  Map<LLKeyName, String> getAll()
     throws IOException;
 }

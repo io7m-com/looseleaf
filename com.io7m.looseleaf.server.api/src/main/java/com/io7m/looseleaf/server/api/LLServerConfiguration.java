@@ -36,6 +36,7 @@ import java.util.Optional;
  * @param schema         The schema identifier
  * @param addresses      The server bind addresses
  * @param databaseFile   The server's database file
+ * @param databaseKind   The server's database kind (such as "SQLITE")
  * @param roles          The set of user roles
  * @param users          The set of users
  * @param telemetry      The telemetry configuration
@@ -51,6 +52,8 @@ public record LLServerConfiguration(
   List<LLServerAddress> addresses,
   @JsonProperty(value = "databaseFile", required = true)
   Path databaseFile,
+  @JsonProperty(value = "databaseKind", required = false)
+  Optional<String> databaseKind,
   @JsonProperty(value = "roles", required = true)
   List<LLServerRole> roles,
   @JsonProperty(value = "users", required = true)
@@ -66,6 +69,7 @@ public record LLServerConfiguration(
    * @param schema         The schema identifier
    * @param addresses      The server bind addresses
    * @param databaseFile   The server's database file
+   * @param databaseKind   The server's database kind (such as "SQLITE")
    * @param roles          The set of user roles
    * @param users          The set of users
    * @param telemetry      The telemetry configuration

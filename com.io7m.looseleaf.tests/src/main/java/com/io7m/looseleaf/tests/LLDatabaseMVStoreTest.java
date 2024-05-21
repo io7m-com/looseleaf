@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022 Mark Raynsford <code@io7m.com> https://www.io7m.com
+ * Copyright © 2024 Mark Raynsford <code@io7m.com> https://www.io7m.com
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -14,13 +14,23 @@
  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-/**
- * Minimalist transactional HTTP key/value store (Database API)
- */
 
-@Export
-@Version("2.0.0")
-package com.io7m.looseleaf.database.api;
+package com.io7m.looseleaf.tests;
 
-import org.osgi.annotation.bundle.Export;
-import org.osgi.annotation.versioning.Version;
+import com.io7m.looseleaf.database.api.LLDatabaseType;
+import com.io7m.looseleaf.database.mvstore.LLDatabaseMVStoreFactory;
+
+import java.io.IOException;
+import java.nio.file.Path;
+
+public final class LLDatabaseMVStoreTest
+  extends LLDatabaseContract
+{
+  @Override
+  protected LLDatabaseType create(
+    final Path file)
+    throws IOException
+  {
+    return new LLDatabaseMVStoreFactory().open(file);
+  }
+}

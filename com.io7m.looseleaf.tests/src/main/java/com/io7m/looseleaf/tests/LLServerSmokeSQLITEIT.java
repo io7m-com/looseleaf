@@ -69,10 +69,10 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
  * transactions in an attempt to see how effective the retry behaviour is.
  */
 
-public final class LLServerSmokeMVSTOREIT
+public final class LLServerSmokeSQLITEIT
 {
   private static final Logger LOG =
-    LoggerFactory.getLogger(LLServerSmokeMVSTOREIT.class);
+    LoggerFactory.getLogger(LLServerSmokeSQLITEIT.class);
 
   private static final int SMOKE_CONCURRENT_CLIENTS = 64;
   private static final int SMOKE_REQUESTS = SMOKE_CONCURRENT_CLIENTS * 1000;
@@ -103,7 +103,7 @@ public final class LLServerSmokeMVSTOREIT
         null,
         List.of(new LLServerAddress("localhost", 20000)),
         this.directory.resolve("looseleaf.db"),
-        Optional.empty(),
+        Optional.of("SQLITE"),
         List.of(
           new LLServerRole(
             "all-reader",
@@ -132,7 +132,7 @@ public final class LLServerSmokeMVSTOREIT
 
     final var file =
       LLTestDirectories.resourceOf(
-        LLServerSmokeMVSTOREIT.class,
+        LLServerSmokeSQLITEIT.class,
         this.directory,
         "200-less-common.txt"
       );
@@ -159,16 +159,6 @@ public final class LLServerSmokeMVSTOREIT
   public void testSmoke()
     throws Exception
   {
-    /*
-     * The test is unreliable on windows due to thread contention.
-     */
-
-    assumeFalse(
-      System.getProperty("os.name")
-        .toUpperCase()
-        .contains("WINDOWS")
-    );
-
     /*
      * The test is expensive.
      */
@@ -210,8 +200,8 @@ public final class LLServerSmokeMVSTOREIT
       (double) failed / (double) SMOKE_REQUESTS;
 
     assertTrue(
-      failurePercentage < 0.2,
-      "Failure percentage %f must be < 0.2".formatted(failurePercentage)
+      failurePercentage < 0.002,
+      "Failure percentage %f must be < 0.002".formatted(failurePercentage)
     );
   }
 

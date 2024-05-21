@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022 Mark Raynsford <code@io7m.com> https://www.io7m.com
+ * Copyright © 2024 Mark Raynsford <code@io7m.com> https://www.io7m.com
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -15,12 +15,12 @@
  */
 
 /**
- * Minimalist transactional HTTP key/value store (Database API)
+ * Minimalist transactional HTTP key/value store (Database SQLite)
  */
 
 @Export
-@Version("2.0.0")
-package com.io7m.looseleaf.database.api;
+@Version("1.0.0")
+package com.io7m.looseleaf.database.sqlite;
 
 import org.osgi.annotation.bundle.Export;
 import org.osgi.annotation.versioning.Version;

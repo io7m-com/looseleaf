@@ -18,6 +18,7 @@ package com.io7m.looseleaf.cmdline;
 
 import com.io7m.looseleaf.cmdline.internal.LLCheckConfiguration;
 import com.io7m.looseleaf.cmdline.internal.LLCreatePassword;
+import com.io7m.looseleaf.cmdline.internal.LLMigrateDatabase;
 import com.io7m.looseleaf.cmdline.internal.LLServer;
 import com.io7m.looseleaf.server.LLVersion;
 import com.io7m.quarrel.core.QApplication;
@@ -71,6 +72,7 @@ public final class Main implements Runnable
     builder.addCommand(new LLCheckConfiguration());
     builder.addCommand(new LLCreatePassword());
     builder.addCommand(new LLServer());
+    builder.addCommand(new LLMigrateDatabase());
 
     this.application = builder.build();
     this.exitCode = 0;

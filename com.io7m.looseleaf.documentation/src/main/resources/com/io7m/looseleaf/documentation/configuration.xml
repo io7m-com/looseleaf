@@ -76,6 +76,23 @@
       The <Term type="expression">databaseFile</Term> property specifies the path of the database that the server
       will use to store key/value data. The file will be created if it does not already exist.
     </Paragraph>
+    <Paragraph>
+      The optional <Term type="expression">databaseKind</Term> property specifies type of the database. One of
+      the following values must be used:
+    </Paragraph>
+    <FormalItem title="Database Kind">
+      <ListUnordered>
+        <Item>
+          <Term type="constant">SQLITE</Term>
+        </Item>
+        <Item>
+          <Term type="constant">MVSTORE</Term>
+        </Item>
+      </ListUnordered>
+    </FormalItem>
+    <Paragraph>
+      If no value is provided, <Term type="constant">SQLITE</Term> is assumed.
+    </Paragraph>
   </Subsection>
 
   <Subsection title="roles"
@@ -144,7 +161,7 @@
       <Term type="constant">n</Term> rounds of hashing, using a <Term type="constant">256</Term> bit key.
     </Paragraph>
     <Paragraph>
-      The <Link target="43008ff7-f2d1-4d52-b064-ef37d9aafc24">create-password</Link> command can be used
+      The <Link target="b4aa762c-a9db-37a9-ae38-1fc5ce3c065e">create-password</Link> command can be used
       to hash a password suitable for use in a configuration file.
     </Paragraph>
     <Paragraph>

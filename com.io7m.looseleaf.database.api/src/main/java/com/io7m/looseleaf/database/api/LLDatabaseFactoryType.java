@@ -26,6 +26,12 @@ import java.nio.file.Path;
 public interface LLDatabaseFactoryType
 {
   /**
+   * @return The underlying database kind (such as "MVSTORE" or "SQLITE")
+   */
+
+  String kind();
+
+  /**
    * Open a database.
    *
    * @param file The database file

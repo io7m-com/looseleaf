@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<Section xmlns:xi="http://www.w3.org/2001/XInclude"
+         id="a9e46e58-7eff-3b31-9ec5-4caf34b2e4fd"
+         title="server"
+         xmlns="urn:com.io7m.structural:8:0">
+
+  <Subsection title="Name">
+    <Paragraph>
+      <Term type="command">server</Term>
+      - Start a server.
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="Description">
+    <Paragraph>
+      The <Term type="command">server</Term> command will start the server based on the configuration given in the
+      configuration file specified with
+      <Term type="parameter">--file</Term>. The command <Term type="term">does not</Term> fork into the background, and
+      is suitable for use under process supervision.
+    </Paragraph>
+  </Subsection>
+
+  <xi:include href="ll-parameters-server.xml"/>
+
+  <Subsection title="Examples">
+    <FormalItem title="Example"
+                type="example">
+      <Verbatim><![CDATA[
+$ looseleaf server --file config.json
+info: [localhost:20000] server started
+]]></Verbatim>
+    </FormalItem>
+  </Subsection>
+
+</Section>
+

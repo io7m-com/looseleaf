@@ -15,41 +15,33 @@
  */
 
 /**
- * Minimalist transactional HTTP key/value store (Server)
+ * Minimalist transactional HTTP key/value store (Test suite)
  */
 
-module com.io7m.looseleaf.server
+open module com.io7m.looseleaf.tests
 {
   requires static org.osgi.annotation.bundle;
   requires static org.osgi.annotation.versioning;
 
-  requires com.io7m.looseleaf.server.api;
+  requires com.io7m.looseleaf.cmdline;
   requires com.io7m.looseleaf.database.api;
   requires com.io7m.looseleaf.database.mvstore;
   requires com.io7m.looseleaf.database.sqlite;
+  requires com.io7m.looseleaf.grafana;
   requires com.io7m.looseleaf.protocol.v1;
+  requires com.io7m.looseleaf.security;
+  requires com.io7m.looseleaf.server.api;
+  requires com.io7m.looseleaf.server;
 
-  requires com.fasterxml.jackson.databind;
-  requires com.io7m.jcip.annotations;
-  requires com.io7m.jdeferthrow.core;
-  requires com.io7m.jmulticlose.core;
-  requires com.io7m.jxtrand.vanilla;
-  requires com.io7m.repetoir.core;
-  requires java.management;
-  requires org.eclipse.jetty.server;
-  requires org.eclipse.jetty.servlet;
+  requires com.io7m.quarrel.core;
+  requires com.io7m.quarrel.ext.xstructural;
+  requires java.net.http;
   requires org.slf4j;
 
-  requires io.opentelemetry.api;
-  requires io.opentelemetry.context;
-  requires io.opentelemetry.sdk.logs;
-  requires io.opentelemetry.sdk.common;
-  requires io.opentelemetry.sdk.metrics;
-  requires io.opentelemetry.sdk.trace;
-  requires io.opentelemetry.semconv;
-  requires io.opentelemetry.exporter.otlp;
-  requires io.opentelemetry.sdk;
+  exports com.io7m.looseleaf.tests;
 
-  exports com.io7m.looseleaf.server;
-  opens com.io7m.looseleaf.server.internal;
+  requires transitive org.junit.jupiter.api;
+  requires transitive org.junit.jupiter.engine;
+  requires transitive org.junit.platform.commons;
+  requires transitive org.junit.platform.engine;
 }

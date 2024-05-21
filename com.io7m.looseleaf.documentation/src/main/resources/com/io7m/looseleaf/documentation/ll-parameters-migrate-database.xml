@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Subsection title="Parameters" xmlns="urn:com.io7m.structural:8:0">
+  <FormalItem id="1aa1806a-6429-3159-97a6-77a1a0798ab7" title="--database-source">
+    <Table type="parameterTable">
+      <Columns>
+        <Column>Attribute</Column>
+        <Column>Value</Column>
+      </Columns>
+      <Row>
+        <Cell>Name</Cell>
+        <Cell>
+          <Term type="parameter">--database-source</Term>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Type</Cell>
+        <Cell>
+          <Term type="class">java.nio.file.Path</Term>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Default Value</Cell>
+        <Cell>
+          <Term type="constant"/>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Cardinality</Cell>
+        <Cell>
+          <Term type="expression">[1, 1]</Term>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Description</Cell>
+        <Cell>The source database.</Cell>
+      </Row>
+    </Table>
+  </FormalItem>
+  <FormalItem id="5e93987a-4c53-33db-b51f-e1de24718760" title="--database-source-kind">
+    <Table type="parameterTable">
+      <Columns>
+        <Column>Attribute</Column>
+        <Column>Value</Column>
+      </Columns>
+      <Row>
+        <Cell>Name</Cell>
+        <Cell>
+          <Term type="parameter">--database-source-kind</Term>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Type</Cell>
+        <Cell>
+          <Term type="class">java.lang.String</Term>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Default Value</Cell>
+        <Cell>
+          <Term type="constant"/>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Cardinality</Cell>
+        <Cell>
+          <Term type="expression">[1, 1]</Term>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Description</Cell>
+        <Cell>The source database kind.</Cell>
+      </Row>
+    </Table>
+  </FormalItem>
+  <FormalItem id="2e722523-b402-384b-bd1e-41a2951bcc94" title="--database-target">
+    <Table type="parameterTable">
+      <Columns>
+        <Column>Attribute</Column>
+        <Column>Value</Column>
+      </Columns>
+      <Row>
+        <Cell>Name</Cell>
+        <Cell>
+          <Term type="parameter">--database-target</Term>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Type</Cell>
+        <Cell>
+          <Term type="class">java.nio.file.Path</Term>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Default Value</Cell>
+        <Cell>
+          <Term type="constant"/>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Cardinality</Cell>
+        <Cell>
+          <Term type="expression">[1, 1]</Term>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Description</Cell>
+        <Cell>The target database.</Cell>
+      </Row>
+    </Table>
+  </FormalItem>
+  <FormalItem id="19d82fb8-6803-3751-9314-006d63070e5c" title="--database-target-kind">
+    <Table type="parameterTable">
+      <Columns>
+        <Column>Attribute</Column>
+        <Column>Value</Column>
+      </Columns>
+      <Row>
+        <Cell>Name</Cell>
+        <Cell>
+          <Term type="parameter">--database-target-kind</Term>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Type</Cell>
+        <Cell>
+          <Term type="class">java.lang.String</Term>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Default Value</Cell>
+        <Cell>
+          <Term type="constant"/>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Cardinality</Cell>
+        <Cell>
+          <Term type="expression">[1, 1]</Term>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Description</Cell>
+        <Cell>The target database kind.</Cell>
+      </Row>
+    </Table>
+  </FormalItem>
+  <FormalItem id="ed73e3b2-4089-3ccd-a8c8-5eb4949a9cd1" title="--verbose">
+    <Table type="parameterTable">
+      <Columns>
+        <Column>Attribute</Column>
+        <Column>Value</Column>
+      </Columns>
+      <Row>
+        <Cell>Name</Cell>
+        <Cell>
+          <Term type="parameter">--verbose</Term>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Type</Cell>
+        <Cell>
+          <Term type="class">com.io7m.quarrel.ext.logback.QLogLevel</Term>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Default Value</Cell>
+        <Cell>
+          <Term type="constant">info</Term>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Cardinality</Cell>
+        <Cell>
+          <Term type="expression">[1, 1]</Term>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Description</Cell>
+        <Cell>Set the logging level of the application.</Cell>
+      </Row>
+    </Table>
+  </FormalItem>
+</Subsection>
+

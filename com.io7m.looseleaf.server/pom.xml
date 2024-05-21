@@ -41,6 +41,11 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
+      <artifactId>com.io7m.looseleaf.database.sqlite</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
       <artifactId>com.io7m.looseleaf.security</artifactId>
       <version>${project.version}</version>
     </dependency>
