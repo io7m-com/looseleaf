@@ -36,7 +36,7 @@
   <properties>
     <!-- io7m dependencies. -->
     <com.io7m.quarrel.version>1.6.1</com.io7m.quarrel.version>
-    <com.io7m.xstructural.version>1.8.0</com.io7m.xstructural.version>
+    <com.io7m.xstructural.version>1.8.1</com.io7m.xstructural.version>
     <com.io7m.trasco.version>1.1.0</com.io7m.trasco.version>
 
     <!-- Configuration -->
