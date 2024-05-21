@@ -33,5 +33,5 @@ module com.io7m.looseleaf.cmdline
   exports com.io7m.looseleaf.cmdline;
 
   exports com.io7m.looseleaf.cmdline.internal
-    to com.io7m.looseleaf.documentation;
+    to com.io7m.looseleaf.documentation, com.io7m.looseleaf.tests;
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<Section xmlns:xi="http://www.w3.org/2001/XInclude"
+         id="4fa2277a-592c-3e53-a928-834e744a4234"
+         title="migrate-database"
+         xmlns="urn:com.io7m.structural:8:0">
+
+  <Subsection title="Name">
+    <Paragraph>
+      <Term type="command">migrate-database</Term>
+      - Migrate data between databases.
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="Description">
+    <Paragraph>
+      The <Term type="command">migrate-database</Term> command migrates data between databases.
+    </Paragraph>
+  </Subsection>
+
+  <xi:include href="ll-parameters-migrate-database.xml"/>
+
+  <Subsection title="Examples">
+    <FormalItem title="Example"
+                type="example">
+      <Verbatim><![CDATA[
+$ looseleaf migrate-database \
+--database-source source.mvstore \
+--database-source-kind MVSTORE \
+--database-target target.mvstore \
+--database-target-kind SQLITE
+]]></Verbatim>
+    </FormalItem>
+  </Subsection>
+
+</Section>
+

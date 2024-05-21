@@ -80,8 +80,8 @@
       <Item>
         The server's database is not a <LinkExternal target="https://en.wikipedia.org/wiki/Distributed_database">
         distributed database</LinkExternal>; it is a simple local store based on the
-        <LinkExternal target="https://h2database.com/html/main.html">H2</LinkExternal>
-        database's underlying storage engine.
+        <LinkExternal target="https://sqlite.org/">SQLite</LinkExternal>
+        database.
       </Item>
       <Item>
         Adding/removing users and roles is not dynamic. The users and roles are defined ahead of time in a single

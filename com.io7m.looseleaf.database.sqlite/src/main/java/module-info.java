@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022 Mark Raynsford <code@io7m.com> https://www.io7m.com
+ * Copyright © 2024 Mark Raynsford <code@io7m.com> https://www.io7m.com
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -15,33 +15,20 @@
  */
 
 /**
- * Minimalist transactional HTTP key/value store (Test suite)
+ * Minimalist transactional HTTP key/value store (Database SQLite)
  */
 
-open module com.io7m.looseleaf.tests
+module com.io7m.looseleaf.database.sqlite
 {
   requires static org.osgi.annotation.bundle;
   requires static org.osgi.annotation.versioning;
 
-  requires com.io7m.looseleaf.cmdline;
+  requires com.io7m.anethum.api;
   requires com.io7m.looseleaf.database.api;
-  requires com.io7m.looseleaf.database.mvstore;
-  requires com.io7m.looseleaf.database.sqlite;
-  requires com.io7m.looseleaf.grafana;
-  requires com.io7m.looseleaf.protocol.v1;
-  requires com.io7m.looseleaf.security;
-  requires com.io7m.looseleaf.server.api;
-  requires com.io7m.looseleaf.server;
-
-  requires java.net.http;
+  requires com.io7m.trasco.api;
+  requires com.io7m.trasco.vanilla;
   requires org.slf4j;
+  requires org.xerial.sqlitejdbc;
 
-  exports com.io7m.looseleaf.tests;
-
-  requires transitive org.junit.jupiter.api;
-  requires transitive org.junit.jupiter.engine;
-  requires transitive org.junit.platform.commons;
-  requires transitive org.junit.platform.engine;
-  requires com.io7m.quarrel.core;
-  requires com.io7m.quarrel.ext.xstructural;
+  exports com.io7m.looseleaf.database.sqlite;
 }

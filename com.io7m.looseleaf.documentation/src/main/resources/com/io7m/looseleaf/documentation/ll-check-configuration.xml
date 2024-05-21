@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<Section xmlns:xi="http://www.w3.org/2001/XInclude"
+         id="4e262db0-d61e-30d1-84e6-87b88923cf7d"
+         title="check-configuration"
+         xmlns="urn:com.io7m.structural:8:0">
+
+  <Subsection title="Name">
+    <Paragraph>
+      <Term type="command">check-configuration</Term>
+      - Check configuration file.
+    </Paragraph>
+  </Subsection>
+
+  <Subsection title="Description">
+    <Paragraph>
+      The <Term type="command">check-configuration</Term> command will validate the configuration file specified with
+      <Term type="parameter">--file</Term>.
+    </Paragraph>
+    <Paragraph>
+      If the command encounters no errors or warnings, it will not print anything.
+    </Paragraph>
+  </Subsection>
+
+  <xi:include href="ll-parameters-check-configuration.xml"/>
+
+  <Subsection title="Examples">
+    <FormalItem title="Example"
+                type="example">
+      <Verbatim><![CDATA[
+$ looseleaf check-configuration --file server.conf
+$ echo $?
+0
+
+$ looseleaf check-configuration --file bad.conf
+error: Nonexistent role 'oops'
+$ echo $?
+1
+
+$ looseleaf check-configuration --file bad2.conf
+error: Duplicate user 'someone'
+$ echo $?
+1
+]]></Verbatim>
+    </FormalItem>
+  </Subsection>
+
+</Section>
+
