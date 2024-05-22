@@ -76,6 +76,8 @@ public final class LLCheckConfiguration implements QCommandType
     final QCommandContextType context)
   {
     try {
+      QLogback.configure(context);
+
       final var configurations =
         new LLServerConfigurations();
       final var configuration =

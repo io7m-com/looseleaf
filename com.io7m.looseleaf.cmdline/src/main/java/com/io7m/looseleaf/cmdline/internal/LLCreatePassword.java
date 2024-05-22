@@ -76,6 +76,8 @@ public final class LLCreatePassword implements QCommandType
     final QCommandContextType context)
     throws Exception
   {
+    QLogback.configure(context);
+
     final var algorithm =
       LLPasswordAlgorithmPBKDF2HmacSHA256.create();
     final var hashedPassword =

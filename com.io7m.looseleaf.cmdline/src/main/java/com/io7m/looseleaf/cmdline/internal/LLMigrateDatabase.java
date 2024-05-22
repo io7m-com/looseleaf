@@ -108,6 +108,8 @@ public final class LLMigrateDatabase implements QCommandType
     final QCommandContextType context)
     throws IOException
   {
+    QLogback.configure(context);
+
     final var srcFile =
       context.parameterValue(DATABASE_SOURCE);
     final var srcKind =
