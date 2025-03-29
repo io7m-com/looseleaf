@@ -11,7 +11,7 @@
         <c:change date="2023-06-11T00:00:00+00:00" summary="Fix a packaging issue that prevented application startup with metrics enabled."/>
       </c:changes>
     </c:release>
-    <c:release date="2024-05-16T19:02:34+00:00" is-open="false" ticket-system="com.github.io7m.looseleaf" version="2.0.0">
+    <c:release date="2024-05-16T00:00:00+00:00" is-open="false" ticket-system="com.github.io7m.looseleaf" version="2.0.0">
       <c:changes>
         <c:change date="2024-04-19T00:00:00+00:00" summary="Update org.jetbrains.kotlin:kotlin-stdlib:1.9.22 → 1.9.23."/>
         <c:change date="2024-04-19T00:00:00+00:00" summary="Update com.io7m.quarrel.version:1.4.0 → 1.6.0."/>
@@ -46,6 +46,11 @@
         <c:change date="2024-05-16T00:00:00+00:00" summary="Upgrade Alpine Linux → 3.19.1."/>
         <c:change date="2024-05-16T00:00:00+00:00" summary="Upgrade Temurin → 21.0.3_9-jre-alpine."/>
         <c:change date="2024-05-16T00:00:00+00:00" summary="Update jetty.version:11.0.20 → 11.0.21."/>
+      </c:changes>
+    </c:release>
+    <c:release date="2025-03-29T09:38:48+00:00" is-open="true" ticket-system="com.github.io7m.looseleaf" version="3.0.0">
+      <c:changes>
+        <c:change compatible="false" date="2025-03-29T09:38:48+00:00" summary="Switch from mvstore to sqlite as the internal database."/>
       </c:changes>
     </c:release>
   </c:releases>
