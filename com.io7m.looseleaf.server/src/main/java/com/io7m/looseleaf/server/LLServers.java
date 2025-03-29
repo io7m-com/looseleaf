@@ -18,7 +18,10 @@ package com.io7m.looseleaf.server;
 
 import com.io7m.jdeferthrow.core.ExceptionTracker;
 import com.io7m.jmulticlose.core.CloseableCollection;
+import com.io7m.looseleaf.database.api.LLDatabaseFactoryType;
+import com.io7m.looseleaf.database.api.LLDatabaseType;
 import com.io7m.looseleaf.database.mvstore.LLDatabaseMVStoreFactory;
+import com.io7m.looseleaf.database.sqlite.LLDatabaseSQLiteFactory;
 import com.io7m.looseleaf.security.LLSecurityContext;
 import com.io7m.looseleaf.server.api.LLServerAddress;
 import com.io7m.looseleaf.server.api.LLServerConfiguration;
@@ -64,6 +67,7 @@ import java.time.Clock;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -78,7 +82,7 @@ public final class LLServers implements LLServerFactoryType
   private static final Logger LOG =
     LoggerFactory.getLogger(LLServers.class);
 
-  private final LLDatabaseMVStoreFactory databases;
+  private final List<LLDatabaseFactoryType> databases;
 
   /**
    * A server factory.
@@ -86,7 +90,10 @@ public final class LLServers implements LLServerFactoryType
 
   public LLServers()
   {
-    this.databases = new LLDatabaseMVStoreFactory();
+    this.databases = List.of(
+      new LLDatabaseMVStoreFactory(),
+      new LLDatabaseSQLiteFactory()
+    );
   }
 
   private static ConstraintSecurityHandler createSecurityHandler(
@@ -135,8 +142,9 @@ public final class LLServers implements LLServerFactoryType
       CloseableCollection.create(IOException::new);
     final var exceptions =
       new ExceptionTracker<IOException>();
+
     final var database =
-      resources.add(this.databases.open(configuration.databaseFile()));
+      resources.add(this.openDatabase(configuration));
 
     final var services =
       new RPServiceDirectory();
@@ -178,6 +186,32 @@ public final class LLServers implements LLServerFactoryType
 
     exceptions.throwIfNecessary();
     return new LLServer(resources, servers, services);
+  }
+
+  private LLDatabaseType openDatabase(
+    final LLServerConfiguration configuration)
+    throws IOException
+  {
+    final var databaseKind =
+      configuration.databaseKind()
+        .orElse("MVSTORE");
+
+    final var factory =
+      this.databases.stream()
+        .filter(f -> Objects.equals(f.kind(), databaseKind))
+        .findFirst()
+        .orElseThrow(() -> {
+          return new UnsupportedOperationException(
+            "No database implementation available with kind '%s'"
+              .formatted(databaseKind)
+          );
+        });
+
+    if (Objects.equals(factory.kind(), "MVSTORE")) {
+      LOG.warn("The MVSTORE database is deprecated; please migrate to SQLITE.");
+    }
+
+    return factory.open(configuration.databaseFile());
   }
 
   private Server createServer(

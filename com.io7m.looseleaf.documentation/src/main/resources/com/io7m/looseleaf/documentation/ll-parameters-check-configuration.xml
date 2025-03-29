@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Subsection title="Parameters" xmlns="urn:com.io7m.structural:8:0">
+  <FormalItem id="0d6dcd5c-17d7-3be6-8d38-f3e8a04bb153" title="--file">
+    <Table type="parameterTable">
+      <Columns>
+        <Column>Attribute</Column>
+        <Column>Value</Column>
+      </Columns>
+      <Row>
+        <Cell>Name</Cell>
+        <Cell>
+          <Term type="parameter">--file</Term>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Type</Cell>
+        <Cell>
+          <Term type="class">java.nio.file.Path</Term>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Default Value</Cell>
+        <Cell>
+          <Term type="constant"/>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Cardinality</Cell>
+        <Cell>
+          <Term type="expression">[1, 1]</Term>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Description</Cell>
+        <Cell>The configuration file.</Cell>
+      </Row>
+    </Table>
+  </FormalItem>
+  <FormalItem id="4298ae34-1416-3ca8-8983-85756f1d1cd2" title="--verbose">
+    <Table type="parameterTable">
+      <Columns>
+        <Column>Attribute</Column>
+        <Column>Value</Column>
+      </Columns>
+      <Row>
+        <Cell>Name</Cell>
+        <Cell>
+          <Term type="parameter">--verbose</Term>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Type</Cell>
+        <Cell>
+          <Term type="class">com.io7m.quarrel.ext.logback.QLogLevel</Term>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Default Value</Cell>
+        <Cell>
+          <Term type="constant">info</Term>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Cardinality</Cell>
+        <Cell>
+          <Term type="expression">[1, 1]</Term>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>Description</Cell>
+        <Cell>Set the logging level of the application.</Cell>
+      </Row>
+    </Table>
+  </FormalItem>
+</Subsection>
+

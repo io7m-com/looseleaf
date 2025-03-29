@@ -95,6 +95,7 @@ public final class LLServerTest
         null,
         List.of(new LLServerAddress("localhost", 20000)),
         this.directory.resolve("looseleaf.db"),
+        Optional.empty(),
         List.of(
           new LLServerRole(
             "xy-reader",

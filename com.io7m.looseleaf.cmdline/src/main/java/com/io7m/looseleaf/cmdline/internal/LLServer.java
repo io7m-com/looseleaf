@@ -83,6 +83,8 @@ public final class LLServer implements QCommandType
     final QCommandContextType context)
     throws Exception
   {
+    QLogback.configure(context);
+
     final var servers =
       new LLServers();
     final var configurations =

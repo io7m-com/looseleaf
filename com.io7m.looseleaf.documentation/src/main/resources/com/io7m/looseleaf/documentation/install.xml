@@ -95,4 +95,20 @@ info: Usage: looseleaf [options] [command] [command options]
     </FormalItem>
   </Subsection>
   
+  <Subsection title="Upgrading">
+    <Subsection title="2.0.0 → 3.0.0">
+      <Paragraph>
+        In <Term type="constant">3.0.0</Term>, the <Term type="command">looseleaf</Term> package added support
+        for <LinkExternal target="https://sqlite.org/">SQLite</LinkExternal> as the new default database implementation
+        underlying the key/value store. Support for
+        <LinkExternal target="https://www.h2database.com/html/mvstore.html">MVStore</LinkExternal> is still
+        present, but deprecated.
+      </Paragraph>
+      <Paragraph>
+        Data should be migrated out of existing databases and into new SQLite databases using the
+        <Link target="4fa2277a-592c-3e53-a928-834e744a4234">migrate-database</Link> command.
+      </Paragraph>
+    </Subsection>
+  </Subsection>
+
 </Section>

@@ -26,6 +26,7 @@ import io.opentelemetry.api.logs.Logger;
 import io.opentelemetry.api.metrics.LongCounter;
 import io.opentelemetry.api.metrics.ObservableLongGauge;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.Objects;
 
@@ -135,14 +136,26 @@ public final class LLMetricsService implements RPServiceType
         .gaugeBuilder("looseleaf_db_keys")
         .setDescription("The approximate number of keys in the database.")
         .ofLongs()
-        .buildWithCallback(m -> m.record(this.database.keyCountApproximate()));
+        .buildWithCallback(m -> {
+          try {
+            m.record(this.database.keyCountApproximate());
+          } catch (final IOException e) {
+            // Nothing we can do about this.
+          }
+        });
 
     this.dbSizeGauge =
       telemetry.meter()
         .gaugeBuilder("looseleaf_db_size")
         .setDescription("The approximate size of the database.")
         .ofLongs()
-        .buildWithCallback(m -> m.record(this.database.dataSizeApproximate()));
+        .buildWithCallback(m -> {
+          try {
+            m.record(this.database.dataSizeApproximate());
+          } catch (final IOException e) {
+            // Nothing we can do about this.
+          }
+        });
 
     this.httpTimeGauge =
       telemetry.meter()

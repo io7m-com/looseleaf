@@ -9,7 +9,7 @@
   <parent>
     <artifactId>com.io7m.looseleaf</artifactId>
     <groupId>com.io7m.looseleaf</groupId>
-    <version>2.0.0</version>
+    <version>3.0.0</version>
   </parent>
 
   <artifactId>com.io7m.looseleaf.server.api</artifactId>

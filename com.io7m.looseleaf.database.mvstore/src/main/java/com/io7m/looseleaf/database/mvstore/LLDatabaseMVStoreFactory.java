@@ -42,6 +42,12 @@ public final class LLDatabaseMVStoreFactory
   }
 
   @Override
+  public String kind()
+  {
+    return "MVSTORE";
+  }
+
+  @Override
   public LLDatabaseType open(final Path file)
     throws IOException
   {

@@ -11,13 +11,16 @@
       <Term type="command">looseleaf</Term> command is broken into a number of subcommands which are documented
       over the following sections.
     </Paragraph>
+
     <FormalItem title="Command-Line Overview">
       <Verbatim><xi:include parse="text" href="usage.txt"/></Verbatim>
     </FormalItem>
+
     <Paragraph>
       All of the command-line functionality is implemented using the standard
       <Link target="94cc9b32-352f-4ef3-9210-780e381fe712">looseleaf APIs</Link>.
     </Paragraph>
+
     <Paragraph>
       All subcommands accept a <Term type="parameter">--verbose</Term> parameter that may be set to one of
       <Term type="constant">trace</Term>, <Term type="constant">debug</Term>, <Term type="constant">info</Term>,
@@ -27,10 +30,11 @@
       <Term type="constant">trace</Term>
       level effectively causes everything to be logged, and will produce large volumes of debugging output.
     </Paragraph>
+
     <Paragraph id="9539c150-2761-4087-a6d5-459c821fb17e">
-      The <Term type="package">looseleaf</Term> command-line tool uses <LinkExternal target="https://jcommander.org/">
-      jcommander
-    </LinkExternal> to parse command-line arguments, and therefore supports placing command-line arguments into a file,
+      The <Term type="package">looseleaf</Term> command-line tool uses
+      <LinkExternal target="https://www.io7m.com/software/quarrel/">quarrel</LinkExternal>
+      to parse command-line arguments, and therefore supports placing command-line arguments into a file,
       one argument per line, and then referencing that file with <Term type="constant">@</Term>. For example:
     </Paragraph>
     <FormalItem title="@ Syntax">
@@ -45,9 +49,10 @@
     </Paragraph>
   </Section>
 
-  <xi:include href="c-check-configuration.xml"/>
-  <xi:include href="c-create-password.xml"/>
-  <xi:include href="c-server.xml"/>
-  <xi:include href="c-version.xml"/>
+  <xi:include href="ll-check-configuration.xml"/>
+  <xi:include href="ll-create-password.xml"/>
+  <xi:include href="ll-migrate-database.xml"/>
+  <xi:include href="ll-server.xml"/>
+  <xi:include href="ll-version.xml"/>
 
 </Section>

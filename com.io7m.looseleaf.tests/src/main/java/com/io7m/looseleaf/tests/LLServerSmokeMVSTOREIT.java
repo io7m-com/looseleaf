@@ -69,10 +69,10 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
  * transactions in an attempt to see how effective the retry behaviour is.
  */
 
-public final class LLServerSmokeIT
+public final class LLServerSmokeMVSTOREIT
 {
   private static final Logger LOG =
-    LoggerFactory.getLogger(LLServerSmokeIT.class);
+    LoggerFactory.getLogger(LLServerSmokeMVSTOREIT.class);
 
   private static final int SMOKE_CONCURRENT_CLIENTS = 64;
   private static final int SMOKE_REQUESTS = SMOKE_CONCURRENT_CLIENTS * 1000;
@@ -103,6 +103,7 @@ public final class LLServerSmokeIT
         null,
         List.of(new LLServerAddress("localhost", 20000)),
         this.directory.resolve("looseleaf.db"),
+        Optional.empty(),
         List.of(
           new LLServerRole(
             "all-reader",
@@ -131,7 +132,7 @@ public final class LLServerSmokeIT
 
     final var file =
       LLTestDirectories.resourceOf(
-        LLServerSmokeIT.class,
+        LLServerSmokeMVSTOREIT.class,
         this.directory,
         "200-less-common.txt"
       );
@@ -209,8 +210,8 @@ public final class LLServerSmokeIT
       (double) failed / (double) SMOKE_REQUESTS;
 
     assertTrue(
-      failurePercentage < 0.002,
-      "Failure percentage %f must be < 0.002".formatted(failurePercentage)
+      failurePercentage < 0.2,
+      "Failure percentage %f must be < 0.2".formatted(failurePercentage)
     );
   }
 

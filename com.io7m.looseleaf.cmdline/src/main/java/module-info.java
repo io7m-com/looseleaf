@@ -16,16 +16,22 @@
 
 module com.io7m.looseleaf.cmdline
 {
+  requires com.io7m.looseleaf.database.api;
+  requires com.io7m.looseleaf.database.mvstore;
+  requires com.io7m.looseleaf.database.sqlite;
+  requires com.io7m.looseleaf.server;
+
   requires ch.qos.logback.classic;
   requires ch.qos.logback.core;
-  requires com.io7m.looseleaf.server;
-  requires org.slf4j;
-
   requires com.io7m.quarrel.core;
   requires com.io7m.quarrel.ext.logback;
+  requires org.slf4j;
+  requires com.io7m.looseleaf.server.api;
+
+  uses com.io7m.looseleaf.database.api.LLDatabaseFactoryType;
 
   exports com.io7m.looseleaf.cmdline;
 
   exports com.io7m.looseleaf.cmdline.internal
-    to com.io7m.looseleaf.documentation;
+    to com.io7m.looseleaf.documentation, com.io7m.looseleaf.tests;
 }
