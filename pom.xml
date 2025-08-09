@@ -52,6 +52,17 @@
     <opentelemetry.version>1.49.0</opentelemetry.version>
   </properties>
 
+  <scm>
+    <url>https://www.github.com/io7m-com/looseleaf</url>
+    <connection>scm:git:https://www.github.com/io7m-com/looseleaf</connection>
+    <developerConnection>scm:git:https://www.github.com/io7m-com/looseleaf</developerConnection>
+  </scm>
+
+  <issueManagement>
+    <url>https://www.github.com/io7m-com/looseleaf/issues</url>
+    <system>GitHub Issues</system>
+  </issueManagement>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
