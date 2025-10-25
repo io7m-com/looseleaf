@@ -45,7 +45,7 @@
 
     <!-- Third-party dependencies. -->
     <helidon.version>4.2.1</helidon.version>
-    <jackson.version>2.19.1</jackson.version>
+    <jackson.version>2.20</jackson.version>
     <jetty.version>11.0.26</jetty.version>
     <org.junit.version>5.13.4</org.junit.version>
     <logback.version>1.5.19</logback.version>
