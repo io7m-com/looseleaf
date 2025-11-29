@@ -29,7 +29,6 @@ module com.io7m.looseleaf.server
   requires com.io7m.looseleaf.database.sqlite;
   requires com.io7m.looseleaf.protocol.v1;
 
-  requires com.fasterxml.jackson.databind;
   requires com.io7m.jcip.annotations;
   requires com.io7m.jdeferthrow.core;
   requires com.io7m.jmulticlose.core;
@@ -39,6 +38,7 @@ module com.io7m.looseleaf.server
   requires org.eclipse.jetty.server;
   requires org.eclipse.jetty.servlet;
   requires org.slf4j;
+  requires tools.jackson.databind;
 
   requires io.opentelemetry.api;
   requires io.opentelemetry.context;

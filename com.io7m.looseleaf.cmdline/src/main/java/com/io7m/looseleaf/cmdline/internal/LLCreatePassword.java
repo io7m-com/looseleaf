@@ -16,7 +16,7 @@
 
 package com.io7m.looseleaf.cmdline.internal;
 
-import com.fasterxml.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.json.JsonMapper;
 import com.io7m.looseleaf.security.LLPasswordAlgorithmPBKDF2HmacSHA256;
 import com.io7m.looseleaf.server.api.LLServerHashedPassword;
 import com.io7m.quarrel.core.QCommandContextType;
@@ -31,9 +31,9 @@ import com.io7m.quarrel.ext.logback.QLogback;
 import java.util.List;
 import java.util.Optional;
 
-import static com.fasterxml.jackson.databind.MapperFeature.SORT_PROPERTIES_ALPHABETICALLY;
-import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
-import static com.fasterxml.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;
+import static tools.jackson.databind.MapperFeature.SORT_PROPERTIES_ALPHABETICALLY;
+import static tools.jackson.databind.SerializationFeature.INDENT_OUTPUT;
+import static tools.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;
 
 /**
  * Create a hashed password.

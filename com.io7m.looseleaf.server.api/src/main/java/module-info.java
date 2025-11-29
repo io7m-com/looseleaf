@@ -23,16 +23,15 @@ module com.io7m.looseleaf.server.api
   requires static org.osgi.annotation.bundle;
   requires static org.osgi.annotation.versioning;
 
+  requires com.io7m.looseleaf.security;
+
+  requires com.fasterxml.jackson.annotation;
   requires com.io7m.dixmont.core;
   requires com.io7m.jdeferthrow.core;
-
-  requires transitive com.fasterxml.jackson.datatype.jdk8;
-  requires transitive com.fasterxml.jackson.annotation;
-  requires transitive com.fasterxml.jackson.databind;
-  requires transitive com.io7m.looseleaf.security;
+  requires tools.jackson.databind;
 
   opens com.io7m.looseleaf.server.api
-    to com.fasterxml.jackson.databind;
+    to tools.jackson.databind;
 
   exports com.io7m.looseleaf.server.api;
 }

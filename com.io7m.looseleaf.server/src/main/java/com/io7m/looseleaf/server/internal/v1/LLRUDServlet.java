@@ -46,6 +46,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+import tools.jackson.core.JacksonException;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -330,7 +331,7 @@ public final class LLRUDServlet extends HttpServlet
           return rud;
         }
       }
-    } catch (final IOException e) {
+    } catch (final IOException | JacksonException e) {
       throw new LLHTTPErrorStatusException(
         400,
         "bad-message",

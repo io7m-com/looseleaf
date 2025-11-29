@@ -17,10 +17,9 @@
 
 package com.io7m.looseleaf.server.api;
 
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.fasterxml.jackson.databind.module.SimpleDeserializers;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.module.SimpleDeserializers;
+import tools.jackson.databind.module.SimpleModule;
 import com.io7m.dixmont.core.DmJsonRestrictedDeserializers;
 
 import java.io.IOException;
@@ -30,9 +29,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
 
-import static com.fasterxml.jackson.databind.DeserializationFeature.USE_BIG_INTEGER_FOR_INTS;
-import static com.fasterxml.jackson.databind.MapperFeature.SORT_PROPERTIES_ALPHABETICALLY;
-import static com.fasterxml.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;
+import static tools.jackson.databind.DeserializationFeature.USE_BIG_INTEGER_FOR_INTS;
+import static tools.jackson.databind.MapperFeature.SORT_PROPERTIES_ALPHABETICALLY;
+import static tools.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;
 
 /**
  * Functions to serialize/deserialize server configurations.
@@ -51,6 +50,7 @@ public final class LLServerConfigurations
   {
     this.serializers =
       DmJsonRestrictedDeserializers.builder()
+        .allowClass(LLFaultInjection.class)
         .allowClass(LLServerAction.class)
         .allowClass(LLServerAddress.class)
         .allowClass(LLServerConfiguration.class)
@@ -58,45 +58,42 @@ public final class LLServerConfigurations
         .allowClass(LLServerHashedPassword.class)
         .allowClass(LLServerRole.class)
         .allowClass(LLServerUser.class)
-        .allowClass(LLTelemetryConfiguration.LLLogs.class)
-        .allowClass(LLTelemetryConfiguration.LLMetrics.class)
-        .allowClass(LLTelemetryConfiguration.LLOTLPProtocol.class)
-        .allowClass(LLTelemetryConfiguration.LLTraces.class)
+        .allowClass(LLLogs.class)
+        .allowClass(LLMetrics.class)
+        .allowClass(LLOTLPProtocol.class)
+        .allowClass(LLTraces.class)
         .allowClass(LLTelemetryConfiguration.class)
-        .allowClass(LLFaultInjection.class)
         .allowClass(Optional.class)
         .allowClass(Path.class)
         .allowClass(String.class)
         .allowClass(URI.class)
-        .allowClass(int.class)
         .allowClass(double.class)
-        .allowClassName(
-          "java.util.Optional<com.io7m.looseleaf.server.api.LLFaultInjection>")
-        .allowClassName(
-          "java.util.Optional<com.io7m.looseleaf.server.api.LLTelemetryConfiguration>")
-        .allowClassName(
-          "java.util.List<java.lang.String>")
-        .allowClassName(
-          "java.util.List<com.io7m.looseleaf.server.api.LLServerAddress>")
-        .allowClassName(
-          "java.util.List<com.io7m.looseleaf.server.api.LLServerUser>")
-        .allowClassName(
-          "java.util.List<com.io7m.looseleaf.server.api.LLServerRole>")
-        .allowClassName(
-          "java.util.List<com.io7m.looseleaf.server.api.LLServerGrant>")
+        .allowClass(int.class)
+        .allowListsOfClass(LLServerAddress.class)
+        .allowListsOfClass(LLServerGrant.class)
+        .allowListsOfClass(LLServerRole.class)
+        .allowListsOfClass(LLServerUser.class)
+        .allowListsOfClass(String.class)
+        .allowOptionalOfClass(LLFaultInjection.class)
+        .allowOptionalOfClass(LLLogs.class)
+        .allowOptionalOfClass(LLMetrics.class)
+        .allowOptionalOfClass(LLOTLPProtocol.class)
+        .allowOptionalOfClass(LLTraces.class)
+        .allowOptionalOfClass(LLTelemetryConfiguration.class)
+        .allowOptionalOfClass(LLTelemetryConfiguration.class)
+        .allowOptionalOfClass(String.class)
         .build();
+
+    final var simpleModule = new SimpleModule();
+    simpleModule.setDeserializers(this.serializers);
 
     this.mapper =
       JsonMapper.builder()
         .enable(USE_BIG_INTEGER_FOR_INTS)
         .enable(ORDER_MAP_ENTRIES_BY_KEYS)
         .enable(SORT_PROPERTIES_ALPHABETICALLY)
+        .addModule(simpleModule)
         .build();
-
-    final var simpleModule = new SimpleModule();
-    simpleModule.setDeserializers(this.serializers);
-    this.mapper.registerModule(simpleModule);
-    this.mapper.registerModule(new Jdk8Module());
   }
 
   /**

@@ -17,8 +17,8 @@
 package com.io7m.looseleaf.server.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 import com.io7m.jdeferthrow.core.ExceptionTracker;
 import com.io7m.looseleaf.security.LLPasswordException;
 import com.io7m.looseleaf.security.LLRoleName;

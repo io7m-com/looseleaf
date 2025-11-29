@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022 Mark Raynsford <code@io7m.com> https://www.io7m.com
+ * Copyright © 2025 Mark Raynsford <code@io7m.com> https://www.io7m.com
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -19,51 +19,32 @@ package com.io7m.looseleaf.server.api;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import tools.jackson.databind.annotation.JsonDeserialize;
 import tools.jackson.databind.annotation.JsonSerialize;
-import com.io7m.looseleaf.security.LLRole;
-import com.io7m.looseleaf.security.LLRoleName;
 
-import java.util.List;
+import java.net.URI;
 import java.util.Objects;
 
 /**
- * A role.
+ * Metrics configuration.
  *
- * @param name   The name of the role
- * @param grants The role's grants
+ * @param endpoint The endpoint to which OTLP metrics data will be sent.
+ * @param protocol The protocol used to deliver OpenTelemetry data.
  */
 
 @JsonDeserialize
 @JsonSerialize
-public record LLServerRole(
-  @JsonProperty(value = "name", required = true)
-  String name,
-  @JsonProperty(value = "grants", required = true)
-  List<LLServerGrant> grants)
+public record LLMetrics(
+  @JsonProperty("endpoint")
+  URI endpoint,
+  @JsonProperty("protocol")
+  LLOTLPProtocol protocol)
 {
   /**
-   * A role.
-   *
-   * @param name   The name of the role
-   * @param grants The role's grants
+   * Metrics configuration.
    */
 
-  public LLServerRole
+  public LLMetrics
   {
-    Objects.requireNonNull(name, "name");
-    Objects.requireNonNull(grants, "grants");
-  }
-
-  /**
-   * @return The configuration as a role
-   */
-
-  public LLRole asRole()
-  {
-    return new LLRole(
-      new LLRoleName(this.name),
-      this.grants.stream()
-        .map(LLServerGrant::asGrant)
-        .toList()
-    );
+    Objects.requireNonNull(endpoint, "endpoint");
+    Objects.requireNonNull(protocol, "protocol");
   }
 }

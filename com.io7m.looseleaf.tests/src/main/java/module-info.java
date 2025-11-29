@@ -33,6 +33,7 @@ open module com.io7m.looseleaf.tests
   requires com.io7m.looseleaf.server.api;
   requires com.io7m.looseleaf.server;
 
+  requires tools.jackson.databind;
   requires com.io7m.quarrel.core;
   requires com.io7m.quarrel.ext.xstructural;
   requires java.net.http;

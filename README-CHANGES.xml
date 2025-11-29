@@ -48,7 +48,7 @@
         <c:change date="2024-05-16T00:00:00+00:00" summary="Update jetty.version:11.0.20 → 11.0.21."/>
       </c:changes>
     </c:release>
-    <c:release date="2025-03-29T10:05:43+00:00" is-open="false" ticket-system="com.github.io7m.looseleaf" version="3.0.0">
+    <c:release date="2025-03-29T00:00:00+00:00" is-open="false" ticket-system="com.github.io7m.looseleaf" version="3.0.0">
       <c:changes>
         <c:change date="2024-05-24T00:00:00+00:00" summary="Update net.jqwik:jqwik-api:1.8.4 → 1.8.5."/>
         <c:change date="2024-05-24T00:00:00+00:00" summary="Update net.jqwik:jqwik-engine:1.8.4 → 1.8.5."/>
@@ -155,6 +155,11 @@
         <c:change date="2025-03-01T00:00:00+00:00" summary="Update io.opentelemetry:opentelemetry-sdk-logs:1.46.0 → 1.47.0."/>
         <c:change compatible="false" date="2025-03-29T00:00:00+00:00" summary="Switch from mvstore to sqlite as the internal database."/>
         <c:change date="2025-03-29T00:00:00+00:00" summary="Update logback.version:1.5.16 → 1.5.17."/>
+      </c:changes>
+    </c:release>
+    <c:release date="2025-11-29T16:00:06+00:00" is-open="true" ticket-system="com.github.io7m.looseleaf" version="4.0.0">
+      <c:changes>
+        <c:change compatible="false" date="2025-11-29T16:00:06+00:00" summary="Upgrade to Jackson 3.0.0."/>
       </c:changes>
     </c:release>
   </c:releases>

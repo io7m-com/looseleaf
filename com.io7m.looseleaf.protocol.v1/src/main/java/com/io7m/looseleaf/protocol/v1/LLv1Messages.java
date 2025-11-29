@@ -17,18 +17,18 @@
 
 package com.io7m.looseleaf.protocol.v1;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.fasterxml.jackson.databind.module.SimpleDeserializers;
-import com.fasterxml.jackson.databind.module.SimpleModule;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.module.SimpleDeserializers;
+import tools.jackson.databind.module.SimpleModule;
 import com.io7m.dixmont.core.DmJsonRestrictedDeserializers;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import static com.fasterxml.jackson.databind.DeserializationFeature.USE_BIG_INTEGER_FOR_INTS;
-import static com.fasterxml.jackson.databind.MapperFeature.SORT_PROPERTIES_ALPHABETICALLY;
-import static com.fasterxml.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;
+import static tools.jackson.databind.DeserializationFeature.USE_BIG_INTEGER_FOR_INTS;
+import static tools.jackson.databind.MapperFeature.SORT_PROPERTIES_ALPHABETICALLY;
+import static tools.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;
 
 /**
  * Functions to deserialize/serialize V1 messages.
@@ -59,16 +59,16 @@ public final class LLv1Messages
         .allowClassName("java.util.Set<java.lang.String>")
         .build();
 
+    final var simpleModule = new SimpleModule();
+    simpleModule.setDeserializers(this.serializers);
+
     this.mapper =
       JsonMapper.builder()
         .enable(USE_BIG_INTEGER_FOR_INTS)
         .enable(ORDER_MAP_ENTRIES_BY_KEYS)
         .enable(SORT_PROPERTIES_ALPHABETICALLY)
+        .addModule(simpleModule)
         .build();
-
-    final var simpleModule = new SimpleModule();
-    simpleModule.setDeserializers(this.serializers);
-    this.mapper.registerModule(simpleModule);
   }
 
   /**
