@@ -308,7 +308,7 @@
       <dependency>
         <groupId>io.opentelemetry</groupId>
         <artifactId>opentelemetry-sdk-logs</artifactId>
-        <version>1.55.0</version>
+        <version>1.56.0</version>
       </dependency>
       <dependency>
         <groupId>org.jetbrains.kotlin</groupId>
