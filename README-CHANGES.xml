@@ -157,9 +157,10 @@
         <c:change date="2025-03-29T00:00:00+00:00" summary="Update logback.version:1.5.16 → 1.5.17."/>
       </c:changes>
     </c:release>
-    <c:release date="2025-11-29T16:00:06+00:00" is-open="true" ticket-system="com.github.io7m.looseleaf" version="4.0.0">
+    <c:release date="2025-11-29T16:21:27+00:00" is-open="true" ticket-system="com.github.io7m.looseleaf" version="4.0.0">
       <c:changes>
-        <c:change compatible="false" date="2025-11-29T16:00:06+00:00" summary="Upgrade to Jackson 3.0.0."/>
+        <c:change compatible="false" date="2025-11-29T00:00:00+00:00" summary="Upgrade to Jackson 3.0.0."/>
+        <c:change compatible="false" date="2025-11-29T16:21:27+00:00" summary="Remove support for mvstore."/>
       </c:changes>
     </c:release>
   </c:releases>

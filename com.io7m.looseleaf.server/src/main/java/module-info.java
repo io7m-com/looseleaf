@@ -25,7 +25,6 @@ module com.io7m.looseleaf.server
 
   requires com.io7m.looseleaf.server.api;
   requires com.io7m.looseleaf.database.api;
-  requires com.io7m.looseleaf.database.mvstore;
   requires com.io7m.looseleaf.database.sqlite;
   requires com.io7m.looseleaf.protocol.v1;
 

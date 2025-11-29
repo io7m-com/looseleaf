@@ -21,7 +21,6 @@
   <modules>
     <module>com.io7m.looseleaf.cmdline</module>
     <module>com.io7m.looseleaf.database.api</module>
-    <module>com.io7m.looseleaf.database.mvstore</module>
     <module>com.io7m.looseleaf.database.sqlite</module>
     <module>com.io7m.looseleaf.documentation</module>
     <module>com.io7m.looseleaf.grafana</module>
@@ -124,11 +123,6 @@
       </dependency>
 
       <!-- DB -->
-      <dependency>
-        <groupId>com.h2database</groupId>
-        <artifactId>h2-mvstore</artifactId>
-        <version>2.4.240</version>
-      </dependency>
       <dependency>
         <groupId>org.xerial</groupId>
         <artifactId>sqlite-jdbc</artifactId>

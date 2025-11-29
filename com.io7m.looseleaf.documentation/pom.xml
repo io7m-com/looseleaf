@@ -36,11 +36,6 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>com.io7m.looseleaf.database.mvstore</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
       <artifactId>com.io7m.looseleaf.protocol.v1</artifactId>
       <version>${project.version}</version>
     </dependency>

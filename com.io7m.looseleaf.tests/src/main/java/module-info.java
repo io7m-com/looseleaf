@@ -25,7 +25,6 @@ open module com.io7m.looseleaf.tests
 
   requires com.io7m.looseleaf.cmdline;
   requires com.io7m.looseleaf.database.api;
-  requires com.io7m.looseleaf.database.mvstore;
   requires com.io7m.looseleaf.database.sqlite;
   requires com.io7m.looseleaf.grafana;
   requires com.io7m.looseleaf.protocol.v1;
