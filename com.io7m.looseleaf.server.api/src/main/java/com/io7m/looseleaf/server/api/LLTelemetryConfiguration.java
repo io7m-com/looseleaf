@@ -17,10 +17,9 @@
 package com.io7m.looseleaf.server.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
-import java.net.URI;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -60,104 +59,5 @@ public record LLTelemetryConfiguration(
     Objects.requireNonNull(logs, "logs");
     Objects.requireNonNull(metrics, "metrics");
     Objects.requireNonNull(traces, "traces");
-  }
-
-  /**
-   * The protocol used to deliver OpenTelemetry data.
-   */
-
-  @JsonDeserialize
-  @JsonSerialize
-  public enum LLOTLPProtocol
-  {
-    /**
-     * gRPC
-     */
-
-    GRPC,
-
-    /**
-     * HTTP(s)
-     */
-
-    HTTP
-  }
-
-  /**
-   * Metrics configuration.
-   *
-   * @param endpoint The endpoint to which OTLP metrics data will be sent.
-   * @param protocol The protocol used to deliver OpenTelemetry data.
-   */
-
-  @JsonDeserialize
-  @JsonSerialize
-  public record LLMetrics(
-    @JsonProperty("endpoint")
-    URI endpoint,
-    @JsonProperty("protocol")
-    LLOTLPProtocol protocol)
-  {
-    /**
-     * Metrics configuration.
-     */
-
-    public LLMetrics
-    {
-      Objects.requireNonNull(endpoint, "endpoint");
-      Objects.requireNonNull(protocol, "protocol");
-    }
-  }
-
-  /**
-   * Trace configuration.
-   *
-   * @param endpoint The endpoint to which OTLP trace data will be sent.
-   * @param protocol The protocol used to deliver OpenTelemetry data.
-   */
-
-  @JsonDeserialize
-  @JsonSerialize
-  public record LLTraces(
-    @JsonProperty("endpoint")
-    URI endpoint,
-    @JsonProperty("protocol")
-    LLOTLPProtocol protocol)
-  {
-    /**
-     * Trace configuration.
-     */
-
-    public LLTraces
-    {
-      Objects.requireNonNull(endpoint, "endpoint");
-      Objects.requireNonNull(protocol, "protocol");
-    }
-  }
-
-  /**
-   * Log configuration.
-   *
-   * @param endpoint The endpoint to which OTLP log data will be sent.
-   * @param protocol The protocol used to deliver OpenTelemetry data.
-   */
-
-  @JsonDeserialize
-  @JsonSerialize
-  public record LLLogs(
-    @JsonProperty("endpoint")
-    URI endpoint,
-    @JsonProperty("protocol")
-    LLOTLPProtocol protocol)
-  {
-    /**
-     * Log configuration.
-     */
-
-    public LLLogs
-    {
-      Objects.requireNonNull(endpoint, "endpoint");
-      Objects.requireNonNull(protocol, "protocol");
-    }
   }
 }

@@ -20,7 +20,6 @@ import com.io7m.jdeferthrow.core.ExceptionTracker;
 import com.io7m.jmulticlose.core.CloseableCollection;
 import com.io7m.looseleaf.database.api.LLDatabaseFactoryType;
 import com.io7m.looseleaf.database.api.LLDatabaseType;
-import com.io7m.looseleaf.database.mvstore.LLDatabaseMVStoreFactory;
 import com.io7m.looseleaf.database.sqlite.LLDatabaseSQLiteFactory;
 import com.io7m.looseleaf.security.LLSecurityContext;
 import com.io7m.looseleaf.server.api.LLServerAddress;
@@ -91,7 +90,6 @@ public final class LLServers implements LLServerFactoryType
   public LLServers()
   {
     this.databases = List.of(
-      new LLDatabaseMVStoreFactory(),
       new LLDatabaseSQLiteFactory()
     );
   }
@@ -194,7 +192,7 @@ public final class LLServers implements LLServerFactoryType
   {
     final var databaseKind =
       configuration.databaseKind()
-        .orElse("MVSTORE");
+        .orElse("SQLITE");
 
     final var factory =
       this.databases.stream()
@@ -206,10 +204,6 @@ public final class LLServers implements LLServerFactoryType
               .formatted(databaseKind)
           );
         });
-
-    if (Objects.equals(factory.kind(), "MVSTORE")) {
-      LOG.warn("The MVSTORE database is deprecated; please migrate to SQLITE.");
-    }
 
     return factory.open(configuration.databaseFile());
   }

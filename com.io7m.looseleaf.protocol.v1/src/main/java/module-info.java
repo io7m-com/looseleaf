@@ -24,11 +24,11 @@ module com.io7m.looseleaf.protocol.v1
   requires static org.osgi.annotation.versioning;
 
   requires com.io7m.dixmont.core;
-  requires transitive com.fasterxml.jackson.databind;
-  requires transitive com.fasterxml.jackson.annotation;
+  requires tools.jackson.databind;
+  requires com.fasterxml.jackson.annotation;
 
   opens com.io7m.looseleaf.protocol.v1
-    to com.fasterxml.jackson.databind;
+    to tools.jackson.databind;
 
   exports com.io7m.looseleaf.protocol.v1;
 }

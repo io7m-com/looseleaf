@@ -9,7 +9,7 @@
   <parent>
     <artifactId>com.io7m.looseleaf</artifactId>
     <groupId>com.io7m.looseleaf</groupId>
-    <version>3.0.0</version>
+    <version>4.0.0</version>
   </parent>
 
   <artifactId>com.io7m.looseleaf.protocol.v1</artifactId>
@@ -20,7 +20,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
+      <groupId>tools.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
     </dependency>
     <dependency>

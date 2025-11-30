@@ -44,9 +44,10 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
-import static com.io7m.looseleaf.server.api.LLTelemetryConfiguration.LLLogs;
-import static com.io7m.looseleaf.server.api.LLTelemetryConfiguration.LLMetrics;
-import static com.io7m.looseleaf.server.api.LLTelemetryConfiguration.LLTraces;
+import com.io7m.looseleaf.server.api.LLLogs;
+
+import com.io7m.looseleaf.server.api.LLMetrics;
+import com.io7m.looseleaf.server.api.LLTraces;
 import static io.opentelemetry.semconv.resource.attributes.ResourceAttributes.SERVICE_NAME;
 import static io.opentelemetry.semconv.resource.attributes.ResourceAttributes.SERVICE_VERSION;
 

@@ -15,23 +15,11 @@
   <Subsection title="Description">
     <Paragraph>
       The <Term type="command">migrate-database</Term> command migrates data between databases.
+      This subcommand is currently not useful as only one database implementation is now supported.
     </Paragraph>
   </Subsection>
 
   <xi:include href="ll-parameters-migrate-database.xml"/>
-
-  <Subsection title="Examples">
-    <FormalItem title="Example"
-                type="example">
-      <Verbatim><![CDATA[
-$ looseleaf migrate-database \
---database-source source.mvstore \
---database-source-kind MVSTORE \
---database-target target.mvstore \
---database-target-kind SQLITE
-]]></Verbatim>
-    </FormalItem>
-  </Subsection>
 
 </Section>
 

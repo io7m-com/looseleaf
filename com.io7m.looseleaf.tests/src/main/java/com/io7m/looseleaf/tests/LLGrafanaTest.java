@@ -17,7 +17,7 @@
 
 package com.io7m.looseleaf.tests;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import com.io7m.looseleaf.grafana.LLGrafana;
 import org.junit.jupiter.api.Test;
 
