@@ -11,7 +11,7 @@
 
   <groupId>com.io7m.looseleaf</groupId>
   <artifactId>com.io7m.looseleaf</artifactId>
-  <version>4.0.0</version>
+  <version>4.0.1-SNAPSHOT</version>
 
   <packaging>pom</packaging>
   <name>com.io7m.looseleaf</name>
@@ -39,7 +39,7 @@
     <com.io7m.trasco.version>3.1.1</com.io7m.trasco.version>
 
     <!-- Configuration -->
-    <io7m.api.previousVersion>3.0.0</io7m.api.previousVersion>
+    <io7m.api.previousVersion>4.0.0</io7m.api.previousVersion>
     <io7m.java.targetJavaVersion>21</io7m.java.targetJavaVersion>
 
     <!-- Third-party dependencies. -->
