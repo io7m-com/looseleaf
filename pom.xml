@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0">
 
@@ -33,6 +33,8 @@
   </modules>
 
   <properties>
+    <io7m.workID>15c3b056-f4d4-3047-b260-f7944ba48996</io7m.workID>
+
     <!-- io7m dependencies. -->
     <com.io7m.quarrel.version>1.8.0</com.io7m.quarrel.version>
     <com.io7m.xstructural.version>1.9.0</com.io7m.xstructural.version>
