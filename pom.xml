@@ -201,7 +201,7 @@
       <dependency>
         <groupId>com.io7m.dixmont</groupId>
         <artifactId>com.io7m.dixmont.core</artifactId>
-        <version>3.0.0</version>
+        <version>3.1.0</version>
       </dependency>
 
       <!-- CLI -->
