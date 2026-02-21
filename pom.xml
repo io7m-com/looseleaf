@@ -45,7 +45,7 @@
     <io7m.java.targetJavaVersion>21</io7m.java.targetJavaVersion>
 
     <!-- Third-party dependencies. -->
-    <helidon.version>4.3.1</helidon.version>
+    <helidon.version>4.3.4</helidon.version>
     <jackson.version>3.0.3</jackson.version>
     <jetty.version>11.0.26</jetty.version>
     <org.junit.version>5.14.2</org.junit.version>
