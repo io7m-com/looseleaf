@@ -49,7 +49,7 @@
     <jackson.version>3.0.4</jackson.version>
     <jetty.version>11.0.26</jetty.version>
     <org.junit.version>5.14.3</org.junit.version>
-    <logback.version>1.5.28</logback.version>
+    <logback.version>1.5.32</logback.version>
     <opentelemetry.version>1.60.1</opentelemetry.version>
   </properties>
 
