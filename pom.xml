@@ -36,7 +36,7 @@
     <io7m.workID>15c3b056-f4d4-3047-b260-f7944ba48996</io7m.workID>
 
     <!-- io7m dependencies. -->
-    <com.io7m.quarrel.version>1.8.0</com.io7m.quarrel.version>
+    <com.io7m.quarrel.version>1.8.1</com.io7m.quarrel.version>
     <com.io7m.xstructural.version>2.0.1</com.io7m.xstructural.version>
     <com.io7m.trasco.version>3.1.1</com.io7m.trasco.version>
 
